@@ -50,4 +50,7 @@ dependencies {
 //    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+
 }
