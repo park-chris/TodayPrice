@@ -1,5 +1,6 @@
 package com.crystal.todayprice.component
 
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -26,7 +27,19 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_launcher_foreground)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.background)))
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+
+        binding.toolbar.navigationIcon
+
+        val homeButton = binding.toolbar.navigationIcon
+        if (homeButton != null) {
+            val newWidth = resources.getDimensionPixelSize(R.dimen.icon_width) // 원하는 너비 설정
+            val newHeight = resources.getDimensionPixelSize(R.dimen.icon_height) // 원하는 높이 설정
+            homeButton.mutate()
+            homeButton.setBounds(0, 0, newWidth, newHeight) // 크기 조절
+            binding.toolbar.navigationIcon = homeButton
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -36,6 +49,9 @@ open class BaseActivity : AppCompatActivity() {
             }
             R.id.action_favorite -> {
                 Toast.makeText(this, "즐겨찾기", Toast.LENGTH_SHORT).show()
+            }
+            android.R.id.home -> {
+                Toast.makeText(this, "메뉴", Toast.LENGTH_SHORT).show()
             }
         }
         return super.onOptionsItemSelected(item)
