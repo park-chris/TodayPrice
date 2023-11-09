@@ -16,7 +16,9 @@ import com.google.android.material.appbar.AppBarLayout
 import kotlin.math.abs
 
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseActivity(
+    private val toolbarType: ToolbarType
+) : AppCompatActivity() {
     private lateinit var binding: ActivityBaseBinding
     protected lateinit var contentFrameLayout: NestedScrollView
 
@@ -28,17 +30,12 @@ open class BaseActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.background)))
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
 
-        binding.toolbar.navigationIcon
-
-        val homeButton = binding.toolbar.navigationIcon
-        if (homeButton != null) {
-            val newWidth = resources.getDimensionPixelSize(R.dimen.icon_width) // 원하는 너비 설정
-            val newHeight = resources.getDimensionPixelSize(R.dimen.icon_height) // 원하는 높이 설정
-            homeButton.mutate()
-            homeButton.setBounds(0, 0, newWidth, newHeight) // 크기 조절
-            binding.toolbar.navigationIcon = homeButton
+        if (toolbarType == ToolbarType.MENU) {
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
+        if (toolbarType == ToolbarType.BACK) {
+            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         }
     }
 
@@ -47,44 +44,34 @@ open class BaseActivity : AppCompatActivity() {
             R.id.action_search -> {
                 Toast.makeText(this, "검색하기", Toast.LENGTH_SHORT).show()
             }
+
             R.id.action_favorite -> {
                 Toast.makeText(this, "즐겨찾기", Toast.LENGTH_SHORT).show()
             }
+
             android.R.id.home -> {
-                Toast.makeText(this, "메뉴", Toast.LENGTH_SHORT).show()
+                if (toolbarType == ToolbarType.MENU) {
+                    Toast.makeText(this, "메뉴", Toast.LENGTH_SHORT).show()
+                }
+                if (toolbarType == ToolbarType.BACK) {
+                    Toast.makeText(this, "뒤로가기", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_with_search, menu)
-//        binding.appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-//
-//            if (verticalOffset == 0) {
-//
-//                // 스크롤이 가장 위로 올라왔을 때 (expanded 상태)
-//                // 검색 창을 다시 표시하고 메뉴를 2개로 설정
-//                // 여기에서 검색 창을 표시하는 논리를 추가
-//                menu?.clear()
-//                menuInflater.inflate(R.menu.menu_with_search, menu)
-//            } else if (abs(verticalOffset) >= appBarLayout.totalScrollRange) {
-//                // 스크롤이 가장 아래로 내려갔을 때 (collapsed 상태)
-//                // 검색 창을 숨기고 메뉴를 3개로 설정
-//                // 여기에서 검색 창을 숨기는 논리를 추가
-//                menu?.clear()
-//                menuInflater.inflate(R.menu.menu_without_search, menu)
-//            } else {
-//                menuInflater.inflate(R.menu.menu_with_search, menu)
-//
-//            }
-//        })
+        when (toolbarType) {
+            ToolbarType.MENU -> menuInflater.inflate(R.menu.menu_with_search, menu)
+            ToolbarType.BACK -> menuInflater.inflate(R.menu.back_with_search, menu)
+        }
         return true
     }
 
-//    protected open fun beforeSetContentView() {}
-//    protected open fun initView() {}
-//    protected open fun initViewModel() {}
-//    protected open fun initListener() {}
+}
 
+enum class ToolbarType {
+    MENU,
+    BACK,
 }

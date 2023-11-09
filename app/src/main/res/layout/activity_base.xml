@@ -23,12 +23,6 @@
                 android:background="@color/white"
                 app:layout_collapseMode="pin" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:src="@mipmap/ic_launcher"
-                android:layout_marginTop="?attr/actionBarSize" />
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
