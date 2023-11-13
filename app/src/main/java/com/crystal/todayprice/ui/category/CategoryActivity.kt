@@ -1,4 +1,4 @@
-package com.crystal.todayprice.ui
+package com.crystal.todayprice.ui.category
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
