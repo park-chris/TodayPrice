@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ListNecessariesPricesResponse (
     @SerializedName("ListNecessariesPricesService")
-    val necessariesPricesResponseText: ListNecessariesPrices
+    val listNecessariesPrices: ListNecessariesPrices
 )
 
 data class ListNecessariesPrices (
