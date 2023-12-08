@@ -1,7 +1,8 @@
 package com.crystal.todayprice.repository
 
 import com.crystal.todayprice.data.ListNecessariesPricesResponse
+import retrofit2.Response
 
 interface PriceRepository {
-    fun getAllItems(callback: (ListNecessariesPricesResponse?) -> Unit)
+    suspend fun getAllItems(): ListNecessariesPricesResponse
 }

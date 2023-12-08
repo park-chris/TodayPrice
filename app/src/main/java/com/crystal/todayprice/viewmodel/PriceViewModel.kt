@@ -1,11 +1,20 @@
 package com.crystal.todayprice.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.crystal.todayprice.data.ListNecessariesPricesResponse
 import com.crystal.todayprice.repository.PriceRepository
+import com.crystal.todayprice.repository.TAG
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class PriceViewModel(private val priceRepository: PriceRepository) : ViewModel() {
 
@@ -13,9 +22,17 @@ class PriceViewModel(private val priceRepository: PriceRepository) : ViewModel()
     val items: LiveData<ListNecessariesPricesResponse> by lazy { _items }
 
     fun getAllItems() {
-        priceRepository.getAllItems {result ->
-            if (result != null) {
-                _items.postValue(result)
+
+        viewModelScope.launch {
+            println(Thread.currentThread().name)
+            try {
+                println(Thread.currentThread().name)
+                val result = priceRepository.getAllItems()
+//                _items.postValue(result)
+                println(Thread.currentThread().name)
+                _items.value = result
+            } catch (e: Exception) {
+                Log.e(TAG, "error: $e")
             }
         }
     }
