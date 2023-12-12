@@ -1,4 +1,4 @@
-package com.crystal.todayprice.ui.category
+package com.crystal.todayprice.ui.market
 
 import android.os.Bundle
 import android.util.Log
@@ -6,13 +6,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
-import com.crystal.todayprice.databinding.ActivityCategoryBinding
+import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.PriceRepositoryImpl
 import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.viewmodel.PriceViewModel
 
-class CategoryActivity : BaseActivity(ToolbarType.BACK) {
-    private lateinit var binding: ActivityCategoryBinding
+class MarketActivity : BaseActivity(ToolbarType.BACK) {
+    private lateinit var binding: ActivityMarketBinding
 
 
     private val priceViewModel: PriceViewModel by viewModels {
@@ -22,7 +22,7 @@ class CategoryActivity : BaseActivity(ToolbarType.BACK) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCategoryBinding.inflate(layoutInflater)
+        binding = ActivityMarketBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
 
     }

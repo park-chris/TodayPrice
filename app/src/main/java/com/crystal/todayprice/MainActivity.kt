@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.databinding.ActivityMainBinding
-import com.crystal.todayprice.ui.category.CategoryActivity
+import com.crystal.todayprice.ui.market.MarketActivity
 
 class MainActivity : BaseActivity(ToolbarType.MENU) {
     private lateinit var binding: ActivityMainBinding
@@ -15,7 +15,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         baseBinding.contentLayout.addView(binding.root)
 
         binding.itemButton.setOnClickListener {
-            startActivity(Intent(this, CategoryActivity::class.java))
+            startActivity(Intent(this, MarketActivity::class.java))
         }
     }
 }
