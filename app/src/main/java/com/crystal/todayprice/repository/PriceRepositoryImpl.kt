@@ -17,7 +17,7 @@ const val TAG = "PriceRepositoryImpl"
 class PriceRepositoryImpl : PriceRepository {
     override suspend fun getAllItems(): ListNecessariesPricesResponse =
         withContext(Dispatchers.IO) {
-            RetrofitManager.priceService.getMarketItems(1, 10)
+            RetrofitManager.priceService.getAllItems()
         }
 
     override fun getMarketItems(marketName: String?): Flow<PagingData<NecessaryPrice>> {

@@ -10,10 +10,11 @@ interface PriceService {
     @GET("ListNecessariesPricesService/1/5/")
     suspend fun getAllItems(): ListNecessariesPricesResponse
 
-    @GET("ListNecessariesPricesService/{startIndex}/{endIndex}/")
+    @GET("ListNecessariesPricesService/{startIndex}/{endIndex}/{marketName}")
     suspend fun getMarketItems(
         @Path(value = "startIndex") startIndex: Int,
-        @Path(value = "endIndex") endIndex: Int
+        @Path(value = "endIndex") endIndex: Int,
+        @Path(value = "marketName") marketName: String?,
     ): ListNecessariesPricesResponse
 
 }

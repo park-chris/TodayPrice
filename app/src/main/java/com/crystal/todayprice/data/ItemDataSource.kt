@@ -25,7 +25,7 @@ class ItemDataSource(
         Log.e(TAG, "ItemDataSource load function is operate")
 
         return try {
-            val response = priceService.getMarketItems(defaultStart, defaultStart * defaultDisplay)
+            val response = priceService.getMarketItems(defaultStart, defaultStart * defaultDisplay, query)
 
             Log.e(TAG, "priceService is started")
 

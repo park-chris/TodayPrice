@@ -53,8 +53,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK) {
                 }
         }
 
-        priceViewModel.handleQuery("인현시장")
-
+        priceViewModel.handleQuery("성대전통시장")
 
     }
 }
