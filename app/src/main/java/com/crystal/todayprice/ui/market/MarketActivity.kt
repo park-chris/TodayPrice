@@ -13,6 +13,7 @@ import androidx.paging.PagingData
 import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
+import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.PriceRepositoryImpl
@@ -21,7 +22,7 @@ import com.crystal.todayprice.viewmodel.PriceViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MarketActivity : BaseActivity(ToolbarType.BACK) {
+class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
     private lateinit var binding: ActivityMarketBinding
 
     private val priceViewModel: PriceViewModel by viewModels {

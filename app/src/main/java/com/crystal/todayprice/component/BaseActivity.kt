@@ -5,22 +5,17 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
 import com.crystal.todayprice.databinding.ActivityBaseBinding
-import com.google.android.material.appbar.AppBarLayout
-import kotlin.math.abs
 
 
 open class BaseActivity(
-    private val toolbarType: ToolbarType
+    private val toolbarType: ToolbarType,
+    private val transitionMode: TransitionMode = TransitionMode.NONE
 ) : AppCompatActivity() {
     protected lateinit var baseBinding: ActivityBaseBinding
 
@@ -30,6 +25,34 @@ open class BaseActivity(
         setContentView(baseBinding.root)
         setSupportActionBar(baseBinding.toolbar)
         setToolbar()
+
+        when (transitionMode) {
+            TransitionMode.HORIZON -> overridePendingTransition(R.anim.horizon_enter, R.anim.none)
+            TransitionMode.VERTICAL -> overridePendingTransition(R.anim.vertical_enter, R.anim.none)
+            else -> {}
+        }
+    }
+
+    override fun finish() {
+        super.finish()
+
+        when (transitionMode) {
+            TransitionMode.HORIZON -> overridePendingTransition(R.anim.none, R.anim.horizon_exit)
+            TransitionMode.VERTICAL -> overridePendingTransition(R.anim.none, R.anim.vertical_exit)
+            else -> {}
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if (isFinishing) {
+            when (transitionMode) {
+                TransitionMode.HORIZON -> overridePendingTransition(R.anim.none, R.anim.horizon_exit)
+                TransitionMode.VERTICAL -> overridePendingTransition(R.anim.none, R.anim.vertical_exit)
+                else -> Unit
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -90,4 +113,10 @@ open class BaseActivity(
 enum class ToolbarType {
     MENU,
     BACK,
+}
+
+enum class TransitionMode {
+    NONE,
+    HORIZON,
+    VERTICAL
 }
