@@ -24,7 +24,6 @@ class ItemAdapter(
             ): Boolean {
                 return oldItem == newItem
             }
-
         }
     }
 

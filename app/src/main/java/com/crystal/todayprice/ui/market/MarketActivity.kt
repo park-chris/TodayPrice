@@ -8,13 +8,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
+import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.PriceRepositoryImpl
 import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.viewmodel.PriceViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MarketActivity : BaseActivity(ToolbarType.BACK) {
     private lateinit var binding: ActivityMarketBinding
@@ -40,12 +45,16 @@ class MarketActivity : BaseActivity(ToolbarType.BACK) {
 
         binding.itemRecyclerView.adapter = adapter
 
-        priceViewModel.items.observe(this, Observer { result ->
-            Log.e(TAG, "result: $result")
-        })
+        lifecycleScope.launch {
+            priceViewModel.itemPagingDataFlow
+                .collectLatest { items ->
+                    adapter.submitData(items)
+                    Log.e(TAG, "itemPagingDataFlow launch")
+                }
+        }
 
-        priceViewModel.getAllItems()
+        priceViewModel.handleQuery("인현시장")
+
 
     }
-
 }
