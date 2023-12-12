@@ -28,8 +28,6 @@ class PriceViewModel(private val priceRepository: PriceRepository) : ViewModel()
             try {
                 println(Thread.currentThread().name)
                 val result = priceRepository.getAllItems()
-//                _items.postValue(result)
-                println(Thread.currentThread().name)
                 _items.value = result
             } catch (e: Exception) {
                 Log.e(TAG, "error: $e")
