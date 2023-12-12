@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
@@ -40,7 +41,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         baseBinding.contentLayout.addView(binding.root)
 
     }
-
     override fun onResume() {
         super.onResume()
 
@@ -49,9 +49,46 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         lifecycleScope.launch {
             priceViewModel.itemPagingDataFlow
                 .collectLatest { items ->
+                    Log.e(TAG, "flow $items")
                     adapter.submitData(items)
-                    Log.e(TAG, "itemPagingDataFlow launch")
                 }
+
+        }
+
+        adapter.addLoadStateListener { loadState ->
+            when (loadState.refresh) {
+                is LoadState.Loading -> {
+                    // Refresh is loading
+                    Log.i(TAG, "LoadState: Loading")
+                }
+                is LoadState.Error -> {
+                    // Refresh has encountered an error
+                    Log.i(TAG, "LoadState: Error")
+                }
+                is LoadState.NotLoading -> {
+                    // Refresh has completed (either successfully or with no data)
+                    Log.i(TAG, "LoadState: NotLoading")
+                }
+            }
+
+            when (loadState.append) {
+                is LoadState.Loading -> {
+                    // Appending more data is in progress
+                    // You can show a loading indicator for appending here
+                    Log.i(TAG, "LoadState addpend: Loading")
+                }
+                is LoadState.Error -> {
+                    // Appending more data encountered an error
+                    // You can handle error state for appending here
+                    Log.i(TAG, "LoadState addpend: Error")
+
+                }
+                is LoadState.NotLoading -> {
+                    // Appending more data has completed (either successfully or with no more data)
+                    // You can hide the loading indicator for appending here
+                    Log.i(TAG, "LoadState addpend: NotLoading")
+                }
+            }
         }
 
         priceViewModel.handleQuery("성대전통시장")
