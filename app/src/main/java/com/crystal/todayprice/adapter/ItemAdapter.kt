@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.crystal.todayprice.data.NecessaryPrice
 
 class ItemAdapter(
-    private val favorite: (NecessaryPrice) -> Unit
+    private val onClick: (NecessaryPrice) -> Unit
 ): PagingDataAdapter<NecessaryPrice, ItemViewHolder> (diffUtil) {
 
     companion object {
@@ -33,6 +33,6 @@ class ItemAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder.create(favorite, parent)
+        return ItemViewHolder.create(onClick, parent)
     }
 }

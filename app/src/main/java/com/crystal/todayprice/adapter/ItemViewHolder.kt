@@ -9,7 +9,7 @@ import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.PriceItemBinding
 
 class ItemViewHolder(
-    private val favorite: (NecessaryPrice) -> Unit,
+    private val onClick: (NecessaryPrice) -> Unit,
     private val binding: PriceItemBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
@@ -23,6 +23,10 @@ class ItemViewHolder(
 
             binding.nameTextView.text = item.itemName
             binding.priceTextView.text = item.itemPrice
+
+            binding.nameTextView.setOnClickListener {
+                onClick(item)
+            }
         }
     }
 
