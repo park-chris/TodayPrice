@@ -42,10 +42,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         binding = ActivityMarketBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
 
-    }
-    override fun onResume() {
-        super.onResume()
-
 
         lifecycleScope.launch {
             priceViewModel.itemPagingDataFlow
@@ -55,48 +51,13 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 }
         }
 
-        binding.itemRecyclerView.adapter = adapter
-
         priceViewModel.handleQuery("성대전통시장")
 
-        testLog()
     }
+    override fun onResume() {
+        super.onResume()
 
-    private fun testLog() {
-        adapter.addLoadStateListener { loadState ->
-            when (loadState.refresh) {
-                is LoadState.Loading -> {
-                    // Refresh is loading
-                    Log.i(TAG, "LoadState: Loading")
-                }
-                is LoadState.Error -> {
-                    // Refresh has encountered an error
-                    Log.i(TAG, "LoadState: Error : ${loadState}")
-                }
-                is LoadState.NotLoading -> {
-                    // Refresh has completed (either successfully or with no data)
-                    Log.i(TAG, "LoadState: NotLoading : ${loadState}")
-                }
-            }
+        binding.itemRecyclerView.adapter = adapter
 
-            when (loadState.append) {
-                is LoadState.Loading -> {
-                    // Appending more data is in progress
-                    // You can show a loading indicator for appending here
-                    Log.i(TAG, "LoadState addpend: Loading")
-                }
-                is LoadState.Error -> {
-                    // Appending more data encountered an error
-                    // You can handle error state for appending here
-                    Log.i(TAG, "LoadState addpend: Error $loadState")
-
-                }
-                is LoadState.NotLoading -> {
-                    // Appending more data has completed (either successfully or with no more data)
-                    // You can hide the loading indicator for appending here
-                    Log.i(TAG, "LoadState addpend: NotLoading")
-                }
-            }
-        }
     }
 }

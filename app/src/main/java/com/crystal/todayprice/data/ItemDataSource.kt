@@ -12,45 +12,40 @@ class ItemDataSource(
     private val priceService: PriceService
 ): PagingSource<Int, NecessaryPrice>() {
     override fun getRefreshKey(state: PagingState<Int, NecessaryPrice>): Int? {
-        Log.e(TAG, "getRefreshKey refresh")
         return state.anchorPosition?.let {
             val closestPageToPosition = state.closestPageToPosition(it)
-            closestPageToPosition?.prevKey?.plus(defaultDisplay )
-                ?: closestPageToPosition?.nextKey?.minus(defaultDisplay)
+            closestPageToPosition?.prevKey?.plus(1 )
+                ?: closestPageToPosition?.nextKey?.minus(1)
         }
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NecessaryPrice> {
-        val start = params.key ?: defaultStart
-
-        Log.e(TAG, "ItemDataSource load function is operate ${params.key} ${params.loadSize}")
+        val page = params.key ?: defaultStart
 
         return try {
-            val response = priceService.getMarketItems(start, start + params.loadSize - 1 , query)
 
-            Log.e(TAG, "start $start end ${start + params.loadSize}")
-
+            val startIndex = (page - 1) * defaultDisplay + 1
+            val endIndex = if (params.loadSize == defaultDisplay) {
+                page * defaultDisplay
+            } else {
+                page * defaultDisplay + (params.loadSize - defaultDisplay)
+            }
+            val response = priceService.getMarketItems(startIndex, endIndex , query)
             val items = response.listNecessariesPrices.row
-
-            Log.e(TAG, "items: $items")
-
-
-            Log.e(TAG, "items count : ${items.size}")
             val nextKey = if (items.isEmpty()) {
                 null
+            } else if (params.loadSize == defaultDisplay) {
+                page + 1
             } else {
-                start + params.loadSize - 1
+                val plusPage = params.loadSize / defaultDisplay
+                page + plusPage
             }
-            val prevKey = if (start == defaultStart) {
+            val prevKey = if (page == defaultStart) {
                 null
             } else {
-                start - defaultDisplay + 1
+                page - 1
             }
-
-            Log.e(TAG, "nextPage: ${items.size } $prevKey $nextKey")
-
             LoadResult.Page(items, prevKey, nextKey)
-
         } catch (exception: Exception) {
             LoadResult.Error(exception)
         }
