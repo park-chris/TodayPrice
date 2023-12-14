@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -24,6 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
+
     private lateinit var binding: ActivityMarketBinding
 
     private val priceViewModel: PriceViewModel by viewModels {
@@ -44,17 +46,23 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
     override fun onResume() {
         super.onResume()
 
-        binding.itemRecyclerView.adapter = adapter
 
         lifecycleScope.launch {
             priceViewModel.itemPagingDataFlow
                 .collectLatest { items ->
-                    Log.e(TAG, "flow $items")
+                    Log.e(TAG, "flow ${items}")
                     adapter.submitData(items)
                 }
-
         }
 
+        binding.itemRecyclerView.adapter = adapter
+
+        priceViewModel.handleQuery("성대전통시장")
+
+        testLog()
+    }
+
+    private fun testLog() {
         adapter.addLoadStateListener { loadState ->
             when (loadState.refresh) {
                 is LoadState.Loading -> {
@@ -63,11 +71,11 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 }
                 is LoadState.Error -> {
                     // Refresh has encountered an error
-                    Log.i(TAG, "LoadState: Error")
+                    Log.i(TAG, "LoadState: Error : ${loadState}")
                 }
                 is LoadState.NotLoading -> {
                     // Refresh has completed (either successfully or with no data)
-                    Log.i(TAG, "LoadState: NotLoading")
+                    Log.i(TAG, "LoadState: NotLoading : ${loadState}")
                 }
             }
 
@@ -80,7 +88,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 is LoadState.Error -> {
                     // Appending more data encountered an error
                     // You can handle error state for appending here
-                    Log.i(TAG, "LoadState addpend: Error")
+                    Log.i(TAG, "LoadState addpend: Error $loadState")
 
                 }
                 is LoadState.NotLoading -> {
@@ -90,8 +98,5 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 }
             }
         }
-
-        priceViewModel.handleQuery("성대전통시장")
-
     }
 }

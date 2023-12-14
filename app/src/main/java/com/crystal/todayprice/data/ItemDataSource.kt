@@ -26,20 +26,25 @@ class ItemDataSource(
         Log.e(TAG, "ItemDataSource load function is operate ${params.key} ${params.loadSize}")
 
         return try {
-            val response = priceService.getMarketItems(start, params.loadSize , query)
+            val response = priceService.getMarketItems(start, start + params.loadSize - 1 , query)
+
+            Log.e(TAG, "start $start end ${start + params.loadSize}")
 
             val items = response.listNecessariesPrices.row
+
+            Log.e(TAG, "items: $items")
+
 
             Log.e(TAG, "items count : ${items.size}")
             val nextKey = if (items.isEmpty()) {
                 null
             } else {
-                start + params.loadSize
+                start + params.loadSize - 1
             }
             val prevKey = if (start == defaultStart) {
                 null
             } else {
-                start - defaultDisplay
+                start - defaultDisplay + 1
             }
 
             Log.e(TAG, "nextPage: ${items.size } $prevKey $nextKey")

@@ -24,6 +24,8 @@ class PriceRepositoryImpl : PriceRepository {
         return Pager(
             config = PagingConfig(
                 pageSize = ItemDataSource.defaultDisplay,
+                initialLoadSize = ItemDataSource.defaultDisplay * 3,
+                prefetchDistance = 5,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
