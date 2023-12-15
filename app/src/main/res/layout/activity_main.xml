@@ -8,65 +8,10 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/item_button"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/marketRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="물품화면 보기" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="메인엑티비티"
-        android:textSize="100sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="테스트"
-        android:textSize="100sp" />
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
