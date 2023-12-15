@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.crystal.todayprice.R
 import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.PriceItemBinding
+import com.crystal.todayprice.util.TextUtil
 
 class ItemViewHolder(
     private val onClick: (NecessaryPrice) -> Unit,
@@ -21,8 +22,9 @@ class ItemViewHolder(
 //                .centerCrop()
 //                .into(binding.itemImageView)
 
+
             binding.nameTextView.text = item.itemName
-            binding.priceTextView.text = item.itemPrice
+            binding.priceTextView.text = TextUtil.priceFormat(binding.root.context, item.itemPrice)
 
             binding.nameTextView.setOnClickListener {
                 onClick(item)

@@ -53,7 +53,7 @@ data class NecessaryPrice (
     @SerializedName("A_UNIT")
     val itemUnit: String,
     @SerializedName("A_PRICE")
-    val itemPrice: String,
+    val itemPrice: Double,
     @SerializedName("P_YEAR_MONTH")
     val date: String,
     @SerializedName("ADD_COL")
