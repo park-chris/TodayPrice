@@ -6,7 +6,7 @@
 
 
     <string name="no_price">알수없음</string>
-    <string name="price_format_won">%s 원</string>
+    <string name="price_format_won">%s원</string>
 
     <!--    description-->
     <string name="activity_container">액티비티 컨테이너</string>

@@ -22,7 +22,6 @@ class ItemViewHolder(
 //                .centerCrop()
 //                .into(binding.itemImageView)
 
-
             binding.nameTextView.text = item.itemName
             binding.priceTextView.text = TextUtil.priceFormat(binding.root.context, item.itemPrice)
 
