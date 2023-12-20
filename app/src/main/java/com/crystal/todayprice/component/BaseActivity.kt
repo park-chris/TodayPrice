@@ -50,8 +50,16 @@ open class BaseActivity(
 
         if (isFinishing) {
             when (transitionMode) {
-                TransitionMode.HORIZON -> overridePendingTransition(R.anim.none, R.anim.horizon_exit)
-                TransitionMode.VERTICAL -> overridePendingTransition(R.anim.none, R.anim.vertical_exit)
+                TransitionMode.HORIZON -> overridePendingTransition(
+                    R.anim.none,
+                    R.anim.horizon_exit
+                )
+
+                TransitionMode.VERTICAL -> overridePendingTransition(
+                    R.anim.none,
+                    R.anim.vertical_exit
+                )
+
                 else -> Unit
             }
         }
@@ -72,8 +80,16 @@ open class BaseActivity(
             }
 
             R.id.action_home -> {
-                Toast.makeText(this, "홈", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+
+                val stackIntent = packageManager.getLaunchIntentForPackage(packageName)
+                if (stackIntent != null) {
+                    startActivity(stackIntent)
+                } else {
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                }
                 finish()
             }
 
@@ -97,9 +113,17 @@ open class BaseActivity(
         }
         return true
     }
+
     private fun setToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(applicationContext, R.color.background)))
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.background
+                )
+            )
+        )
 
         if (toolbarType == ToolbarType.MENU) {
             supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
@@ -119,7 +143,14 @@ open class BaseActivity(
     fun setTitle(title: String) {
         baseBinding.toolbarLayout.title = title
         baseBinding.backgroundImageView.isVisible = true
-        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(applicationContext, android.R.color.transparent)))
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                ContextCompat.getColor(
+                    applicationContext,
+                    android.R.color.transparent
+                )
+            )
+        )
     }
 
 }
