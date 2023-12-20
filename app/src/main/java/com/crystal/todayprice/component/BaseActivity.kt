@@ -96,7 +96,6 @@ open class BaseActivity(
                     Toast.makeText(this, "메뉴", Toast.LENGTH_SHORT).show()
                 }
                 if (toolbarType == ToolbarType.BACK) {
-                    Toast.makeText(this, "뒤로가기", Toast.LENGTH_SHORT).show()
                     finish()
                 }
             }
