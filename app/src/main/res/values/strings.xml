@@ -8,6 +8,9 @@
     <string name="no_price">알수없음</string>
     <string name="price_format_won">%s원</string>
 
+    <string name="drawer_state_open">사이드바 확장</string>
+    <string name="drawer_state_closed">사이드바 숨김</string>
+
     <!--    description-->
     <string name="activity_container">액티비티 컨테이너</string>
 </resources>
