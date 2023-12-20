@@ -25,6 +25,7 @@
                 app:collapsedTitleTextColor="@color/black"
                 app:contentScrim="@color/background"
                 app:expandedTitleTextColor="@color/white"
+                app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.appcompat.widget.AppCompatImageView

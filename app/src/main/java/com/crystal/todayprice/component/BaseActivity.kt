@@ -127,11 +127,16 @@ open class BaseActivity(
     }
 
     fun setImageView(url: String) {
-        Glide.with(baseBinding.root)
-            .load(url)
-            .centerCrop()
-            .error(R.drawable.no_picture)
-            .into(baseBinding.backgroundImageView)
+        if (url.isNotEmpty()) {
+            Glide.with(baseBinding.root)
+                .load(url)
+                .centerCrop()
+                .error(R.drawable.no_picture)
+                .into(baseBinding.backgroundImageView)
+        } else {
+            baseBinding.backgroundImageView.setImageResource(R.drawable.no_picture)
+        }
+
     }
 
     fun setTitle(title: String) {

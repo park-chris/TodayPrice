@@ -23,15 +23,19 @@ class MarketAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(market: Market?) {
-            market?.let { market ->
-                binding.nameTextView.text = market.name
-                binding.addressTextView.text = market.address
+            market?.let {
+                binding.nameTextView.text = it.name
+                binding.addressTextView.text = it.address
 
-                Glide.with(binding.root)
-                    .load(market.imgUrl)
-                    .centerCrop()
-                    .error(R.drawable.no_picture)
-                    .into(binding.marketImageView)
+                if (it.imgUrl.isNotEmpty()) {
+                    Glide.with(binding.root)
+                        .load(it.imgUrl)
+                        .centerCrop()
+                        .error(R.drawable.no_picture)
+                        .into(binding.marketImageView)
+                } else {
+                    binding.marketImageView.setImageResource(R.drawable.no_picture)
+                }
 
                 binding.layout.setOnClickListener {
                     onClick(market)
