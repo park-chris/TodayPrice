@@ -81,8 +81,6 @@ open class BaseActivity(
 
             R.id.action_home -> {
                 val intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-
                 val stackIntent = packageManager.getLaunchIntentForPackage(packageName)
                 if (stackIntent != null) {
                     startActivity(stackIntent)
