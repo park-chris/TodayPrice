@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
 import com.crystal.todayprice.databinding.ActivityBaseBinding
@@ -107,6 +109,18 @@ open class BaseActivity(
         }
     }
 
+    fun setImageView(url: String) {
+        Glide.with(baseBinding.root)
+            .load(url)
+            .centerCrop()
+            .into(baseBinding.backgroundImageView)
+    }
+
+    fun setTitle(title: String) {
+        baseBinding.toolbarLayout.title = title
+        baseBinding.backgroundImageView.isVisible = true
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(ContextCompat.getColor(applicationContext, android.R.color.transparent)))
+    }
 
 }
 
