@@ -26,7 +26,6 @@ class MarketAdapter(
             market?.let { market ->
                 binding.nameTextView.text = market.name
                 binding.addressTextView.text = market.address
-                binding.marketImageView
 
                 Glide.with(binding.root)
                     .load(market.imgUrl)
@@ -43,7 +42,6 @@ class MarketAdapter(
             }
         }
     }
-
     private fun create(
         onClick: (Market) -> Unit,
         parent: ViewGroup
