@@ -134,6 +134,7 @@ open class BaseActivity(
         Glide.with(baseBinding.root)
             .load(url)
             .centerCrop()
+            .error(R.drawable.no_picture)
             .into(baseBinding.backgroundImageView)
     }
 
