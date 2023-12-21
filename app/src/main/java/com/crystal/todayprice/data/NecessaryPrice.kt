@@ -1,6 +1,7 @@
 package com.crystal.todayprice.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class ListNecessariesPricesResponse (
     @SerializedName("ListNecessariesPricesService")
@@ -68,4 +69,4 @@ data class NecessaryPrice (
     val marketBoroughCode: String,
     @SerializedName("M_GU_NAME")
     val marketBoroughName: String
-)
+) : Serializable

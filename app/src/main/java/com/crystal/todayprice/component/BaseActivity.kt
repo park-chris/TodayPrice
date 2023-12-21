@@ -22,7 +22,7 @@ import com.google.android.material.navigation.NavigationView
 
 open class BaseActivity(
     private val toolbarType: ToolbarType,
-    private val transitionMode: TransitionMode = TransitionMode.NONE
+    private val transitionMode: TransitionMode = TransitionMode.NONE,
 ) : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     protected lateinit var baseBinding: ActivityBaseBinding
 
@@ -159,21 +159,16 @@ open class BaseActivity(
         Toast.makeText(this, "즐겨찾기", Toast.LENGTH_SHORT).show()
     }
     private fun actionMenuHome() {
+        Toast.makeText(this, "호모오옴", Toast.LENGTH_SHORT).show()
+
         val intent = Intent(this, MainActivity::class.java)
-        val stackIntent = packageManager.getLaunchIntentForPackage(packageName)
-        if (stackIntent != null) {
-            startActivity(stackIntent)
-        } else {
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-        }
-        finish()
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
     private fun actionHome() {
         when (toolbarType) {
             ToolbarType.MENU -> {
                 baseBinding.drawerLayout.openDrawer(GravityCompat.START)
-
             }
             ToolbarType.BACK -> {
                 finish()

@@ -15,6 +15,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:elevation="0dp"
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -28,6 +29,7 @@
                 app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/backgroundImageView"
                     android:layout_width="match_parent"
@@ -39,14 +41,17 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
+                    android:elevation="0dp"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    app:contentInsetStart="0dp"
+                    app:contentInsetEnd="0dp"
                     app:layout_collapseMode="pin" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        </com.google.android.material.appbar.AppBarLayout>
 
+        </com.google.android.material.appbar.AppBarLayout>
         <ScrollView
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.crystal.todayprice.ui.market
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,9 +13,11 @@ import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
+import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.PriceRepositoryImpl
 import com.crystal.todayprice.repository.TAG
+import com.crystal.todayprice.ui.item.ItemActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.viewmodel.PriceViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -30,6 +33,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
     private val adapter: ItemAdapter = ItemAdapter {
         Toast.makeText(this, "${it.itemName} is clicked!!", Toast.LENGTH_SHORT).show()
+        moveToItem(it)
     }
 
     private var market : Market? = null
@@ -52,6 +56,12 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         super.onResume()
 
         setItems()
+    }
+
+    private fun moveToItem(item: NecessaryPrice) {
+        val intent = Intent(this, ItemActivity::class.java)
+        intent.putExtra(ItemActivity.ITEM_NAME, item)
+        startActivity(intent)
     }
 
     private fun setItems() {
