@@ -71,5 +71,4 @@
         app:headerLayout="@layout/drawer_hearder"
         app:menu="@menu/drawer" />
 
-
 </androidx.drawerlayout.widget.DrawerLayout>

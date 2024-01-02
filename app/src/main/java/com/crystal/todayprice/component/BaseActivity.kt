@@ -123,12 +123,12 @@ open class BaseActivity(
             )
         )
 
-        if (toolbarType == ToolbarType.MENU) {
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+        when (toolbarType) {
+            ToolbarType.MENU -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
+            ToolbarType.BACK -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+            ToolbarType.HOME -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         }
-        if (toolbarType == ToolbarType.BACK) {
-            supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-        }
+
     }
 
     fun setImageView(url: String) {
@@ -163,7 +163,7 @@ open class BaseActivity(
         Toast.makeText(this, "즐겨찾기", Toast.LENGTH_SHORT).show()
     }
     private fun actionMenuHome() {
-        Toast.makeText(this, "호모오옴", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "호오옴", Toast.LENGTH_SHORT).show()
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -186,9 +186,9 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuItem1 -> Toast.makeText(this, "item1 clicked", Toast.LENGTH_SHORT).show()
-            R.id.menuItem2 -> Toast.makeText(this, "item2 clicked", Toast.LENGTH_SHORT).show()
-            R.id.menuItem3 -> Toast.makeText(this, "item3 clicked", Toast.LENGTH_SHORT).show()
+            R.id.menuItem1 -> Toast.makeText(this, "item1 is clicked", Toast.LENGTH_SHORT).show()
+            R.id.menuItem2 -> Toast.makeText(this, "item2 is clicked", Toast.LENGTH_SHORT).show()
+            R.id.menuItem3 -> Toast.makeText(this, "item3 is clicked", Toast.LENGTH_SHORT).show()
         }
         return false
     }
