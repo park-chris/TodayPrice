@@ -11,7 +11,7 @@ import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.ActivityItemBinding
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 
-class ItemActivity: BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON)  {
+class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
     
     private lateinit var binding: ActivityItemBinding
     

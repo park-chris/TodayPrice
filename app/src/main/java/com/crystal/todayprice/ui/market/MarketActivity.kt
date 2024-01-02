@@ -49,6 +49,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         market?.let {
             setTitle(it.name)
             setImageView(it.imgUrl)
+//            setHeader()
         }
 
     }

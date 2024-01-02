@@ -42,6 +42,10 @@ open class BaseActivity(
 
     }
 
+    fun setHeader() {
+        val customView = layoutInflater.inflate(R.layout.market_header, null)
+        baseBinding.toolbarLayout.addView(customView)
+    }
 
     override fun finish() {
         super.finish()
@@ -104,6 +108,7 @@ open class BaseActivity(
         when (toolbarType) {
             ToolbarType.MENU -> menuInflater.inflate(R.menu.menu_with_search, menu)
             ToolbarType.BACK -> menuInflater.inflate(R.menu.back_with_search, menu)
+            ToolbarType.HOME -> menuInflater.inflate(R.menu.back_with_home, menu)
         }
         return true
     }
@@ -136,7 +141,6 @@ open class BaseActivity(
         } else {
             baseBinding.backgroundImageView.setImageResource(R.drawable.no_picture)
         }
-
     }
 
     fun setTitle(title: String) {
@@ -173,6 +177,10 @@ open class BaseActivity(
             ToolbarType.BACK -> {
                 finish()
             }
+
+            ToolbarType.HOME -> {
+                finish()
+            }
         }
     }
 
@@ -189,6 +197,7 @@ open class BaseActivity(
 enum class ToolbarType {
     MENU,
     BACK,
+    HOME,
 }
 
 enum class TransitionMode {

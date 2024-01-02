@@ -32,7 +32,7 @@ data class Result(
  * @property itemName 품목 이름
  * @property itemUnit 실판매규격
  * @property itemPrice 가격 (원)
- * @property P_YEAR_MONTH 년도-월
+ * @property date 년도-월
  * @property note 비고
  * @property checkDate 점검 일자
  * @property marketTypeCode 시장 유형 구분 코드
