@@ -30,6 +30,7 @@ class MarketViewModel(private val marketRepository: MarketRepository): ViewModel
     }
 
     class MarketViewModelFactory(private val marketRepository: MarketRepository): ViewModelProvider.Factory {
+
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return MarketViewModel(marketRepository) as T
         }

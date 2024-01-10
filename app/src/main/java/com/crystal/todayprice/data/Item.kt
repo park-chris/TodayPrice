@@ -9,11 +9,11 @@ data class Item(
 )
 
 data class Price(
-    val itemId: Int,
-    val itemName: String,
-    val itemPrice: Int,
-    val itemUnit: String,
-    val surveyDate: String,
+    val itemId: Int = -1,
+    val itemName: String = "",
+    val itemPrice: Int = -1,
+    val itemUnit: String = "",
+    val surveyDate: String = "",
 )
 
 enum class ItemType {

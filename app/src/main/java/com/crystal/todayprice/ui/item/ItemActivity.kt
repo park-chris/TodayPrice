@@ -1,21 +1,34 @@
 package com.crystal.todayprice.ui.item
 
-import android.content.ClipData.Item
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
-import com.crystal.todayprice.data.Market
+import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.NecessaryPrice
+import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.databinding.ActivityItemBinding
+import com.crystal.todayprice.repository.ItemRepositoryImpl
+import com.crystal.todayprice.repository.PriceRepositoryImpl
+import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
+import com.crystal.todayprice.viewmodel.ItemViewModel
+import com.crystal.todayprice.viewmodel.PriceViewModel
 
 class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
     
     private lateinit var binding: ActivityItemBinding
-    
-    private var item: NecessaryPrice? = null
+
+    private val itemViewModel: ItemViewModel by viewModels {
+        ItemViewModel.ItemViewModelFactory(ItemRepositoryImpl())
+    }
+
+    private var necessaryPrice: NecessaryPrice? = null
+    private var prices: List<Price> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +36,15 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         binding = ActivityItemBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
         
-        item = intent.intentSerializable(ITEM_NAME, NecessaryPrice::class.java)
+        necessaryPrice = intent.intentSerializable(ITEM_NAME, NecessaryPrice::class.java)
         
-        item?.let {
-            Toast.makeText(this, "item: $item", Toast.LENGTH_SHORT).show()
+        itemViewModel.prices.observe(this, Observer {
+            prices = it
+        })
+        
+        
+        necessaryPrice?.let {
+            itemViewModel.getItem(it.marketId.toInt(), it.itemId.toInt())
             binding.item = it
         }
     }
