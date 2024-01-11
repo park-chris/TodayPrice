@@ -41,8 +41,7 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         itemViewModel.prices.observe(this, Observer {
             prices = it
         })
-        
-        
+
         necessaryPrice?.let {
             itemViewModel.getItem(it.marketId.toInt(), it.itemId.toInt())
             binding.item = it
