@@ -25,7 +25,7 @@ class ItemViewHolder(
             binding.nameTextView.text = item.itemName
             binding.priceTextView.text = TextUtil.priceFormat(binding.root.context, item.itemPrice)
 
-            binding.nameTextView.setOnClickListener {
+            binding.layout.setOnClickListener {
                 onClick(item)
             }
         }

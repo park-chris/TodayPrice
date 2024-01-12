@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-const val TAG = "PriceRepositoryImpl"
+const val TAG = "TestLog"
 
 class PriceRepositoryImpl : PriceRepository {
     override suspend fun getAllItems(): ListNecessariesPricesResponse =
