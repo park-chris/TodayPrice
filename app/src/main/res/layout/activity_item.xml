@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
             name="item"
-            type="com.crystal.todayprice.data.NecessaryPrice" />
+            type="com.crystal.todayprice.data.Item" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,20 +26,13 @@
             android:background="@drawable/background_image" />
 
         <TextView
-            android:id="@+id/noteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/itemImageView"
-            android:text="비고란"
-            android:layout_marginTop="50dp" />
-
-        <TextView
             android:id="@+id/priceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/item_title_text_size"
+            tools:text="dd"
             android:textColor="@color/highlight"
-            app:layout_constraintTop_toBottomOf="@id/noteTextView"
+            app:layout_constraintTop_toBottomOf="@id/itemImageView"
             android:layout_marginTop="20dp"/>
 
         <TextView
@@ -46,17 +40,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{item.itemName}"
+            tools:text="사과"
             app:layout_constraintTop_toBottomOf="@id/priceTextView"
             android:layout_marginTop="20dp"/>
-
 
         <TextView
             android:id="@+id/marketTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{item.marketName}"
+            tools:text="마켓이름"
             app:layout_constraintTop_toBottomOf="@id/nameTextView"
             android:layout_marginTop="20dp"/>
+
+        <com.crystal.todayprice.component.GraphView
+            android:id="@+id/graphView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/marketTextView"
+            android:layout_marginTop="40dp"
+            android:layout_marginHorizontal="20dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

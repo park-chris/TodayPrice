@@ -20,7 +20,7 @@ import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.crystal.todayprice.viewmodel.PriceViewModel
 
 class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
-    
+
     private lateinit var binding: ActivityItemBinding
 
     private val itemViewModel: ItemViewModel by viewModels {
@@ -40,11 +40,12 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         
         itemViewModel.prices.observe(this, Observer {
             prices = it
+            binding.graphView.setData(prices)
         })
 
         necessaryPrice?.let {
             itemViewModel.getItem(it.marketId.toInt(), it.itemId.toInt())
-            binding.item = it
+//            binding.item = it
         }
     }
 
