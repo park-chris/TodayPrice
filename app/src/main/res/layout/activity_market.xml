@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.market.MarketActivity">
+    android:id="@+id/motionLayout"
+    app:layoutDescription="@xml/activity_market_scene">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/marketImageView"
+        android:layout_width="match_parent"
+        android:background="@color/pink"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_height="300dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemRecyclerView"
-        tools:listitem="@layout/price_item"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:background="@color/highlight"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/price_item" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

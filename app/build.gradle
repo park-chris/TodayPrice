@@ -82,4 +82,7 @@ dependencies {
             replacedBy("org.jetbrains.kotlin:kotlin-stdlib", "kotlin-stdlib-jdk8 is now part of kotlin-stdlib")
         }
     }
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
 }
