@@ -42,11 +42,6 @@ open class BaseActivity(
 
     }
 
-    fun setHeader() {
-        val customView = layoutInflater.inflate(R.layout.market_header, null)
-        baseBinding.toolbarLayout.addView(customView)
-    }
-
     override fun finish() {
         super.finish()
 
@@ -129,31 +124,6 @@ open class BaseActivity(
             ToolbarType.HOME -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
-    }
-
-    fun setImageView(url: String) {
-        if (url.isNotEmpty()) {
-            Glide.with(baseBinding.root)
-                .load(url)
-                .centerCrop()
-                .error(R.drawable.no_picture)
-                .into(baseBinding.backgroundImageView)
-        } else {
-            baseBinding.backgroundImageView.setImageResource(R.drawable.no_picture)
-        }
-    }
-
-    fun setTitle(title: String) {
-        baseBinding.toolbarLayout.title = title
-        baseBinding.backgroundImageView.isVisible = true
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                ContextCompat.getColor(
-                    applicationContext,
-                    android.R.color.transparent
-                )
-            )
-        )
     }
 
     private fun actionMenuSearch() {

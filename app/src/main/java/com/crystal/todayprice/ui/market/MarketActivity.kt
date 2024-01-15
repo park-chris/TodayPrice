@@ -47,8 +47,8 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         market = intent.intentSerializable(MARKET_NAME, Market::class.java)
 
         market?.let {
-            setTitle(it.name)
-            setImageView(it.imgUrl)
+//            setTitle(it.name)
+//            setImageView(it.imgUrl)
 //            setHeader()
         }
 
