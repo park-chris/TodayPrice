@@ -30,14 +30,31 @@
         <Constraint
             android:id="@+id/marketImageView"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             motion:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            motion:layout_constraintTop_toBottomOf="@id/marketImageView" />
+
+        <Constraint
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/horizontalScrollView"
+            app:layout_constraintStart_toStartOf="@id/horizontalScrollView"
+            app:layout_constraintEnd_toEndOf="@id/horizontalScrollView"
+            app:layout_constraintBottom_toBottomOf="@id/horizontalScrollView"/>
+
         <Constraint
             android:id="@+id/itemRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
-            motion:layout_constraintTop_toBottomOf="@id/marketImageView" />
+            motion:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -48,13 +65,29 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintBottom_toTopOf="parent"
             motion:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/horizontalScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"/>
+
+        <Constraint
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/horizontalScrollView"
+            app:layout_constraintStart_toStartOf="@id/horizontalScrollView"
+            app:layout_constraintEnd_toEndOf="@id/horizontalScrollView"
+            app:layout_constraintBottom_toBottomOf="@id/horizontalScrollView"/>
+
         <Constraint
             android:id="@+id/itemRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             motion:layout_constraintBottom_toBottomOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"/>
+            motion:layout_constraintTop_toBottomOf="@id/horizontalScrollView" />
     </ConstraintSet>
 
 </MotionScene>
