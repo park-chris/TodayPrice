@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/effect_basic_ripple"
     android:id="@+id/layout"
-    android:padding="10dp">
+    android:padding="@dimen/horizontal_padding">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/marketImageView"
