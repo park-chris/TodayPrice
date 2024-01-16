@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="20dp"
-            android:background="@drawable/background_image" />
+            android:background="@drawable/bg_image" />
 
         <TextView
             android:id="@+id/priceTextView"

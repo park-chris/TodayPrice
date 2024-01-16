@@ -12,7 +12,7 @@
         android:id="@+id/itemImageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/background_image"
+        android:background="@drawable/bg_image"
         android:scaleType="centerCrop"
         android:src="@drawable/no_picture"
         app:layout_constraintStart_toStartOf="parent"

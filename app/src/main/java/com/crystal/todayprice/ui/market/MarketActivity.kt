@@ -3,16 +3,13 @@ package com.crystal.todayprice.ui.market
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.crystal.todayprice.R
 import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
@@ -26,6 +23,7 @@ import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.ui.item.ItemActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.viewmodel.PriceViewModel
+import com.google.android.material.chip.Chip
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -55,6 +53,30 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         Log.e(TAG, "market: $market")
         market?.let {
         }
+
+        addChip()
+
+    }
+
+    private fun addChip() {
+        val list = listOf<String>("첫번째", "두번째", "세번쨰", "네번째", "다섯번째", "여섯번째")
+
+        for (string in list) {
+            binding.chipGroup.addView(Chip(this).apply {
+                text = string
+                textSize = 20F
+                isCheckable = true
+
+                isCheckedIconVisible = false
+                chipBackgroundColor = ContextCompat.getColorStateList(this@MarketActivity, R.color.bg_chip_state)
+
+//                this.setChipBackgroundColorResource()
+//                setOnClickListener {
+//                    this.isChecked = !this.isChecked
+//                }
+            })
+        }
+
 
     }
 
