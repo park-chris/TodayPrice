@@ -1,8 +1,6 @@
 package com.crystal.todayprice.api
 
-import android.util.Log
 import com.crystal.todayprice.BuildConfig
-import com.crystal.todayprice.repository.TAG
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -13,9 +11,6 @@ object RetrofitManager {
 
     private const val BASE_URL = "http://openAPI.seoul.go.kr:8088/${BuildConfig.PUBLIC_API_KEY}/json/"
 
-    init {
-        Log.e(TAG, "url: $BASE_URL")
-    }
     // okHttpClient Settings
     private val okHttpClient = OkHttpClient.Builder()
         .connectTimeout(10, TimeUnit.SECONDS)

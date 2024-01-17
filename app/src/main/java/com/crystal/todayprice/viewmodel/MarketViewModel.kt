@@ -5,17 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
-import com.crystal.todayprice.api.RetrofitManager
-import com.crystal.todayprice.data.ListNecessariesPricesResponse
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.repository.MarketRepository
-import com.crystal.todayprice.repository.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class MarketViewModel(private val marketRepository: MarketRepository): ViewModel() {
 

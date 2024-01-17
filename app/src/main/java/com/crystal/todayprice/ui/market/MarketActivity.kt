@@ -19,7 +19,6 @@ import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
-import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.ui.item.ItemActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.viewmodel.ItemViewModel
@@ -49,7 +48,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
         market = intent.intentSerializable(MARKET_NAME, Market::class.java)
 
-        Log.e(TAG, "market: $market")
         market?.let {
 
         }
@@ -83,7 +81,10 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         super.onResume()
 
         setItems()
+        setScrollEvent()
 
+    }
+    private fun setScrollEvent() {
         binding.itemRecyclerView.apply {
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -91,9 +92,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
                     val layoutManager = recyclerView.layoutManager as LinearLayoutManager
 
-                    // 스크롤을 위로 올렸을 경우, 첫 번째 항목이 완전히 보이는지 확인 (맨 위까지 스크롤),
-                    // 버벅거림 방지를 위해 transition 상태가 확인 후,
-                    // 현재 애니메이션이 진행되고 있지 않다면 motion transition 수행
                     if (dy < 0
                         && layoutManager.findFirstCompletelyVisibleItemPosition() == 0
                         && binding.motionLayout.currentState == R.id.end
@@ -103,8 +101,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                         binding.motionLayout.transitionToStart()
                     }
 
-                    // 스크롤을 아래로 내렸을 경우, 버벅거림 방지를 위해 transition 상태 확인 후,
-                    // 현재 애니메이션이 진행되고 있지 않다면 motion transition 수행
                     if (dy > 0
                         && binding.motionLayout.currentState == R.id.start
                         && (binding.motionLayout.progress >= 1f
@@ -116,7 +112,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
             })
         }
     }
-
 
     private fun moveToItem(item: Item) {
         val intent = Intent(this, ItemActivity::class.java)
