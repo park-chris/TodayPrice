@@ -121,22 +121,24 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
         for (category in categoryArray) {
 
+            val categoryId = when (category) {
+                "all" -> R.id.all
+                "grain" -> R.id.grain
+                "fruits" -> R.id.fruits
+                "seaFood" -> R.id.seaFood
+                "meatEggs" -> R.id.meatEggs
+                "vegetables" -> R.id.vegetables
+                "seasonings" -> R.id.seasonings
+                "processedFoods" -> R.id.processedFoods
+                "dairyProducts" -> R.id.dairyProducts
+                "beverages" -> R.id.beverages
+                "householdItems" -> R.id.householdItems
+                "undefined" -> R.id.undefined
+                else -> R.id.all
+            }
+
             binding.chipGroup.addView(Chip(this).apply {
-                id = when (category) {
-                    "all" -> R.id.all
-                    "grain" -> R.id.grain
-                    "fruits" -> R.id.fruits
-                    "seaFood" -> R.id.seaFood
-                    "meatEggs" -> R.id.meatEggs
-                    "vegetables" -> R.id.vegetables
-                    "seasonings" -> R.id.seasonings
-                    "processedFoods" -> R.id.processedFoods
-                    "dairyProducts" -> R.id.dairyProducts
-                    "beverages" -> R.id.beverages
-                    "householdItems" -> R.id.householdItems
-                    "undefined" -> R.id.undefined
-                    else -> { R.id.all }
-                }
+                id = categoryId
                 text = TextUtil.categoryFormat(this@MarketActivity, category)
                 textSize = 20F
                 isCheckable = true
@@ -155,21 +157,20 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             for (id in checkedIds) {
                 when (id) {
-                    R.id.all -> Log.e(TAG, "전체")
-                    R.id.grain -> Log.e(TAG, "grain")
-                    R.id.fruits -> Log.e(TAG, "fruits")
-                    R.id.seaFood -> Log.e(TAG, "seaFood")
-                    R.id.meatEggs -> Log.e(TAG, "meatEggs")
-                    R.id.vegetables -> Log.e(TAG, "vegetables")
-                    R.id.seasonings -> Log.e(TAG, "seasonings")
-                    R.id.processedFoods -> Log.e(TAG, "processedFoods")
-                    R.id.dairyProducts -> Log.e(TAG, "dairyProducts")
-                    R.id.beverages -> Log.e(TAG, "beverages")
-                    R.id.householdItems -> Log.e(TAG, "householdItems")
-                    R.id.undefined -> Log.e(TAG, "undefined")
+                    R.id.all -> adapter.submitList(itemViewModel.items.value ?: emptyList())
+                    R.id.grain -> adapter.submitList(itemViewModel.getFilterItems("grain"))
+                    R.id.fruits -> adapter.submitList(itemViewModel.getFilterItems("fruits"))
+                    R.id.seaFood -> adapter.submitList(itemViewModel.getFilterItems("seaFood"))
+                    R.id.meatEggs -> adapter.submitList(itemViewModel.getFilterItems("meatEggs"))
+                    R.id.vegetables -> adapter.submitList(itemViewModel.getFilterItems("vegetables"))
+                    R.id.seasonings -> adapter.submitList(itemViewModel.getFilterItems("seasonings"))
+                    R.id.processedFoods ->adapter.submitList(itemViewModel.getFilterItems("processedFoods"))
+                    R.id.dairyProducts -> adapter.submitList(itemViewModel.getFilterItems("dairyProducts"))
+                    R.id.beverages -> adapter.submitList(itemViewModel.getFilterItems("beverages"))
+                    R.id.householdItems -> adapter.submitList(itemViewModel.getFilterItems("householdItems"))
+                    R.id.undefined -> adapter.submitList(itemViewModel.getFilterItems("undefined"))
                 }
             }
-
         }
 
     }

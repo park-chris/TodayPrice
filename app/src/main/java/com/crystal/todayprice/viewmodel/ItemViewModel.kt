@@ -1,6 +1,5 @@
 package com.crystal.todayprice.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.repository.ItemRepository
+import com.crystal.todayprice.util.TextUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +31,11 @@ class ItemViewModel(private val itemRepository: ItemRepository): ViewModel() {
             val items = itemRepository.getItems(marketId)
             _items.postValue(items)
         }
+    }
+
+    fun getFilterItems(category: String): List<Item> {
+        val list = items.value ?: return emptyList()
+        return list.filter { item: Item -> item.category == TextUtil.stringToItemType(category) }
     }
 
     class ItemViewModelFactory(private val itemRepository: ItemRepository): ViewModelProvider.Factory {

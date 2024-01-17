@@ -36,5 +36,22 @@ class TextUtil {
                 else -> ""
             }
         }
+
+        fun stringToItemType(string: String): ItemType? {
+            return when (string) {
+                "grain" -> ItemType.GRAIN
+                "fruits" -> ItemType.FRUITS
+                "seaFood" -> ItemType.SEAFOOD
+                "meatEggs" -> ItemType.MEAT_EGGS
+                "vegetables" -> ItemType.VEGETABLES
+                "seasonings" -> ItemType.SEASONINGS
+                "processedFoods" -> ItemType.PROCESSED_FOODS
+                "dairyProducts" -> ItemType.DAIRY_PRODUCTS
+                "beverages" -> ItemType.BEVERAGES
+                "householdItems" -> ItemType.HOUSEHOLD_ITEMS
+                "undefined" -> ItemType.UNDEFINED
+                else -> null
+            }
+        }
     }
 }
