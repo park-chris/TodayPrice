@@ -21,10 +21,12 @@ import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
 import com.crystal.todayprice.ui.item.ItemActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
+import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 
+private const val TAG = "TestLog"
 class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketBinding
@@ -53,27 +55,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         }
 
         addChip()
-
-    }
-
-    private fun addChip() {
-        val list = listOf<String>("첫번째", "두번째", "세번쨰", "네번째", "다섯번째", "여섯번째")
-
-        for (string in list) {
-            binding.chipGroup.addView(Chip(this).apply {
-                text = string
-                textSize = 20F
-                isCheckable = true
-                isCheckedIconVisible = false
-                chipBackgroundColor = ContextCompat.getColorStateList(this@MarketActivity, R.color.bg_chip_state)
-
-//                this.setChipBackgroundColorResource()
-//                setOnClickListener {
-//                    this.isChecked = !this.isChecked
-//                }
-            })
-        }
-
 
     }
 
@@ -132,6 +113,65 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         market?.let {
             itemViewModel.getItems(it.id)
         }
+    }
+
+    private fun addChip() {
+
+        val categoryArray = resources.getStringArray(R.array.item_type_array)
+
+        for (category in categoryArray) {
+
+            binding.chipGroup.addView(Chip(this).apply {
+                id = when (category) {
+                    "all" -> R.id.all
+                    "grain" -> R.id.grain
+                    "fruits" -> R.id.fruits
+                    "seaFood" -> R.id.seaFood
+                    "meatEggs" -> R.id.meatEggs
+                    "vegetables" -> R.id.vegetables
+                    "seasonings" -> R.id.seasonings
+                    "processedFoods" -> R.id.processedFoods
+                    "dairyProducts" -> R.id.dairyProducts
+                    "beverages" -> R.id.beverages
+                    "householdItems" -> R.id.householdItems
+                    "undefined" -> R.id.undefined
+                    else -> { R.id.all }
+                }
+                text = TextUtil.categoryFormat(this@MarketActivity, category)
+                textSize = 20F
+                isCheckable = true
+                isCheckedIconVisible = false
+                isChecked = category == "all"
+                chipBackgroundColor = ContextCompat.getColorStateList(this@MarketActivity, R.color.bg_chip_state)
+
+                this.setOnClickListener {
+                    if (!this.isChecked) {
+                        this.isChecked = true
+                    }
+                }
+            })
+        }
+
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            for (id in checkedIds) {
+                when (id) {
+                    R.id.all -> Log.e(TAG, "전체")
+                    R.id.grain -> Log.e(TAG, "grain")
+                    R.id.fruits -> Log.e(TAG, "fruits")
+                    R.id.seaFood -> Log.e(TAG, "seaFood")
+                    R.id.meatEggs -> Log.e(TAG, "meatEggs")
+                    R.id.vegetables -> Log.e(TAG, "vegetables")
+                    R.id.seasonings -> Log.e(TAG, "seasonings")
+                    R.id.processedFoods -> Log.e(TAG, "processedFoods")
+                    R.id.dairyProducts -> Log.e(TAG, "dairyProducts")
+                    R.id.beverages -> Log.e(TAG, "beverages")
+                    R.id.householdItems -> Log.e(TAG, "householdItems")
+                    R.id.undefined -> Log.e(TAG, "undefined")
+                }
+            }
+
+        }
+
     }
 
     companion object {
