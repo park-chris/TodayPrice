@@ -12,6 +12,7 @@ import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.MarketItemBinding
 import com.crystal.todayprice.databinding.PriceItemBinding
+import com.crystal.todayprice.util.TextUtil
 
 class ItemAdapter(
     private val onClick: (Item) -> Unit
@@ -24,7 +25,10 @@ class ItemAdapter(
         fun bind(item: Item?) {
             item?.let {
                 binding.nameTextView.text = it.itemName
-                binding.priceTextView.text = it.itemPrice.toString()
+                binding.priceTextView.text = TextUtil.priceFormat(binding.root.context, it.itemPrice.toDouble())
+                binding.layout.setOnClickListener {
+                    onClick(item)
+                }
             }
         }
     }

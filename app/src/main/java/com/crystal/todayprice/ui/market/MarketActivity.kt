@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.crystal.todayprice.R
 import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
@@ -51,17 +52,21 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         market = intent.intentSerializable(MARKET_NAME, Market::class.java)
 
         market?.let {
-
+            Glide.with(binding.root)
+                .load(it.imgUrl)
+                .centerCrop()
+                .error(R.drawable.no_picture)
+                .into(binding.marketImageView)
         }
 
         addChip()
+        setItems()
 
     }
 
     override fun onResume() {
         super.onResume()
 
-        setItems()
         setScrollEvent()
 
     }
@@ -97,6 +102,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
     private fun moveToItem(item: Item) {
         val intent = Intent(this, ItemActivity::class.java)
         intent.putExtra(ItemActivity.ITEM_NAME, item)
+        intent.putExtra(MARKET_NAME, market)
         startActivity(intent)
     }
 

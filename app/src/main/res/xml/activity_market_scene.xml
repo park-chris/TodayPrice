@@ -5,7 +5,7 @@
     <Transition
         motion:constraintSetStart="@+id/start"
         motion:constraintSetEnd="@+id/end"
-        motion:duration="200">
+        motion:duration="300">
 
         <KeyFrameSet>
             <KeyAttribute
@@ -30,7 +30,7 @@
         <Constraint
             android:id="@+id/marketImageView"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             motion:layout_constraintTop_toTopOf="parent" />
 
         <Constraint

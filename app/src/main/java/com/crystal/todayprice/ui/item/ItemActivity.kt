@@ -7,12 +7,15 @@ import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Item
+import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.databinding.ActivityItemBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
+import com.crystal.todayprice.ui.market.MarketActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.viewmodel.ItemViewModel
+import com.google.common.primitives.UnsignedBytes.toInt
 
 class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
 
@@ -23,6 +26,7 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
     }
 
     private var item: Item? = null
+    private var market: Market? = null
     private var prices: List<Price> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +34,10 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         
         binding = ActivityItemBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
-        
+
         item = intent.intentSerializable(ITEM_NAME, Item::class.java)
-        
+        market = intent.intentSerializable(MarketActivity.MARKET_NAME, Market::class.java)
+
         itemViewModel.prices.observe(this, Observer {
             prices = it
             binding.graphView.setData(prices)
@@ -40,8 +45,8 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
 
         item?.let {
             // market ID를 어디서 받아와야함. (item 넘기면서 마켓도 같이 넘기는걸루 )
-//            itemViewModel.getItem(it.marketId.toInt(), it.itemId.toInt())
-//            binding.item = it
+            itemViewModel.getItem(market!!.id, it.itemId.toInt())
+            binding.item = it
         }
     }
 
