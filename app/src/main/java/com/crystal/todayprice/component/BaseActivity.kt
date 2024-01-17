@@ -3,20 +3,15 @@ package com.crystal.todayprice.component
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
 import com.crystal.todayprice.databinding.ActivityBaseBinding
-import com.crystal.todayprice.repository.TAG
 import com.google.android.material.navigation.NavigationView
 
 
