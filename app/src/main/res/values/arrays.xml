@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="item_type_array">
+        <item>all</item>
+        <item>grain</item>
+        <item>fruits</item>
+        <item>seaFood</item>
+        <item>meatEggs</item>
+        <item>vegetables</item>
+        <item>seasonings</item>
+        <item>processedFoods</item>
+        <item>dairyProducts</item>
+        <item>beverages</item>
+        <item>householdItems</item>
+        <item>undefined</item>
+    </array>
+</resources>

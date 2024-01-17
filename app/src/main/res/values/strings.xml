@@ -13,4 +13,21 @@
 
     <!--    description-->
     <string name="activity_container">액티비티 컨테이너</string>
+
+
+
+
+<!--    category 별 글-->
+    <string name="all">전체</string>
+    <string name="grain">곡류</string>
+    <string name="fruits">과일</string>
+    <string name="seaFood">해산물</string>
+    <string name="meatEggs">육류 및 계란</string>
+    <string name="vegetables">채소</string>
+    <string name="seasonings">양념 및 조미료</string>
+    <string name="processedFoods">가공식품</string>
+    <string name="dairyProducts">유제품</string>
+    <string name="beverages">음료</string>
+    <string name="householdItems">생활용품</string>
+    <string name="undefined">기타</string>
 </resources>

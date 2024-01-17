@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="all" type="id" />
+    <item name="grain" type="id" />
+    <item name="fruits" type="id" />
+    <item name="seaFood" type="id" />
+    <item name="meatEggs" type="id" />
+    <item name="vegetables" type="id" />
+    <item name="seasonings" type="id" />
+    <item name="processedFoods" type="id" />
+    <item name="dairyProducts" type="id" />
+    <item name="beverages" type="id" />
+    <item name="householdItems" type="id" />
+    <item name="undefined" type="id" />
+</resources>

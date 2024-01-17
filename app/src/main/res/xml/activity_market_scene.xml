@@ -5,7 +5,7 @@
     <Transition
         motion:constraintSetStart="@+id/start"
         motion:constraintSetEnd="@+id/end"
-        motion:duration="500">
+        motion:duration="200">
 
         <KeyFrameSet>
             <KeyAttribute

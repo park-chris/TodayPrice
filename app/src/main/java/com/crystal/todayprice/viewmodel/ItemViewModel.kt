@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.repository.ItemRepository
-import com.crystal.todayprice.repository.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
