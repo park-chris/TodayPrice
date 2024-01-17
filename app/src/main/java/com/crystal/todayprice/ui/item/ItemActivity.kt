@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
+import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.databinding.ActivityItemBinding
@@ -21,7 +22,7 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         ItemViewModel.ItemViewModelFactory(ItemRepositoryImpl())
     }
 
-    private var necessaryPrice: NecessaryPrice? = null
+    private var item: Item? = null
     private var prices: List<Price> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,15 +31,16 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         binding = ActivityItemBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
         
-        necessaryPrice = intent.intentSerializable(ITEM_NAME, NecessaryPrice::class.java)
+        item = intent.intentSerializable(ITEM_NAME, Item::class.java)
         
         itemViewModel.prices.observe(this, Observer {
             prices = it
             binding.graphView.setData(prices)
         })
 
-        necessaryPrice?.let {
-            itemViewModel.getItem(it.marketId.toInt(), it.itemId.toInt())
+        item?.let {
+            // market ID를 어디서 받아와야함. (item 넘기면서 마켓도 같이 넘기는걸루 )
+//            itemViewModel.getItem(it.marketId.toInt(), it.itemId.toInt())
 //            binding.item = it
         }
     }
