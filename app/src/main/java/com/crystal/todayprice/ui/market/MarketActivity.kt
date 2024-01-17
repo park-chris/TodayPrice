@@ -1,12 +1,12 @@
 package com.crystal.todayprice.ui.market
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,24 +15,23 @@ import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
+import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.databinding.ActivityMarketBinding
-import com.crystal.todayprice.repository.PriceRepositoryImpl
+import com.crystal.todayprice.repository.ItemRepositoryImpl
 import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.ui.item.ItemActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
-import com.crystal.todayprice.viewmodel.PriceViewModel
+import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.google.android.material.chip.Chip
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketBinding
 
-    private val priceViewModel: PriceViewModel by viewModels {
-        PriceViewModel.PriceViewModelFactory(PriceRepositoryImpl())
+    private val itemViewModel: ItemViewModel by viewModels {
+        ItemViewModel.ItemViewModelFactory(ItemRepositoryImpl())
     }
 
     private val adapter: ItemAdapter = ItemAdapter {
@@ -52,6 +51,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
         Log.e(TAG, "market: $market")
         market?.let {
+
         }
 
         addChip()
@@ -66,7 +66,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 text = string
                 textSize = 20F
                 isCheckable = true
-
                 isCheckedIconVisible = false
                 chipBackgroundColor = ContextCompat.getColorStateList(this@MarketActivity, R.color.bg_chip_state)
 
@@ -119,7 +118,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
     }
 
 
-    private fun moveToItem(item: NecessaryPrice) {
+    private fun moveToItem(item: Item) {
         val intent = Intent(this, ItemActivity::class.java)
         intent.putExtra(ItemActivity.ITEM_NAME, item)
         startActivity(intent)
@@ -130,15 +129,13 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         binding.itemRecyclerView.adapter = adapter
 
         lifecycleScope.launch {
-            priceViewModel.itemPagingDataFlow
-                .collectLatest { items ->
-                    Log.e(TAG, "flow ${items}")
-                    adapter.submitData(items)
-                }
+            itemViewModel.items.observe(this@MarketActivity, Observer {
+                adapter.submitList(it)
+            })
         }
 
         market?.let {
-            priceViewModel.handleQuery(it.name)
+            itemViewModel.getItems(it.id)
         }
     }
 

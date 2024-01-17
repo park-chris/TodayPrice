@@ -1,5 +1,8 @@
 package com.crystal.todayprice.repository
 
+import android.util.Log
+import com.crystal.todayprice.data.Item
+import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.Price
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -15,6 +18,15 @@ class ItemRepositoryImpl : ItemRepository {
         return try {
             val snapshot = marketCollection.document(marketId.toString()).collection("items").document(itemId.toString()).collection("prices").get().await()
             snapshot.toObjects<Price>()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override suspend fun getItems(marketId: Int): List<Item> {
+        return try {
+            val snapshot = marketCollection.document(marketId.toString()).collection("items").get().await()
+            snapshot.toObjects<Item>()
         } catch (e: Exception) {
             emptyList()
         }

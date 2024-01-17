@@ -5,4 +5,6 @@ import com.crystal.todayprice.data.Price
 
 interface ItemRepository {
     suspend fun getItem(marketId: Int, itemId: Int): List<Price>
+
+    suspend fun getItems(marketId: Int): List<Item>
 }

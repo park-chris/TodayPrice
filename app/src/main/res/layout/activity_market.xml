@@ -17,7 +17,7 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:scrollbars="none"
-        android:padding="@dimen/horizontal_padding"
+        android:paddingHorizontal="@dimen/horizontal_padding"
         android:layout_height="wrap_content">
 
         <com.google.android.material.chip.ChipGroup

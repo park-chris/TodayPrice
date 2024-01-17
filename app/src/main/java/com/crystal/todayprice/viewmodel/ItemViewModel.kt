@@ -17,12 +17,20 @@ class ItemViewModel(private val itemRepository: ItemRepository): ViewModel() {
 
     private val _prices = MutableLiveData<List<Price>>()
     val prices: LiveData<List<Price>> by lazy { _prices }
+    private val _items = MutableLiveData<List<Item>>()
+    val items: LiveData<List<Item>> by lazy { _items }
 
     fun getItem(marketId: Int, itemId: Int) {
-        Log.e(TAG, "getItem start")
         CoroutineScope(Dispatchers.IO).launch {
             val prices = itemRepository.getItem(marketId, itemId)
             _prices.postValue(prices)
+        }
+    }
+
+    fun getItems(marketId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val items = itemRepository.getItems(marketId)
+            _items.postValue(items)
         }
     }
 

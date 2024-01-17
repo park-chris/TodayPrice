@@ -1,12 +1,14 @@
 package com.crystal.todayprice.data
 
+import java.io.Serializable
+
 data class Item(
-    val itemId: Int,
-    val itemName: String,
-    val itemPrice: Int,
-    val category: ItemType,
-    val prices: List<Price>,
-)
+    val itemId: Int = -1,
+    val itemName: String = "",
+    val itemPrice: Int = -1,
+    val category: ItemType = ItemType.UNDEFINED,
+    val prices: List<Price> = emptyList(),
+): Serializable
 
 data class Price(
     val itemId: Int = -1,

@@ -2,14 +2,11 @@ package com.crystal.todayprice.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.crystal.todayprice.R
-import com.crystal.todayprice.adapter.ItemAdapter.Companion.diffUtil
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.MarketItemBinding
 

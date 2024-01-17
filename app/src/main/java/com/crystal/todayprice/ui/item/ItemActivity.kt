@@ -1,23 +1,17 @@
 package com.crystal.todayprice.ui.item
 
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
-import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.databinding.ActivityItemBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
-import com.crystal.todayprice.repository.PriceRepositoryImpl
-import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.viewmodel.ItemViewModel
-import com.crystal.todayprice.viewmodel.PriceViewModel
 
 class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
 

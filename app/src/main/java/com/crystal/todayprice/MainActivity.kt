@@ -2,28 +2,16 @@ package com.crystal.todayprice
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.adapter.MarketAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.data.Type
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
-import com.crystal.todayprice.repository.PriceRepositoryImpl
-import com.crystal.todayprice.repository.TAG
 import com.crystal.todayprice.ui.market.MarketActivity
 import com.crystal.todayprice.viewmodel.MarketViewModel
-import com.crystal.todayprice.viewmodel.PriceViewModel
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity(ToolbarType.MENU) {
     private lateinit var binding: ActivityMainBinding
