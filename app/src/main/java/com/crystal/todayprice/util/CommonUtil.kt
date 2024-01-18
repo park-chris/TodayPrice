@@ -1,7 +1,9 @@
 package com.crystal.todayprice.util
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.TypedValue
 import java.io.Serializable
 
 class CommonUtil {
@@ -12,6 +14,14 @@ class CommonUtil {
             } else {
                 this.getSerializableExtra(key) as T?
             }
+        }
+
+        fun Int.dpToPx(context: Context): Int {
+            return TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                this.toFloat(),
+                context.resources.displayMetrics
+            ).toInt()
         }
     }
 }
