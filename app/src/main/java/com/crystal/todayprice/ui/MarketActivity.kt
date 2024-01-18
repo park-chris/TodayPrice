@@ -1,4 +1,4 @@
-package com.crystal.todayprice.ui.market
+package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,6 @@ import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
-import com.crystal.todayprice.ui.item.ItemActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.viewmodel.ItemViewModel

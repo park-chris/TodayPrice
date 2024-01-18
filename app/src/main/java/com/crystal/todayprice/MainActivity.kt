@@ -10,7 +10,7 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
-import com.crystal.todayprice.ui.market.MarketActivity
+import com.crystal.todayprice.ui.MarketActivity
 import com.crystal.todayprice.viewmodel.MarketViewModel
 
 class MainActivity : BaseActivity(ToolbarType.MENU) {

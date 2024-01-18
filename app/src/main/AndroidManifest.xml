@@ -17,10 +17,10 @@
         android:theme="@style/Theme.TodayPrice"
         tools:targetApi="31">
         <activity
-            android:name=".ui.market.MarketActivity"
+            android:name=".ui.MarketActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.item.ItemActivity"
+            android:name=".ui.ItemActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

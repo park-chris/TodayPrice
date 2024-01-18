@@ -1,4 +1,4 @@
-package com.crystal.todayprice.ui.item
+package com.crystal.todayprice.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -8,15 +8,12 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.data.NecessaryPrice
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.databinding.ActivityItemBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
-import com.crystal.todayprice.ui.market.MarketActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.viewmodel.ItemViewModel
-import com.google.common.primitives.UnsignedBytes.toInt
 
 class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
 
