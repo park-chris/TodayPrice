@@ -6,6 +6,7 @@ data class Item(
     val itemId: Int = -1,
     val itemName: String = "",
     val itemPrice: Int = -1,
+    val itemUnit: String = "",
     val category: ItemType = ItemType.UNDEFINED,
     val prices: List<Price> = emptyList(),
 ): Serializable

@@ -14,6 +14,7 @@ import com.crystal.todayprice.databinding.ActivityItemBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
 import com.crystal.todayprice.ui.market.MarketActivity
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
+import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.google.common.primitives.UnsignedBytes.toInt
 
@@ -40,13 +41,14 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
 
         itemViewModel.prices.observe(this, Observer {
             prices = it
-            binding.graphView.setData(prices)
+            binding.graphView.setData(prices.takeLast(4))
         })
 
         item?.let {
             // market ID를 어디서 받아와야함. (item 넘기면서 마켓도 같이 넘기는걸루 )
             itemViewModel.getItem(market!!.id, it.itemId.toInt())
             binding.item = it
+            binding.priceTextView.text = TextUtil.priceFormat(this, it.itemPrice.toDouble())
         }
     }
 
