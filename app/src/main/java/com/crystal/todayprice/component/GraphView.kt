@@ -39,7 +39,7 @@ class GraphView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
     private val frameLinePaint = Paint().apply {
         color =  ContextCompat.getColor(context, R.color.hint)
-        strokeWidth = 5f
+        strokeWidth = 2f
     }
 
     private val linePaint = Paint().apply {
