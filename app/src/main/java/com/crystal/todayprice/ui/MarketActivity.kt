@@ -51,10 +51,7 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 .into(binding.marketImageView)
 
             binding.market = it
-            Log.e(TAG, "description: ${it.description}")
             if (it.description.isEmpty()) {
-                Log.e(TAG, "description is empty")
-
                 binding.descriptionTextView.text = resources.getString(R.string.market_empty_description)
             }
         }
@@ -65,6 +62,15 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         super.onResume()
 
         setScrollEvent()
+        setupEvent()
+    }
+
+    private fun setupEvent() {
+        binding.pricesButton.setOnClickListener {
+            val intent = Intent(this, ItemListActivity::class.java)
+            intent.putExtra(MARKET_NAME, market)
+            startActivity(intent)
+        }
     }
 
     private fun setScrollEvent() {
