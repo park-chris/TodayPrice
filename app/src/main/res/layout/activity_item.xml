@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/item_content_text_size"
             tools:text="1개"
-            android:text="1개"
+            android:text="@{item.itemUnit}"
             android:gravity="end"
             android:textColor="@color/text"
             app:layout_constraintEnd_toEndOf="parent"
