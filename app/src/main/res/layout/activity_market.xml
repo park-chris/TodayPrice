@@ -63,7 +63,7 @@
         android:layout_height="@dimen/button_height"
         android:background="@drawable/bg_fill_button"
         android:textColor="@color/white"
-        android:text="View Prices" />
+        android:text="@string/market_prices_button" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
