@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import com.crystal.todayprice.R
 import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
@@ -22,7 +23,7 @@ import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
 
-class ItemListActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
+class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityItemListBinding
 
@@ -48,7 +49,6 @@ class ItemListActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  
 
         market?.let {
             itemViewModel.getItems(it.id)
-
         }
 
         addChip()
@@ -57,6 +57,7 @@ class ItemListActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  
 
     private fun setItems() {
 
+        binding.itemRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.itemRecyclerView.adapter = adapter
 
         lifecycleScope.launch {
@@ -100,10 +101,14 @@ class ItemListActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  
                 id = categoryId
                 text = TextUtil.categoryFormat(this@ItemListActivity, category)
                 textSize = 20F
+                chipStrokeColor = ContextCompat.getColorStateList(this@ItemListActivity, R.color.stroke_chip_state)
+                chipStrokeWidth = 2F
                 isCheckable = true
                 isCheckedIconVisible = false
                 isChecked = category == "all"
-                chipBackgroundColor = ContextCompat.getColorStateList(this@ItemListActivity, R.color.bg_chip_state)
+                chipBackgroundColor =
+                    ContextCompat.getColorStateList(this@ItemListActivity, R.color.bg_chip_state)
+                setTextColor(ContextCompat.getColorStateList(this@ItemListActivity, R.color.text_chip_state))
 
                 this.setOnClickListener {
                     if (!this.isChecked) {
@@ -123,7 +128,7 @@ class ItemListActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  
                     R.id.meatEggs -> adapter.submitList(itemViewModel.getFilterItems("meatEggs"))
                     R.id.vegetables -> adapter.submitList(itemViewModel.getFilterItems("vegetables"))
                     R.id.seasonings -> adapter.submitList(itemViewModel.getFilterItems("seasonings"))
-                    R.id.processedFoods ->adapter.submitList(itemViewModel.getFilterItems("processedFoods"))
+                    R.id.processedFoods -> adapter.submitList(itemViewModel.getFilterItems("processedFoods"))
                     R.id.dairyProducts -> adapter.submitList(itemViewModel.getFilterItems("dairyProducts"))
                     R.id.beverages -> adapter.submitList(itemViewModel.getFilterItems("beverages"))
                     R.id.householdItems -> adapter.submitList(itemViewModel.getFilterItems("householdItems"))

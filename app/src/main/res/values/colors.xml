@@ -11,7 +11,7 @@
 
 
     <color name="background">#F5F4F8</color>
-    <color name="opposite_background">#202020</color>
+    <color name="opposite_background">#1C1C1C</color>
     <color name="text">#3E3E3E</color>
     <color name="hint">#9E9E9E</color>
 
@@ -20,7 +20,7 @@
     <color name="ripple_effect">#665C5C5C</color>
 
 
-    <color name="highlight">#f2213c</color>
+    <color name="highlight">#5856d6</color>
 
     <color name="title_text">#191919</color>
     <color name="subtitle_text">#5C5C5C</color>
