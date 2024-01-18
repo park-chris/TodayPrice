@@ -3,6 +3,8 @@ package com.crystal.todayprice.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.OnScrollChangeListener
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -31,15 +33,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketBinding
 
-    private val itemViewModel: ItemViewModel by viewModels {
-        ItemViewModel.ItemViewModelFactory(ItemRepositoryImpl())
-    }
-
-    private val adapter: ItemAdapter = ItemAdapter {
-        Toast.makeText(this, "${it.itemName} is clicked!!", Toast.LENGTH_SHORT).show()
-        moveToItem(it)
-    }
-
     private var market: Market? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,10 +49,15 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
                 .centerCrop()
                 .error(R.drawable.no_picture)
                 .into(binding.marketImageView)
-        }
 
-        addChip()
-        setItems()
+            binding.market = it
+            Log.e(TAG, "description: ${it.description}")
+            if (it.description.isEmpty()) {
+                Log.e(TAG, "description is empty")
+
+                binding.descriptionTextView.text = resources.getString(R.string.market_empty_description)
+            }
+        }
 
     }
 
@@ -67,118 +65,39 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         super.onResume()
 
         setScrollEvent()
-
     }
+
     private fun setScrollEvent() {
-        binding.itemRecyclerView.apply {
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-
-                    if (dy < 0
-                        && layoutManager.findFirstCompletelyVisibleItemPosition() == 0
-                        && binding.motionLayout.currentState == R.id.end
-                        && (binding.motionLayout.progress >= 1f
-                                || binding.motionLayout.progress <= 0f)
-                    ) {
-                        binding.motionLayout.transitionToStart()
-                    }
-
-                    if (dy > 0
-                        && binding.motionLayout.currentState == R.id.start
-                        && (binding.motionLayout.progress >= 1f
-                                || binding.motionLayout.progress <= 0f)
-                    ) {
-                        binding.motionLayout.transitionToEnd()
-                    }
+        binding.scrollView.apply {
+            viewTreeObserver.addOnScrollChangedListener {
+                if (scrollY == 0
+                    && binding.motionLayout.currentState == R.id.end
+                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+                ) {
+                    binding.motionLayout.transitionToStart()
                 }
-            })
-        }
-    }
 
-    private fun moveToItem(item: Item) {
-        val intent = Intent(this, ItemActivity::class.java)
-        intent.putExtra(ItemActivity.ITEM_NAME, item)
-        intent.putExtra(MARKET_NAME, market)
-        startActivity(intent)
-    }
+                // 아래로 스크롤할 때의 처리
+                 if (scrollY > 0 && binding.motionLayout.currentState == R.id.start
+                     && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+                 ) {
+                     binding.motionLayout.transitionToEnd()
+                 }
 
-    private fun setItems() {
+                val maxScroll = getChildAt(0).height - height
 
-        binding.itemRecyclerView.adapter = adapter
+                if (scrollY == maxScroll
+                    && binding.motionLayout.currentState == R.id.end
+                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+                ) {
+                    binding.motionLayout.transitionToStart()
+                }
 
-        lifecycleScope.launch {
-            itemViewModel.items.observe(this@MarketActivity, Observer {
-                adapter.submitList(it)
-            })
-        }
-
-        market?.let {
-            itemViewModel.getItems(it.id)
-        }
-    }
-
-    private fun addChip() {
-
-        val categoryArray = resources.getStringArray(R.array.item_type_array)
-
-        for (category in categoryArray) {
-
-            val categoryId = when (category) {
-                "all" -> R.id.all
-                "grain" -> R.id.grain
-                "fruits" -> R.id.fruits
-                "seaFood" -> R.id.seaFood
-                "meatEggs" -> R.id.meatEggs
-                "vegetables" -> R.id.vegetables
-                "seasonings" -> R.id.seasonings
-                "processedFoods" -> R.id.processedFoods
-                "dairyProducts" -> R.id.dairyProducts
-                "beverages" -> R.id.beverages
-                "householdItems" -> R.id.householdItems
-                "undefined" -> R.id.undefined
-                else -> R.id.all
             }
 
-            binding.chipGroup.addView(Chip(this).apply {
-                id = categoryId
-                text = TextUtil.categoryFormat(this@MarketActivity, category)
-                textSize = 20F
-                isCheckable = true
-                isCheckedIconVisible = false
-                isChecked = category == "all"
-                chipBackgroundColor = ContextCompat.getColorStateList(this@MarketActivity, R.color.bg_chip_state)
-
-                this.setOnClickListener {
-                    if (!this.isChecked) {
-                        this.isChecked = true
-                    }
-                }
-            })
         }
-
-        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-            for (id in checkedIds) {
-                when (id) {
-                    R.id.all -> adapter.submitList(itemViewModel.items.value ?: emptyList())
-                    R.id.grain -> adapter.submitList(itemViewModel.getFilterItems("grain"))
-                    R.id.fruits -> adapter.submitList(itemViewModel.getFilterItems("fruits"))
-                    R.id.seaFood -> adapter.submitList(itemViewModel.getFilterItems("seaFood"))
-                    R.id.meatEggs -> adapter.submitList(itemViewModel.getFilterItems("meatEggs"))
-                    R.id.vegetables -> adapter.submitList(itemViewModel.getFilterItems("vegetables"))
-                    R.id.seasonings -> adapter.submitList(itemViewModel.getFilterItems("seasonings"))
-                    R.id.processedFoods ->adapter.submitList(itemViewModel.getFilterItems("processedFoods"))
-                    R.id.dairyProducts -> adapter.submitList(itemViewModel.getFilterItems("dairyProducts"))
-                    R.id.beverages -> adapter.submitList(itemViewModel.getFilterItems("beverages"))
-                    R.id.householdItems -> adapter.submitList(itemViewModel.getFilterItems("householdItems"))
-                    R.id.undefined -> adapter.submitList(itemViewModel.getFilterItems("undefined"))
-                }
-            }
-        }
-
     }
+
 
     companion object {
         const val MARKET_NAME = "market_name"

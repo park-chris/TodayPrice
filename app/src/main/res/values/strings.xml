@@ -11,6 +11,7 @@
     <string name="drawer_state_open">사이드바 확장</string>
     <string name="drawer_state_closed">사이드바 숨김</string>
     <string name="price_graph">가격 변동표</string>
+    <string name="market_empty_description">시장에 대한 소개글이 없습니다.</string>
 
     <!--    description-->
     <string name="activity_container">액티비티 컨테이너</string>
