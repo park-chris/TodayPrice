@@ -12,9 +12,9 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/itemImageView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="170dp"
         android:scaleType="centerCrop"
-        android:background="@color/ripple_effect"
+        android:background="@drawable/bg_image"
         android:src="@drawable/no_picture" />
 
 
@@ -35,7 +35,5 @@
         android:textSize="@dimen/item_subtitle_text_size"
         android:layout_marginTop="5dp"
         tools:text="ddd" />
-
-
 
 </LinearLayout>
