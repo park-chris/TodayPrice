@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.crystal.todayprice.adapter.MarketAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
@@ -30,18 +32,18 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
             moveToMarketActivity(market)
         }
 
-        marketViewModel.getAllMarkets()
-
         marketViewModel.markets.observe(this, Observer {markets ->
             markets?.let {
                 setMarketList(markets)
             }
         })
+
     }
 
     override fun onResume() {
         super.onResume()
 
+        marketViewModel.getAllMarkets()
 
 
     }
@@ -54,6 +56,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
 
     private fun setMarketList(markets: List<Market>) {
         binding.marketRecyclerView.adapter = adapter
+
         adapter.submitList(markets)
     }
 }

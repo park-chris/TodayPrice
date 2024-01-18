@@ -100,7 +100,7 @@ class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) 
             binding.chipGroup.addView(Chip(this).apply {
                 id = categoryId
                 text = TextUtil.categoryFormat(this@ItemListActivity, category)
-                textSize = 20F
+                textSize = 15F
                 chipStrokeColor = ContextCompat.getColorStateList(this@ItemListActivity, R.color.stroke_chip_state)
                 chipStrokeWidth = 2F
                 isCheckable = true
