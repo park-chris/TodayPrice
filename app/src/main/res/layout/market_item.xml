@@ -5,10 +5,8 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:maxWidth="156dp"
-    android:padding="8dp"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/horizontal_padding"
-    android:background="@drawable/bg_image">
+    android:layout_margin="@dimen/horizontal_padding">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/marketImageView"
