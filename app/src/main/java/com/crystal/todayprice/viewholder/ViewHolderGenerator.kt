@@ -15,6 +15,7 @@ object ViewHolderGenerator {
         return when (viewType) {
             ViewType.NEWS.ordinal -> NewsViewHolder(parent.toBinding())
             ViewType.MARKET.ordinal -> MarketViewHolder(parent.toBinding())
+            ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(parent.toBinding())
             else -> ItemViewHolder(parent.toBinding())
         }
     }

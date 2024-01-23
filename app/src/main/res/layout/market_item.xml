@@ -4,53 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.crystal.todayprice.data.Market" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/layout"
-    android:layout_width="match_parent"
-    android:maxWidth="156dp"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/horizontal_padding">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/marketImageView"
-        android:layout_width="match_parent"
-        android:layout_height="104dp"
-        android:background="@drawable/bg_image"
-        android:scaleType="centerCrop"
-        app:setImage="@{item.imgUrl}"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/addressTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textColor="@color/subtitle_text"
-        android:textSize="@dimen/x_small_text_size"
-        android:text="@{item.address}"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/marketImageView"
-        tools:text="ddd" />
-
-    <TextView
-        android:id="@+id/nameTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:maxLines="1"
-        android:textColor="@color/title_text"
-        android:textSize="@dimen/small_text_size"
-        android:text="@{item.name}"
-        app:layout_constraintTop_toBottomOf="@id/addressTextView"
-        tools:text="ddd" />
+        android:layout_margin="@dimen/horizontal_padding"
+        android:maxWidth="156dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/marketImageView"
+            android:layout_width="match_parent"
+            android:layout_height="104dp"
+            android:background="@drawable/bg_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrl="@{item.imgUrl}" />
+
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{item.address}"
+            android:textColor="@color/subtitle_text"
+            android:textSize="@dimen/x_small_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/marketImageView"
+            tools:text="ddd" />
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:maxLines="1"
+            android:text="@{item.name}"
+            android:textColor="@color/title_text"
+            android:textSize="@dimen/small_text_size"
+            app:layout_constraintTop_toBottomOf="@id/addressTextView"
+            tools:text="ddd" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

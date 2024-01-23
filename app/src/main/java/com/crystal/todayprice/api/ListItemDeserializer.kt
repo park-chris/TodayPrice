@@ -1,6 +1,7 @@
 package com.crystal.todayprice.api
 
 import com.crystal.todayprice.data.Empty
+import com.crystal.todayprice.data.Horizontal
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.News
@@ -28,6 +29,7 @@ class ListItemDeserializer: JsonDeserializer<ListItem> {
             when (viewTypeName) {
                 ViewType.NEWS.name -> gson.fromJson(json, News::class.java)
                 ViewType.MARKET.name -> gson.fromJson(json, Market::class.java)
+                ViewType.HORIZONTAL.name -> gson.fromJson(json, Horizontal::class.java)
                 else -> gson.fromJson(json, Empty::class.java)
             }
         } catch (e: Exception) {

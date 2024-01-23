@@ -2,19 +2,22 @@ package com.crystal.todayprice
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.crystal.todayprice.adapter.MarketAdapter
+import com.crystal.todayprice.adapter.HomeAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
+import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMainBinding
+import com.crystal.todayprice.repository.ListItemRepositoryImpl
 import com.crystal.todayprice.repository.MarketRepositoryImpl
 import com.crystal.todayprice.ui.MarketActivity
+import com.crystal.todayprice.viewmodel.ListItemViewModel
 import com.crystal.todayprice.viewmodel.MarketViewModel
 
+const val TAG = "TestLog"
 class MainActivity : BaseActivity(ToolbarType.MENU) {
     private lateinit var binding: ActivityMainBinding
 
@@ -22,29 +25,38 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         MarketViewModel.MarketViewModelFactory(MarketRepositoryImpl())
     }
 
-    private lateinit var adapter: MarketAdapter
+    private val listItemViewModel: ListItemViewModel by viewModels {
+        ListItemViewModel.ListItemViewModelFactory(ListItemRepositoryImpl())
+    }
+
+    private lateinit var adapter: HomeAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
 
-        adapter = MarketAdapter { market ->
-            moveToMarketActivity(market)
-        }
+        adapter = HomeAdapter()
 
-        marketViewModel.markets.observe(this, Observer {markets ->
-            markets?.let {
-                setMarketList(markets)
+        listItemViewModel.listItem.observe(this, Observer { listItem ->
+            listItem?.let {
+                setMarketList(it)
+                Log.e(TAG, "list: $it")
             }
         })
+//        marketViewModel.markets.observe(this, Observer {markets ->
+//            markets?.let {
+//                setMarketList(markets)
+//            }
+//        })
 
     }
 
     override fun onResume() {
         super.onResume()
 
-        marketViewModel.getAllMarkets()
+//        marketViewModel.getAllMarkets()
 
+        listItemViewModel.getHomeListItem()
 
     }
 
@@ -54,9 +66,9 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         startActivity(intent)
     }
 
-    private fun setMarketList(markets: List<Market>) {
-        binding.marketRecyclerView.adapter = adapter
+    private fun setMarketList(listItem: List<ListItem>) {
+        binding.recyclerView.adapter = adapter
 
-        adapter.submitList(markets)
+        adapter.submitList(listItem)
     }
 }
