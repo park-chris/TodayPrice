@@ -15,7 +15,7 @@ object ViewHolderGenerator {
         onItemClickListener: OnItemListItemListener
     ): ListItemViewHolder<*> {
         return when (viewType) {
-            ViewType.NEWS.ordinal -> NewsViewHolder(parent.toBinding())
+            ViewType.NEWS.ordinal -> NewsViewHolder(parent.toBinding(), onItemClickListener)
             ViewType.MARKET.ordinal -> MarketViewHolder(parent.toBinding(), onItemClickListener)
             ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(parent.toBinding(), onItemClickListener)
             else -> ItemViewHolder(parent.toBinding())

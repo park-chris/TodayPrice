@@ -24,10 +24,6 @@ const val TAG = "TestLog"
 class MainActivity : BaseActivity(ToolbarType.MENU) {
     private lateinit var binding: ActivityMainBinding
 
-    private val marketViewModel: MarketViewModel by viewModels {
-        MarketViewModel.MarketViewModelFactory(MarketRepositoryImpl())
-    }
-
     private val listItemViewModel: ListItemViewModel by viewModels {
         ListItemViewModel.ListItemViewModelFactory(ListItemRepositoryImpl())
     }
@@ -56,21 +52,14 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         listItemViewModel.listItem.observe(this, Observer { listItem ->
             listItem?.let {
                 setMarketList(it)
-                Log.e(TAG, "list: $it")
             }
         })
-//        marketViewModel.markets.observe(this, Observer {markets ->
-//            markets?.let {
-//                setMarketList(markets)
-//            }
-//        })
 
     }
 
     override fun onResume() {
         super.onResume()
 
-//        marketViewModel.getAllMarkets()
 
         listItemViewModel.getHomeListItem()
 
