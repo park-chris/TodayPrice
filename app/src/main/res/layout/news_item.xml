@@ -16,7 +16,7 @@
         android:id="@+id/contentTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxWidth="300dp"
+        android:maxWidth="200dp"
         android:maxLines="3"
         android:text="@{item.newsContent}"
         app:layout_constraintTop_toTopOf="parent" />

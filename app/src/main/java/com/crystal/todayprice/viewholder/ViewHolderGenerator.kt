@@ -4,18 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.crystal.todayprice.data.ViewType
 import androidx.viewbinding.ViewBinding
+import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.databinding.EmptyItemBinding
 
 object ViewHolderGenerator {
 
     fun get(
         parent: ViewGroup,
-        viewType: Int
+        viewType: Int,
+        onItemClickListener: OnItemListItemListener
     ): ListItemViewHolder<*> {
         return when (viewType) {
             ViewType.NEWS.ordinal -> NewsViewHolder(parent.toBinding())
-            ViewType.MARKET.ordinal -> MarketViewHolder(parent.toBinding())
-            ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(parent.toBinding())
+            ViewType.MARKET.ordinal -> MarketViewHolder(parent.toBinding(), onItemClickListener)
+            ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(parent.toBinding(), onItemClickListener)
             else -> ItemViewHolder(parent.toBinding())
         }
     }

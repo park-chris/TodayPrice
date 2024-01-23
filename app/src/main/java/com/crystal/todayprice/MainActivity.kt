@@ -3,13 +3,16 @@ package com.crystal.todayprice
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.crystal.todayprice.adapter.HomeAdapter
+import com.crystal.todayprice.adapter.ListItemAdapter
 import com.crystal.todayprice.component.BaseActivity
+import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
+import com.crystal.todayprice.data.News
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.ListItemRepositoryImpl
 import com.crystal.todayprice.repository.MarketRepositoryImpl
@@ -29,13 +32,26 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         ListItemViewModel.ListItemViewModelFactory(ListItemRepositoryImpl())
     }
 
-    private lateinit var adapter: HomeAdapter
+    private lateinit var adapter: ListItemAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
 
-        adapter = HomeAdapter()
+        adapter = ListItemAdapter(object : OnItemListItemListener {
+            override fun onItemClick(listItem: ListItem) {
+                when (listItem) {
+                    is Market -> {
+                        moveToMarketActivity(listItem)
+                    }
+                    is News -> {
+                        Toast.makeText(this@MainActivity, "news title : ${listItem.newsTitle}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+        })
 
         listItemViewModel.listItem.observe(this, Observer { listItem ->
             listItem?.let {
@@ -71,4 +87,5 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
 
         adapter.submitList(listItem)
     }
+
 }

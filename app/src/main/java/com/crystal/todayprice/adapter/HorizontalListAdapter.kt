@@ -3,11 +3,14 @@ package com.crystal.todayprice.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.crystal.todayprice.component.ListItemDiffUtil
+import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.viewholder.ListItemViewHolder
 import com.crystal.todayprice.viewholder.ViewHolderGenerator
 
-class HorizontalListAdapter: ListAdapter<ListItem, ListItemViewHolder<*>>(ListItemDiffUtil()) {
+class HorizontalListAdapter(
+    private val onItemListItemListener: OnItemListItemListener
+): ListAdapter<ListItem, ListItemViewHolder<*>>(ListItemDiffUtil()) {
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
@@ -15,7 +18,7 @@ class HorizontalListAdapter: ListAdapter<ListItem, ListItemViewHolder<*>>(ListIt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder<*> {
-        return ViewHolderGenerator.get(parent, viewType)
+        return ViewHolderGenerator.get(parent, viewType, onItemListItemListener)
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder<*>, position: Int) {
