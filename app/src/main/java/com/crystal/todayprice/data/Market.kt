@@ -25,7 +25,10 @@ data class Market(
     val borough: String = "",
     val description: String = "",
     val phoneNumber: String = "",
-) : Serializable
+) : Serializable, ListItem {
+    override val viewType: ViewType
+        get() = ViewType.MARKET
+}
 
 
 /**

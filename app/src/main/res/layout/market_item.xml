@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.crystal.todayprice.data.Market" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:maxWidth="156dp"
@@ -14,6 +22,7 @@
         android:layout_height="104dp"
         android:background="@drawable/bg_image"
         android:scaleType="centerCrop"
+        app:setImage="@{item.imgUrl}"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -25,6 +34,7 @@
         android:maxLines="1"
         android:textColor="@color/subtitle_text"
         android:textSize="@dimen/x_small_text_size"
+        android:text="@{item.address}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/marketImageView"
@@ -38,7 +48,9 @@
         android:maxLines="1"
         android:textColor="@color/title_text"
         android:textSize="@dimen/small_text_size"
+        android:text="@{item.name}"
         app:layout_constraintTop_toBottomOf="@id/addressTextView"
         tools:text="ddd" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

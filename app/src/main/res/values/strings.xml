@@ -19,6 +19,7 @@
     <string name="activity_container">액티비티 컨테이너</string>
 
 
+    <string name="format_money">%1$s원</string>
 
 
 <!--    category 별 글-->
