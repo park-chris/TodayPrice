@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/layout"
-    android:orientation="vertical"
-    android:background="@drawable/effect_basic_ripple">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/itemImageView"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/bg_image"
-        android:src="@drawable/no_picture" />
+    <data>
 
+        <variable
+            name="item"
+            type="com.crystal.todayprice.data.Item" />
+    </data>
 
-    <TextView
-        android:id="@+id/priceTextView"
+    <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/title_text"
-        android:textSize="@dimen/item_title_text_size"
-        android:layout_marginTop="5dp"
-        tools:text="ddd" />
+        android:background="@drawable/effect_basic_ripple"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/subtitle_text"
-        android:textSize="@dimen/item_subtitle_text_size"
-        android:layout_marginTop="5dp"
-        tools:text="ddd" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/itemImageView"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@drawable/bg_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/no_picture"
+            app:itemImageUrl="@{item.itemId}" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/priceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/title_text"
+            android:textSize="@dimen/item_title_text_size"
+            app:moneyText="@{item.itemPrice}"
+            tools:text="ddd" />
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@{item.itemName}"
+            android:textColor="@color/subtitle_text"
+            android:textSize="@dimen/item_subtitle_text_size"
+            tools:text="ddd" />
+
+    </LinearLayout>
+</layout>

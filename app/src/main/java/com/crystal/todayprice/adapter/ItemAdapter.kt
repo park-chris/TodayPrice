@@ -24,8 +24,7 @@ class ItemAdapter(
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item?) {
             item?.let {
-                binding.nameTextView.text = it.itemName
-                binding.priceTextView.text = TextUtil.priceFormat(binding.root.context, it.itemPrice.toDouble())
+                binding.item = it
                 binding.layout.setOnClickListener {
                     onClick(item)
                 }

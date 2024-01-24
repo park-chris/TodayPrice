@@ -28,9 +28,24 @@ fun ImageView.setImage(imageUrl: String?) {
     }
 }
 
+@BindingAdapter("itemImageUrl")
+fun ImageView.setImage(itemId: Int?) {
+    val url = "https://firebasestorage.googleapis.com/v0/b/today-price-94264.appspot.com/o/item%2F${itemId}.webp?alt=media"
+    Glide.with(this)
+        .load(url)
+        .centerCrop()
+        .transition(DrawableTransitionOptions.withCrossFade(300))
+        .error(R.drawable.no_picture)
+        .into(this)
+}
+
 @BindingAdapter("moneyText")
-fun TextView.setMoneyText(money: Long?) {
-    text = resources.getString(R.string.format_money, NumberFormat.getInstance(Locale.KOREA).format( money ?: 0))
+fun TextView.setMoneyText(money: Int?) {
+    text = if (money == 0) {
+        resources.getString(R.string.no_stock)
+    } else {
+        resources.getString(R.string.format_money, NumberFormat.getInstance(Locale.KOREA).format( money ?: 0))
+    }
 }
 
 @BindingAdapter("descriptionText")
