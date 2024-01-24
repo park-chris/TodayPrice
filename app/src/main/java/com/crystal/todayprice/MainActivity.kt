@@ -2,7 +2,6 @@ package com.crystal.todayprice
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -13,12 +12,11 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.News
+import com.crystal.todayprice.data.ViewType
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.ListItemRepositoryImpl
-import com.crystal.todayprice.repository.MarketRepositoryImpl
 import com.crystal.todayprice.ui.MarketActivity
 import com.crystal.todayprice.viewmodel.ListItemViewModel
-import com.crystal.todayprice.viewmodel.MarketViewModel
 
 const val TAG = "TestLog"
 class MainActivity : BaseActivity(ToolbarType.MENU) {
@@ -44,6 +42,18 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
                     is News -> {
                         Toast.makeText(this@MainActivity, "news title : ${listItem.newsTitle}", Toast.LENGTH_SHORT).show()
                     }
+                }
+            }
+
+            override fun onSeeMoreClick(viewType: ViewType) {
+                when (viewType) {
+                    ViewType.NEWS -> {
+                        Toast.makeText(this@MainActivity, "뉴스화면으로 이동", Toast.LENGTH_SHORT).show()
+                    }
+                    ViewType.MARKET -> {
+                        Toast.makeText(this@MainActivity, "마켓화면으로 이동", Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {}
                 }
             }
 
