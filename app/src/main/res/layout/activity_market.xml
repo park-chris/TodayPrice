@@ -38,7 +38,7 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/market_title_text_size"
+                android:textSize="@dimen/x_large_text_size"
                 android:layout_marginHorizontal="@dimen/horizontal_padding"
                 android:text="@{market.name}"
                 android:layout_marginTop="20dp"
@@ -54,7 +54,7 @@
                 app:layout_constraintTop_toBottomOf="@id/nameTextView"
                 android:paddingBottom="100dp"
                 android:layout_marginTop="20dp"
-                android:text="@{market.description}"
+                app:descriptionText="@{market.description}"
                 android:textStyle="bold" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

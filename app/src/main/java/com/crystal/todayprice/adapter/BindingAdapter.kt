@@ -32,3 +32,12 @@ fun ImageView.setImage(imageUrl: String?) {
 fun TextView.setMoneyText(money: Long?) {
     text = resources.getString(R.string.format_money, NumberFormat.getInstance(Locale.KOREA).format( money ?: 0))
 }
+
+@BindingAdapter("descriptionText")
+fun TextView.setDescriptionText(description: String?) {
+    text = if (description != null && description.isEmpty()) {
+        resources.getString(R.string.market_empty_description)
+    } else {
+        description
+    }
+}

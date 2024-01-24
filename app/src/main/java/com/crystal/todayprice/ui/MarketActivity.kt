@@ -45,9 +45,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
         market?.let {
             binding.market = it
-            if (it.description.isEmpty()) {
-                binding.descriptionTextView.text = resources.getString(R.string.market_empty_description)
-            }
         }
 
     }
