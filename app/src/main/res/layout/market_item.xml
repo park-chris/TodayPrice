@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.crystal.todayprice.data.Market" />
@@ -20,7 +19,7 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/marketImageView"
             android:layout_width="match_parent"
-            android:layout_height="104dp"
+            android:layout_height="200dp"
             android:background="@drawable/bg_image"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +32,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{item.address}"
+            android:text="@{item.borough}"
             android:textColor="@color/subtitle_text"
             android:textSize="@dimen/x_small_text_size"
             app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +48,7 @@
             android:maxLines="1"
             android:text="@{item.name}"
             android:textColor="@color/title_text"
-            android:textSize="@dimen/small_text_size"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintTop_toBottomOf="@id/addressTextView"
             tools:text="ddd" />
 
