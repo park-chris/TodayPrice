@@ -6,6 +6,7 @@ import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.data.Horizontal
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.databinding.HorizontalItemBinding
+import com.crystal.todayprice.util.HorizontalSpaceItemDecoration
 
 class HorizontalViewHolder(
     private val binding: HorizontalItemBinding,
@@ -14,12 +15,15 @@ class HorizontalViewHolder(
     private val adapter = HorizontalListAdapter(onItemClickListener)
 
     init {
+        val itemDecoration = HorizontalSpaceItemDecoration(30)
+        binding.listView.addItemDecoration(itemDecoration)
         binding.listView.adapter = adapter
     }
 
     override fun bind(item: ListItem) {
         super.bind(item)
         item as Horizontal
+
         binding.titleTextView.text = item.title
         adapter.submitList(item.items)
 

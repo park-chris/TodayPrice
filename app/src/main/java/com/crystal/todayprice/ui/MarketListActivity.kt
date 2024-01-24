@@ -17,6 +17,7 @@ import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketListBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
+import com.crystal.todayprice.util.GridSpacingItemDecoration
 import com.crystal.todayprice.viewmodel.MarketViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.delay
@@ -57,7 +58,13 @@ class MarketListActivity: BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON)
     }
 
     private fun setMarkets() {
-        binding.itemRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.horizontal_padding)
+        val spanCount = 2
+        val includeEdge = true
+
+        binding.itemRecyclerView.layoutManager = GridLayoutManager(this, spanCount)
+        val itemDecoration = GridSpacingItemDecoration(spanCount, spacingInPixels, includeEdge)
+        binding.itemRecyclerView.addItemDecoration(itemDecoration)
         binding.itemRecyclerView.adapter = adapter
     }
     private fun moveToMarket(market: Market) {

@@ -13,8 +13,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/horizontal_padding"
-        android:maxWidth="156dp">
+        android:maxWidth="170dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/marketImageView"

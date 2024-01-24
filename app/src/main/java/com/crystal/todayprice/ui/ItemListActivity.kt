@@ -2,7 +2,6 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -18,6 +17,7 @@ import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityItemListBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
+import com.crystal.todayprice.util.GridSpacingItemDecoration
 import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.google.android.material.chip.Chip
@@ -56,8 +56,13 @@ class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) 
     }
 
     private fun setItems() {
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen.horizontal_padding)
+        val spanCount = 2
+        val includeEdge = true
 
-        binding.itemRecyclerView.layoutManager = GridLayoutManager(this, 2)
+        binding.itemRecyclerView.layoutManager = GridLayoutManager(this, spanCount)
+        val itemDecoration = GridSpacingItemDecoration(spanCount, spacingInPixels, includeEdge)
+        binding.itemRecyclerView.addItemDecoration(itemDecoration)
         binding.itemRecyclerView.adapter = adapter
 
         lifecycleScope.launch {
@@ -118,7 +123,7 @@ class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) 
             })
         }
 
-        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             for (id in checkedIds) {
                 when (id) {
                     R.id.all -> adapter.submitList(itemViewModel.items.value ?: emptyList())
@@ -136,8 +141,6 @@ class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) 
                 }
             }
         }
-
     }
-
 
 }
