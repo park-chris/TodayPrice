@@ -20,6 +20,12 @@
             android:name=".ui.MarketActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.MarketListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.NewsListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ItemActivity"
             android:exported="false" />
         <activity
