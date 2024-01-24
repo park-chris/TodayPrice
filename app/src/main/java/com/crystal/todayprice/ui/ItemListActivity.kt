@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,6 +22,7 @@ import com.crystal.todayprice.util.GridSpacingItemDecoration
 import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.viewmodel.ItemViewModel
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
@@ -68,6 +70,7 @@ class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) 
         lifecycleScope.launch {
             itemViewModel.items.observe(this@ItemListActivity, Observer {
                 adapter.submitList(it)
+                binding.progressBar.isVisible = false
             })
         }
 
@@ -126,20 +129,30 @@ class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) 
         binding.chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             for (id in checkedIds) {
                 when (id) {
-                    R.id.all -> adapter.submitList(itemViewModel.items.value ?: emptyList())
-                    R.id.grain -> adapter.submitList(itemViewModel.getFilterItems("grain"))
-                    R.id.fruits -> adapter.submitList(itemViewModel.getFilterItems("fruits"))
-                    R.id.seaFood -> adapter.submitList(itemViewModel.getFilterItems("seaFood"))
-                    R.id.meatEggs -> adapter.submitList(itemViewModel.getFilterItems("meatEggs"))
-                    R.id.vegetables -> adapter.submitList(itemViewModel.getFilterItems("vegetables"))
-                    R.id.seasonings -> adapter.submitList(itemViewModel.getFilterItems("seasonings"))
-                    R.id.processedFoods -> adapter.submitList(itemViewModel.getFilterItems("processedFoods"))
-                    R.id.dairyProducts -> adapter.submitList(itemViewModel.getFilterItems("dairyProducts"))
-                    R.id.beverages -> adapter.submitList(itemViewModel.getFilterItems("beverages"))
-                    R.id.householdItems -> adapter.submitList(itemViewModel.getFilterItems("householdItems"))
-                    R.id.undefined -> adapter.submitList(itemViewModel.getFilterItems("undefined"))
+                    R.id.all -> submitList(itemViewModel.items.value ?: emptyList())
+                    R.id.grain -> submitList(itemViewModel.getFilterItems("grain"))
+                    R.id.fruits -> submitList(itemViewModel.getFilterItems("fruits"))
+                    R.id.seaFood -> submitList(itemViewModel.getFilterItems("seaFood"))
+                    R.id.meatEggs -> submitList(itemViewModel.getFilterItems("meatEggs"))
+                    R.id.vegetables -> submitList(itemViewModel.getFilterItems("vegetables"))
+                    R.id.seasonings -> submitList(itemViewModel.getFilterItems("seasonings"))
+                    R.id.processedFoods -> submitList(itemViewModel.getFilterItems("processedFoods"))
+                    R.id.dairyProducts -> submitList(itemViewModel.getFilterItems("dairyProducts"))
+                    R.id.beverages -> submitList(itemViewModel.getFilterItems("beverages"))
+                    R.id.householdItems -> submitList(itemViewModel.getFilterItems("householdItems"))
+                    R.id.undefined -> submitList(itemViewModel.getFilterItems("undefined"))
                 }
             }
+        }
+    }
+
+    private fun submitList(list: List<Item>) {
+        adapter.submitList(list)
+        binding.infoTextView.isVisible = list.isEmpty()
+
+        lifecycleScope.launch {
+            delay(300)
+            binding.itemRecyclerView.scrollToPosition(0)
         }
     }
 
