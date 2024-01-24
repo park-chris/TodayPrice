@@ -23,6 +23,7 @@ fun ImageView.setImage(imageUrl: String?) {
             .load(imageUrl)
             .centerCrop()
             .transition(DrawableTransitionOptions.withCrossFade(300))
+            .error(R.drawable.no_picture)
             .into(this)
     }
 }

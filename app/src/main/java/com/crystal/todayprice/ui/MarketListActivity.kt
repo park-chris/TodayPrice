@@ -2,6 +2,7 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -18,6 +19,7 @@ import com.crystal.todayprice.databinding.ActivityMarketListBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
 import com.crystal.todayprice.viewmodel.MarketViewModel
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MarketListActivity: BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
@@ -99,5 +101,10 @@ class MarketListActivity: BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON)
     private fun submitList(list: List<Market>) {
         adapter.submitList(list)
         binding.infoTextView.isVisible = list.isEmpty()
+
+        lifecycleScope.launch {
+            delay(300)
+            binding.itemRecyclerView.scrollToPosition(0)
+        }
     }
 }
