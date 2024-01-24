@@ -21,18 +21,7 @@ class MarketAdapter(
 
         fun bind(market: Market?) {
             market?.let {
-                binding.nameTextView.text = it.name
-                binding.addressTextView.text = it.address
-
-                if (it.imgUrl.isNotEmpty()) {
-                    Glide.with(binding.root)
-                        .load(it.imgUrl)
-                        .centerCrop()
-                        .error(R.drawable.no_picture)
-                        .into(binding.marketImageView)
-                } else {
-                    binding.marketImageView.setImageResource(R.drawable.no_picture)
-                }
+                binding.item = market
 
                 binding.layout.setOnClickListener {
                     onClick(market)

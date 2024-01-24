@@ -23,6 +23,8 @@
 
     <string name="see_more">더보기</string>
 
+    <string name="no_list">목록이 없습니다.</string>
+
 <!--    category 별 글-->
     <string name="all">전체</string>
     <string name="grain">곡류</string>
