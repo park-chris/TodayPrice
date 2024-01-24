@@ -44,12 +44,6 @@ class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
         market = intent.intentSerializable(MARKET_NAME, Market::class.java)
 
         market?.let {
-            Glide.with(binding.root)
-                .load(it.imgUrl)
-                .centerCrop()
-                .error(R.drawable.no_picture)
-                .into(binding.marketImageView)
-
             binding.market = it
             if (it.description.isEmpty()) {
                 binding.descriptionTextView.text = resources.getString(R.string.market_empty_description)

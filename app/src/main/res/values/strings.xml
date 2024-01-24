@@ -14,7 +14,7 @@
     <string name="price_graph">가격 변동표</string>
     <string name="market_empty_description">시장에 대한 소개글이 없습니다.</string>
 
-    <string name="market_prices_button">제품 목록</string>
+    <string name="market_prices_button">생필품 목록</string>
     <!--    description-->
     <string name="activity_container">액티비티 컨테이너</string>
 
