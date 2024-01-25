@@ -18,6 +18,8 @@ object ViewHolderGenerator {
             ViewType.NEWS.ordinal -> NewsViewHolder(parent.toBinding(), onItemClickListener)
             ViewType.MARKET.ordinal -> MarketViewHolder(parent.toBinding(), onItemClickListener)
             ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(parent.toBinding(), onItemClickListener)
+            ViewType.VIEW_PAGER.ordinal -> ViewPagerViewHolder(parent.toBinding(), onItemClickListener)
+            ViewType.NOTICE.ordinal -> NoticeViewHolder(parent.toBinding(), onItemClickListener)
             else -> ItemViewHolder(parent.toBinding())
         }
     }

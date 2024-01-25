@@ -5,6 +5,8 @@ import com.crystal.todayprice.data.Horizontal
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.News
+import com.crystal.todayprice.data.Notice
+import com.crystal.todayprice.data.ViewPager
 import com.crystal.todayprice.data.ViewType
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializationContext
@@ -30,6 +32,8 @@ class ListItemDeserializer: JsonDeserializer<ListItem> {
                 ViewType.NEWS.name -> gson.fromJson(json, News::class.java)
                 ViewType.MARKET.name -> gson.fromJson(json, Market::class.java)
                 ViewType.HORIZONTAL.name -> gson.fromJson(json, Horizontal::class.java)
+                ViewType.VIEW_PAGER.name -> gson.fromJson(json, ViewPager::class.java)
+                ViewType.NOTICE.name -> gson.fromJson(json, Notice::class.java)
                 else -> gson.fromJson(json, Empty::class.java)
             }
         } catch (e: Exception) {

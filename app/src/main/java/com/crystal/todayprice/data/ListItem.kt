@@ -11,5 +11,7 @@ enum class ViewType {
     MARKET,
     NEWS,
     HORIZONTAL,
+    VIEW_PAGER,
+    NOTICE,
     EMPTY,
 }

@@ -13,6 +13,7 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.News
+import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.data.ViewType
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.ListItemRepositoryImpl
@@ -47,6 +48,9 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
                     }
                     is News -> {
                         Toast.makeText(this@MainActivity, "news title : ${listItem.newsTitle}", Toast.LENGTH_SHORT).show()
+                    }
+                    is Notice -> {
+                        Toast.makeText(this@MainActivity, "notice title : ${listItem.title}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
