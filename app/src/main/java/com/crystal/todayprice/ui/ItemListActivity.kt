@@ -2,11 +2,7 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.widget.HorizontalScrollView
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -18,7 +14,6 @@ import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Item
-import com.crystal.todayprice.data.ItemType
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityItemListBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
@@ -162,18 +157,28 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
         }
     }
 
-    override fun onSearch(query: String) {
-        val items = itemViewModel.getFilterItem(query)
-        if (items.isNotEmpty()) {
-            binding.chipGroup.check(R.id.search)
-            submitList(items)
-            binding.horizontalScrollView.post {
-                binding.horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.no_search), Toast.LENGTH_SHORT).show()
-        }
-        super.onSearch(query)
-    }
+//    private fun closeSearchView() {
+//        val inputMethodManager =
+//            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//        inputMethodManager.hideSoftInputFromWindow(searchView?.windowToken, 0)
+//        searchView!!.isIconified = true
+//        searchView!!.clearFocus()
+//    }
+
+
+    // 추후 에딧 텍스트 만들기
+//    override fun onSearch(query: String) {
+//        val items = itemViewModel.getFilterItem(query)
+//        if (items.isNotEmpty()) {
+//            binding.chipGroup.check(R.id.search)
+//            submitList(items)
+//            binding.horizontalScrollView.post {
+//                binding.horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
+//            }
+//        } else {
+//            Toast.makeText(this, getString(R.string.no_search), Toast.LENGTH_SHORT).show()
+//        }
+//        super.onSearch(query)
+//    }
 
 }
