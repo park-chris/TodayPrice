@@ -2,34 +2,15 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.view.View.OnScrollChangeListener
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.crystal.todayprice.R
-import com.crystal.todayprice.adapter.ItemAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
-import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketBinding
-import com.crystal.todayprice.repository.ItemRepositoryImpl
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
-import com.crystal.todayprice.util.TextUtil
-import com.crystal.todayprice.viewmodel.ItemViewModel
-import com.google.android.material.chip.Chip
-import kotlinx.coroutines.launch
 
-private const val TAG = "TestLog"
-class MarketActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
+class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketBinding
 

@@ -25,7 +25,7 @@ import com.google.android.material.chip.Chip
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ItemListActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
+class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityItemListBinding
 
