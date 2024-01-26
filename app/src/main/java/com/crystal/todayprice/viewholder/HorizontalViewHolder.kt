@@ -5,13 +5,13 @@ import com.crystal.todayprice.adapter.HorizontalListAdapter
 import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.data.Horizontal
 import com.crystal.todayprice.data.ListItem
-import com.crystal.todayprice.databinding.HorizontalItemBinding
+import com.crystal.todayprice.databinding.ItemHorizontalBinding
 import com.crystal.todayprice.util.HorizontalSpaceItemDecoration
 
 class HorizontalViewHolder(
-    private val binding: HorizontalItemBinding,
+    private val binding: ItemHorizontalBinding,
     private val onItemClickListener: OnItemListItemListener
-): ListItemViewHolder<HorizontalItemBinding>(binding) {
+): ListItemViewHolder<ItemHorizontalBinding>(binding) {
     private val adapter = HorizontalListAdapter(onItemClickListener)
 
     init {

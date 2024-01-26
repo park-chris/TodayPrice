@@ -2,12 +2,12 @@ package com.crystal.todayprice.viewholder
 
 import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.databinding.MarketItemBinding
+import com.crystal.todayprice.databinding.ItemMarketBinding
 
 class MarketViewHolder(
-    binding: MarketItemBinding,
+    binding: ItemMarketBinding,
     private val onItemClickListener: OnItemListItemListener
-): ListItemViewHolder<MarketItemBinding>(binding) {
+): ListItemViewHolder<ItemMarketBinding>(binding) {
     init {
         binding.root.setOnClickListener {
             item?.let {

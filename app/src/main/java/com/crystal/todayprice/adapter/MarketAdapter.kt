@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.crystal.todayprice.R
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.databinding.MarketItemBinding
+import com.crystal.todayprice.databinding.ItemMarketBinding
 
 class MarketAdapter(
     private val onClick: (Market) -> Unit
@@ -16,7 +15,7 @@ class MarketAdapter(
 
     inner class ViewHolder(
         private val onClick: (Market) -> Unit,
-        private val binding: MarketItemBinding
+        private val binding: ItemMarketBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(market: Market?) {
@@ -37,8 +36,8 @@ class MarketAdapter(
         parent: ViewGroup
     ): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.market_item, parent, false)
-        val binding = MarketItemBinding.bind(view)
+            .inflate(R.layout.item_market, parent, false)
+        val binding = ItemMarketBinding.bind(view)
         return ViewHolder(onClick, binding)
     }
 

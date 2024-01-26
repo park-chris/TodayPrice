@@ -2,17 +2,12 @@ package com.crystal.todayprice.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.todayprice.R
 import com.crystal.todayprice.data.Item
-import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.data.NecessaryPrice
-import com.crystal.todayprice.databinding.MarketItemBinding
-import com.crystal.todayprice.databinding.PriceItemBinding
-import com.crystal.todayprice.util.TextUtil
+import com.crystal.todayprice.databinding.ItemPriceBinding
 
 class ItemAdapter(
     private val onClick: (Item) -> Unit
@@ -20,7 +15,7 @@ class ItemAdapter(
 
     inner class ViewHolder(
         private val onClick: (Item) -> Unit,
-        private val binding: PriceItemBinding
+        private val binding: ItemPriceBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item?) {
             item?.let {
@@ -36,8 +31,8 @@ class ItemAdapter(
         parent: ViewGroup
     ): ItemAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.price_item, parent, false)
-        val binding = PriceItemBinding.bind(view)
+            .inflate(R.layout.item_price, parent, false)
+        val binding = ItemPriceBinding.bind(view)
         return ViewHolder(onClick, binding)
     }
 

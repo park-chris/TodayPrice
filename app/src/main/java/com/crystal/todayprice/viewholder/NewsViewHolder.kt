@@ -2,12 +2,12 @@ package com.crystal.todayprice.viewholder
 
 import com.crystal.todayprice.component.OnItemListItemListener
 import com.crystal.todayprice.data.News
-import com.crystal.todayprice.databinding.NewsItemBinding
+import com.crystal.todayprice.databinding.ItemNewsBinding
 
 class NewsViewHolder(
-    binding: NewsItemBinding,
+    binding: ItemNewsBinding,
     private val onItemClickListener: OnItemListItemListener
-): ListItemViewHolder<NewsItemBinding>(binding) {
+): ListItemViewHolder<ItemNewsBinding>(binding) {
     init {
         binding.root.setOnClickListener {
             item?.let {

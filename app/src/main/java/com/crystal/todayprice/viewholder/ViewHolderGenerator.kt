@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.crystal.todayprice.data.ViewType
 import androidx.viewbinding.ViewBinding
 import com.crystal.todayprice.component.OnItemListItemListener
-import com.crystal.todayprice.databinding.EmptyItemBinding
+import com.crystal.todayprice.databinding.ItemEmptyBinding
 
 object ViewHolderGenerator {
 
@@ -24,7 +24,7 @@ object ViewHolderGenerator {
         }
     }
 
-    class ItemViewHolder(binding: EmptyItemBinding) : ListItemViewHolder<EmptyItemBinding>(binding)
+    class ItemViewHolder(binding: ItemEmptyBinding) : ListItemViewHolder<ItemEmptyBinding>(binding)
 
     private inline fun <reified V: ViewBinding> ViewGroup.toBinding() : V {
         return V::class.java.getMethod(
