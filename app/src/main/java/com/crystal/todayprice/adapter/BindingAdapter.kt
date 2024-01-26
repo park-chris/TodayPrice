@@ -26,6 +26,7 @@ fun ImageView.setImage(imageUrl: String?) {
             .error(R.drawable.no_picture)
             .into(this)
     }
+    this.clipToOutline = true
 }
 
 @BindingAdapter("itemImageUrl")
@@ -37,6 +38,7 @@ fun ImageView.setImage(itemId: Int?) {
         .transition(DrawableTransitionOptions.withCrossFade(300))
         .error(R.drawable.no_picture)
         .into(this)
+    this.clipToOutline = true
 }
 
 @BindingAdapter("moneyText")

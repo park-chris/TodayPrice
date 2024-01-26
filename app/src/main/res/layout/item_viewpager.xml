@@ -4,7 +4,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:padding="@dimen/horizontal_padding"
-        android:layout_height="200dp">
+        android:layout_height="120dp">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager"
