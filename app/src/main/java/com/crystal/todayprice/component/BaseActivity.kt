@@ -154,6 +154,12 @@ open class BaseActivity(
 
     }
     open fun actionMenuSearch() {
+        if (toolbarType == ToolbarType.BACK) {
+            openSearchView()
+        }
+    }
+
+    private fun openSearchView() {
         baseBinding.searchView.visibility = View.VISIBLE
         baseBinding.toolbarLayout.visibility = View.GONE
         baseBinding.searchView.requestFocus()

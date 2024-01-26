@@ -159,15 +159,6 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
         }
     }
 
-//    private fun closeSearchView() {
-//        val inputMethodManager =
-//            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//        inputMethodManager.hideSoftInputFromWindow(searchView?.windowToken, 0)
-//        searchView!!.isIconified = true
-//        searchView!!.clearFocus()
-//    }
-
-
     override fun onSearch(query: String?) {
         query?.let {
             val items = itemViewModel.getFilterItem(query)

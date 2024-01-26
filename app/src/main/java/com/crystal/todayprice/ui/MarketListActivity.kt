@@ -23,7 +23,7 @@ import com.google.android.material.chip.Chip
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MarketListActivity: BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) {
+class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketListBinding
 
