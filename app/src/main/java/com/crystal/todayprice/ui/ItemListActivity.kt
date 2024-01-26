@@ -2,7 +2,11 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.HorizontalScrollView
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -14,6 +18,7 @@ import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Item
+import com.crystal.todayprice.data.ItemType
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityItemListBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
@@ -88,7 +93,6 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
         val categoryArray = resources.getStringArray(R.array.item_type_array)
 
         for (category in categoryArray) {
-
             val categoryId = when (category) {
                 "all" -> R.id.all
                 "grain" -> R.id.grain
@@ -102,6 +106,7 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
                 "beverages" -> R.id.beverages
                 "householdItems" -> R.id.householdItems
                 "undefined" -> R.id.undefined
+                "search" -> R.id.search
                 else -> R.id.all
             }
 
@@ -141,6 +146,7 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
                     R.id.beverages -> submitList(itemViewModel.getFilterItems("beverages"))
                     R.id.householdItems -> submitList(itemViewModel.getFilterItems("householdItems"))
                     R.id.undefined -> submitList(itemViewModel.getFilterItems("undefined"))
+                    R.id.search -> submitList(emptyList())
                 }
             }
         }
@@ -154,6 +160,20 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
             delay(300)
             binding.itemRecyclerView.scrollToPosition(0)
         }
+    }
+
+    override fun onSearch(query: String) {
+        val items = itemViewModel.getFilterItem(query)
+        if (items.isNotEmpty()) {
+            binding.chipGroup.check(R.id.search)
+            submitList(items)
+            binding.horizontalScrollView.post {
+                binding.horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
+            }
+        } else {
+            Toast.makeText(this, getString(R.string.no_search), Toast.LENGTH_SHORT).show()
+        }
+        super.onSearch(query)
     }
 
 }

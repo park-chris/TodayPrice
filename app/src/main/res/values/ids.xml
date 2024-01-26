@@ -12,4 +12,5 @@
     <item name="beverages" type="id" />
     <item name="householdItems" type="id" />
     <item name="undefined" type="id" />
+    <item name="search" type="id" />
 </resources>

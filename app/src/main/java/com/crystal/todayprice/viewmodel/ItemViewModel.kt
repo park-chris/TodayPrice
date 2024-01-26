@@ -38,6 +38,11 @@ class ItemViewModel(private val itemRepository: ItemRepository): ViewModel() {
         return list.filter { item: Item -> item.category == TextUtil.stringToItemType(category) }
     }
 
+    fun getFilterItem(name: String): List<Item> {
+        val list = items.value ?: return emptyList()
+        return list.filter { item: Item -> item.itemName.contains(name) }
+    }
+
     class ItemViewModelFactory(private val itemRepository: ItemRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ItemViewModel(itemRepository) as T

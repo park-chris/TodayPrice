@@ -1,13 +1,17 @@
 package com.crystal.todayprice.component
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
@@ -20,6 +24,7 @@ open class BaseActivity(
     private val transitionMode: TransitionMode = TransitionMode.NONE,
 ) : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     protected lateinit var baseBinding: ActivityBaseBinding
+     var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +53,11 @@ open class BaseActivity(
     }
 
     override fun onBackPressed() {
+
         if (baseBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             baseBinding.drawerLayout.closeDrawers()
+        } else if (searchView != null && !searchView!!.isIconified) {
+            closeSearchView()
         } else {
             super.onBackPressed()
 
@@ -59,10 +67,12 @@ open class BaseActivity(
                         R.anim.none,
                         R.anim.horizon_exit
                     )
+
                     TransitionMode.VERTICAL -> overridePendingTransition(
                         R.anim.none,
                         R.anim.vertical_exit
                     )
+
                     else -> Unit
                 }
             }
@@ -70,39 +80,51 @@ open class BaseActivity(
     }
 
     override fun onDestroy() {
+        searchView?.setOnQueryTextListener(null)
         baseBinding.navigationView.setNavigationItemSelectedListener(null)
         super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_search -> {
-                actionMenuSearch()
-            }
-
-            R.id.action_favorite -> {
-                actionMenuFavorite()
-            }
-
-            R.id.action_home -> {
-                actionMenuHome()
-            }
-
-            android.R.id.home -> {
-                actionHome()
-            }
+            R.id.action_search -> actionMenuSearch(item)
+            R.id.action_favorite -> actionMenuFavorite()
+            R.id.action_home -> actionMenuHome()
+            android.R.id.home -> actionHome()
         }
         return super.onOptionsItemSelected(item)
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         when (toolbarType) {
             ToolbarType.MENU -> menuInflater.inflate(R.menu.menu_with_search, menu)
-            ToolbarType.BACK -> menuInflater.inflate(R.menu.back_with_search, menu)
+            ToolbarType.BACK -> setSearchView(menu)
             ToolbarType.HOME -> menuInflater.inflate(R.menu.back_with_home, menu)
             ToolbarType.ONLY_BACK -> {}
         }
         return true
     }
+
+    private fun setSearchView(menu: Menu) {
+        menuInflater.inflate(R.menu.back_with_search, menu)
+
+        val searchItem = menu.findItem(R.id.action_search)
+        searchView = searchItem.actionView as SearchView
+
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query ?: return true
+                onSearch(query)
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                return true
+            }
+        })
+    }
+
+
     private fun setToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(
@@ -123,24 +145,32 @@ open class BaseActivity(
 
     }
 
-    private fun actionMenuSearch() {
-        Toast.makeText(this, "검색하기", Toast.LENGTH_SHORT).show()
+    private fun closeSearchView() {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(searchView?.windowToken, 0)
+        searchView!!.isIconified = true
+        searchView!!.clearFocus()
     }
-    private fun actionMenuFavorite() {
-        Toast.makeText(this, "즐겨찾기", Toast.LENGTH_SHORT).show()
-    }
-    private fun actionMenuHome() {
-        Toast.makeText(this, "호오옴", Toast.LENGTH_SHORT).show()
 
+    open fun onSearch(query: String) {
+        closeSearchView()
+    }
+
+    open fun actionMenuSearch(menuItem: MenuItem) {}
+    open fun actionMenuFavorite() {}
+    private fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
+
     private fun actionHome() {
         when (toolbarType) {
             ToolbarType.MENU -> {
                 baseBinding.drawerLayout.openDrawer(GravityCompat.START)
             }
+
             ToolbarType.BACK -> {
                 finish()
             }

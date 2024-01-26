@@ -2,6 +2,7 @@ package com.crystal.todayprice.util
 
 import android.content.Context
 import com.crystal.todayprice.R
+import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.ItemType
 import java.text.DecimalFormat
 
@@ -33,6 +34,7 @@ class TextUtil {
                 "beverages" -> context.resources.getString(R.string.beverages)
                 "householdItems" -> context.resources.getString(R.string.householdItems)
                 "undefined" -> context.resources.getString(R.string.undefined)
+                "search" -> context.resources.getString(R.string.search_result)
                 else -> ""
             }
         }
@@ -53,5 +55,40 @@ class TextUtil {
                 else -> null
             }
         }
+
+        fun itemTypeToString(type: ItemType): String? {
+            return when (type) {
+                ItemType.GRAIN -> "grain"
+                ItemType.FRUITS -> "fruits"
+                ItemType.SEAFOOD -> "seaFood"
+                ItemType.MEAT_EGGS -> "meatEggs"
+                ItemType.VEGETABLES -> "vegetables"
+                ItemType.SEASONINGS -> "seasonings"
+                ItemType.PROCESSED_FOODS -> "processedFoods"
+                ItemType.DAIRY_PRODUCTS -> "dairyProducts"
+                ItemType.BEVERAGES -> "beverages"
+                ItemType.HOUSEHOLD_ITEMS -> "householdItems"
+                ItemType.UNDEFINED -> "undefined"
+                else -> null
+            }
+        }
+
+        fun itemTypeToId(type: ItemType): Int {
+            return when (type) {
+                ItemType.GRAIN -> R.id.grain
+                ItemType.FRUITS -> R.id.fruits
+                ItemType.SEAFOOD -> R.id.seaFood
+                ItemType.MEAT_EGGS ->  R.id.meatEggs
+                ItemType.VEGETABLES -> R.id.vegetables
+                ItemType.SEASONINGS -> R.id.seasonings
+                ItemType.PROCESSED_FOODS ->  R.id.processedFoods
+                ItemType.DAIRY_PRODUCTS -> R.id.dairyProducts
+                ItemType.BEVERAGES -> R.id.beverages
+                ItemType.HOUSEHOLD_ITEMS -> R.id.householdItems
+                ItemType.UNDEFINED -> R.id.undefined
+                else -> R.id.all
+            }
+        }
+
     }
 }

@@ -25,6 +25,8 @@
     <string name="see_more">더보기</string>
 
     <string name="no_list">목록이 없습니다.</string>
+    <string name="no_search">검색 결과가 없습니다.</string>
+    <string name="search_result">검색 결과</string>
 
 <!--    category 별 글-->
     <string name="all">전체</string>
