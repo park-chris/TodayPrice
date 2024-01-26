@@ -6,13 +6,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
 import com.crystal.todayprice.databinding.ActivityBaseBinding
@@ -24,6 +27,7 @@ open class BaseActivity(
     private val transitionMode: TransitionMode = TransitionMode.NONE,
 ) : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     protected lateinit var baseBinding: ActivityBaseBinding
+    private var searchViewVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +37,9 @@ open class BaseActivity(
         setToolbar()
         baseBinding.navigationView.setNavigationItemSelectedListener(this)
 
-        when (transitionMode) {
-            TransitionMode.HORIZON -> overridePendingTransition(R.anim.horizon_enter, R.anim.none)
-            TransitionMode.VERTICAL -> overridePendingTransition(R.anim.vertical_enter, R.anim.none)
-            else -> {}
-        }
+
+        setAnimation()
+        setSearchViewListener()
 
     }
 
@@ -55,6 +57,9 @@ open class BaseActivity(
 
         if (baseBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             baseBinding.drawerLayout.closeDrawers()
+        }
+        else if (searchViewVisible) {
+            closeSearchView()
         }
         else {
             super.onBackPressed()
@@ -78,6 +83,7 @@ open class BaseActivity(
     }
 
     override fun onDestroy() {
+        baseBinding.searchView.setOnQueryTextListener(null)
         baseBinding.navigationView.setNavigationItemSelectedListener(null)
         super.onDestroy()
     }
@@ -102,6 +108,32 @@ open class BaseActivity(
         return true
     }
 
+    private fun setAnimation() {
+        when (transitionMode) {
+            TransitionMode.HORIZON -> overridePendingTransition(R.anim.horizon_enter, R.anim.none)
+            TransitionMode.VERTICAL -> overridePendingTransition(R.anim.vertical_enter, R.anim.none)
+            else -> {}
+        }
+    }
+
+    private fun setSearchViewListener() {
+        when (toolbarType) {
+            ToolbarType.BACK -> {
+                baseBinding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        onSearch(query)
+                        return true
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        return true
+                    }
+                })
+            }
+            else -> {}
+        }
+    }
+
     private fun setToolbar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setBackgroundDrawable(
@@ -121,7 +153,22 @@ open class BaseActivity(
         }
 
     }
-    open fun actionMenuSearch() {}
+    open fun actionMenuSearch() {
+        baseBinding.searchView.visibility = View.VISIBLE
+        baseBinding.toolbarLayout.visibility = View.GONE
+        baseBinding.searchView.requestFocus()
+        searchViewVisible = true
+    }
+
+    private fun closeSearchView() {
+        baseBinding.searchView.visibility = View.GONE
+        baseBinding.toolbarLayout.visibility = View.VISIBLE
+        searchViewVisible = false
+    }
+
+    open fun onSearch(query: String?) {
+        closeSearchView()
+    }
     open fun actionMenuFavorite() {}
     private fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)

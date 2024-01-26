@@ -2,6 +2,8 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.HorizontalScrollView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -166,19 +168,20 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
 //    }
 
 
-    // 추후 에딧 텍스트 만들기
-//    override fun onSearch(query: String) {
-//        val items = itemViewModel.getFilterItem(query)
-//        if (items.isNotEmpty()) {
-//            binding.chipGroup.check(R.id.search)
-//            submitList(items)
-//            binding.horizontalScrollView.post {
-//                binding.horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
-//            }
-//        } else {
-//            Toast.makeText(this, getString(R.string.no_search), Toast.LENGTH_SHORT).show()
-//        }
-//        super.onSearch(query)
-//    }
+    override fun onSearch(query: String?) {
+        query?.let {
+            val items = itemViewModel.getFilterItem(query)
+            if (items.isNotEmpty()) {
+                binding.chipGroup.check(R.id.search)
+                submitList(items)
+                binding.horizontalScrollView.post {
+                    binding.horizontalScrollView.fullScroll(HorizontalScrollView.FOCUS_RIGHT)
+                }
+            } else {
+                Toast.makeText(this, getString(R.string.no_search), Toast.LENGTH_SHORT).show()
+            }
+        }
 
+        super.onSearch(query)
+    }
 }

@@ -27,6 +27,7 @@
     <string name="no_list">목록이 없습니다.</string>
     <string name="no_search">검색 결과가 없습니다.</string>
     <string name="search_result">검색 결과</string>
+    <string name="search_hint">검색어를 입력하세요.</string>
 
 <!--    category 별 글-->
     <string name="all">전체</string>

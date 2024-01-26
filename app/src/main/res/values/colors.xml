@@ -23,6 +23,7 @@
 
 
     <color name="highlight">#D6784C</color>
+    <color name="second_highlist">#D6632E</color>
 
     <color name="title_text">#191919</color>
     <color name="subtitle_text">#5C5C5C</color>
