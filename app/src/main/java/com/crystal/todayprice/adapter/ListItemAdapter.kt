@@ -1,10 +1,9 @@
 package com.crystal.todayprice.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.crystal.todayprice.component.ListItemDiffUtil
-import com.crystal.todayprice.component.OnItemListItemListener
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.viewholder.ListItemViewHolder
 import com.crystal.todayprice.viewholder.ViewHolderGenerator

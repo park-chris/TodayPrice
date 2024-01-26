@@ -1,7 +1,7 @@
 package com.crystal.todayprice.viewholder
 
 import com.crystal.todayprice.adapter.ListItemAdapter
-import com.crystal.todayprice.component.OnItemListItemListener
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.ViewPager
 import com.crystal.todayprice.databinding.ItemViewpagerBinding

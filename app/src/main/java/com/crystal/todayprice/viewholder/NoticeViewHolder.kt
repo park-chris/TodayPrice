@@ -1,6 +1,6 @@
 package com.crystal.todayprice.viewholder
 
-import com.crystal.todayprice.component.OnItemListItemListener
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.databinding.ItemNoticeBinding
 

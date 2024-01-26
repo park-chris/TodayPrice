@@ -99,6 +99,7 @@ open class BaseActivity(
             ToolbarType.MENU -> menuInflater.inflate(R.menu.menu_with_search, menu)
             ToolbarType.BACK -> menuInflater.inflate(R.menu.back_with_search, menu)
             ToolbarType.HOME -> menuInflater.inflate(R.menu.back_with_home, menu)
+            ToolbarType.ONLY_BACK -> {}
         }
         return true
     }
@@ -117,6 +118,7 @@ open class BaseActivity(
             ToolbarType.MENU -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
             ToolbarType.BACK -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
             ToolbarType.HOME -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+            ToolbarType.ONLY_BACK -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
     }
@@ -146,6 +148,10 @@ open class BaseActivity(
             ToolbarType.HOME -> {
                 finish()
             }
+
+            ToolbarType.ONLY_BACK -> {
+                finish()
+            }
         }
     }
 
@@ -163,6 +169,7 @@ enum class ToolbarType {
     MENU,
     BACK,
     HOME,
+    ONLY_BACK,
 }
 
 enum class TransitionMode {

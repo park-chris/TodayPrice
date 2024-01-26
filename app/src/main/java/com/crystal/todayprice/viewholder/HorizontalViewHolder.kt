@@ -2,7 +2,7 @@ package com.crystal.todayprice.viewholder
 
 import androidx.core.view.isVisible
 import com.crystal.todayprice.adapter.HorizontalListAdapter
-import com.crystal.todayprice.component.OnItemListItemListener
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.data.Horizontal
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.databinding.ItemHorizontalBinding

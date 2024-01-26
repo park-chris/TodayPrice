@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.crystal.todayprice.data.ViewType
 import androidx.viewbinding.ViewBinding
-import com.crystal.todayprice.component.OnItemListItemListener
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.databinding.ItemEmptyBinding
 
 object ViewHolderGenerator {

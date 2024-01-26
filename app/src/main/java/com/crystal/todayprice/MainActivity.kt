@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.adapter.ListItemAdapter
 import com.crystal.todayprice.component.BaseActivity
-import com.crystal.todayprice.component.OnItemListItemListener
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
@@ -20,6 +20,7 @@ import com.crystal.todayprice.repository.ListItemRepositoryImpl
 import com.crystal.todayprice.ui.MarketActivity
 import com.crystal.todayprice.ui.MarketListActivity
 import com.crystal.todayprice.ui.NewsListActivity
+import com.crystal.todayprice.ui.NoticeActivity
 import com.crystal.todayprice.viewmodel.ListItemViewModel
 
 class MainActivity : BaseActivity(ToolbarType.MENU) {
@@ -44,21 +45,22 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
             override fun onItemClick(listItem: ListItem) {
                 when (listItem) {
                     is Market -> {
-                        moveToMarketActivity(listItem)
+                        moveToActivity(MarketActivity::class.java, listItem)
                     }
                     is News -> {
                         Toast.makeText(this@MainActivity, "news title : ${listItem.newsTitle}", Toast.LENGTH_SHORT).show()
+
                     }
                     is Notice -> {
-                        Toast.makeText(this@MainActivity, "notice title : ${listItem.title}", Toast.LENGTH_SHORT).show()
+                        moveToActivity(NoticeActivity::class.java, listItem)
                     }
                 }
             }
 
             override fun onSeeMoreClick(viewType: ViewType) {
                 when (viewType) {
-                    ViewType.NEWS -> moveToActivity(NewsListActivity::class.java)
-                    ViewType.MARKET -> moveToActivity(MarketListActivity::class.java)
+                    ViewType.NEWS -> moveToActivity(NewsListActivity::class.java, null)
+                    ViewType.MARKET -> moveToActivity(MarketListActivity::class.java, null)
                     else -> {}
                 }
             }
@@ -76,14 +78,15 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         listItemViewModel.getHomeListItem()
     }
 
-    private fun moveToActivity(destinationClass: Class<*>) {
+    private fun moveToActivity(destinationClass: Class<*>, argument: ListItem?) {
         val intent = Intent(this, destinationClass)
-        startActivity(intent)
-    }
-
-    private fun moveToMarketActivity(market: Market) {
-        val intent = Intent(this, MarketActivity::class.java)
-        intent.putExtra(MarketActivity.MARKET_NAME, market)
+        argument?.let {
+            when (it) {
+                is Market -> { intent.putExtra(MarketActivity.MARKET_NAME, it) }
+                is Notice -> { intent.putExtra(NOTICE_OBJECT, it) }
+                else -> {}
+            }
+        }
         startActivity(intent)
     }
 
@@ -93,4 +96,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         adapter.submitList(listItem)
     }
 
+    companion object {
+        const val NOTICE_OBJECT = "notice_object"
+    }
 }
