@@ -22,7 +22,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
         binding = ActivityMarketBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
 
-        market = intent.intentSerializable(MARKET_NAME, Market::class.java)
+        market = intent.intentSerializable(MARKET_OBJECT, Market::class.java)
 
         market?.let {
             binding.market = it
@@ -40,7 +40,12 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
     private fun setupEvent() {
         binding.pricesButton.setOnClickListener {
             val intent = Intent(this, ItemListActivity::class.java)
-            intent.putExtra(MARKET_NAME, market)
+            intent.putExtra(MARKET_OBJECT, market)
+            startActivity(intent)
+        }
+        binding.reviewTextView.setOnClickListener {
+            val intent = Intent(this, ReviewActivity::class.java)
+            intent.putExtra(MARKET_ID, market?.id)
             startActivity(intent)
         }
     }
@@ -78,6 +83,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
 
     companion object {
-        const val MARKET_NAME = "market_name"
+        const val MARKET_OBJECT = "market_object"
+        const val MARKET_ID = "market_id"
     }
 }

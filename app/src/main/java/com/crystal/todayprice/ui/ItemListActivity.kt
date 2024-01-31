@@ -47,7 +47,7 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
         binding = ActivityItemListBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
 
-        market = intent.intentSerializable(MarketActivity.MARKET_NAME, Market::class.java)
+        market = intent.intentSerializable(MarketActivity.MARKET_OBJECT, Market::class.java)
 
         setItems()
 
@@ -81,7 +81,7 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
     private fun moveToItem(item: Item) {
         val intent = Intent(this, ItemActivity::class.java)
         intent.putExtra(ItemActivity.ITEM_NAME, item)
-        intent.putExtra(MarketActivity.MARKET_NAME, market)
+        intent.putExtra(MarketActivity.MARKET_OBJECT, market)
         startActivity(intent)
     }
 

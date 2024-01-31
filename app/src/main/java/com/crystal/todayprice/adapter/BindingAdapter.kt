@@ -58,3 +58,8 @@ fun TextView.setDescriptionText(description: String?) {
         description
     }
 }
+
+@BindingAdapter("countText")
+fun TextView.setCountText(count: Int?) {
+    text = count?.toString() ?: "0"
+}

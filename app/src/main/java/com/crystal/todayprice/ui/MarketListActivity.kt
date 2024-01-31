@@ -2,7 +2,6 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -69,7 +68,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
     }
     private fun moveToMarket(market: Market) {
         val intent = Intent(this, MarketActivity::class.java)
-        intent.putExtra(MarketActivity.MARKET_NAME, market)
+        intent.putExtra(MarketActivity.MARKET_OBJECT, market)
         startActivity(intent)
     }
 

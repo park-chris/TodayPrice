@@ -82,7 +82,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         val intent = Intent(this, destinationClass)
         argument?.let {
             when (it) {
-                is Market -> { intent.putExtra(MarketActivity.MARKET_NAME, it) }
+                is Market -> { intent.putExtra(MarketActivity.MARKET_OBJECT, it) }
                 is Notice -> { intent.putExtra(NOTICE_OBJECT, it) }
                 else -> {}
             }

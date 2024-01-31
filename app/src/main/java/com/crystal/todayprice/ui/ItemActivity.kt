@@ -34,7 +34,7 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         baseBinding.contentLayout.addView(binding.root)
 
         item = intent.intentSerializable(ITEM_NAME, Item::class.java)
-        market = intent.intentSerializable(MarketActivity.MARKET_NAME, Market::class.java)
+        market = intent.intentSerializable(MarketActivity.MARKET_OBJECT, Market::class.java)
 
         itemViewModel.prices.observe(this, Observer {
             prices = it

@@ -36,14 +36,34 @@
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/x_large_text_size"
                 android:layout_marginHorizontal="@dimen/horizontal_padding"
                 android:text="@{market.name}"
                 android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/marketImageView"
+                app:layout_constraintEnd_toStartOf="@id/reviewTextView"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/reviewTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                app:countText="@{market.reviewCount}"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/effect_basic_ripple"
+                tools:text="1"
+                android:layout_marginHorizontal="@dimen/horizontal_padding"
+                app:layout_constraintTop_toBottomOf="@id/marketImageView"
+                android:textSize="@dimen/small_text_size"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:textColor="@color/hint"
+                app:drawableStartCompat="@drawable/ic_speech" />
+
 
             <TextView
                 android:id="@+id/descriptionTextView"
