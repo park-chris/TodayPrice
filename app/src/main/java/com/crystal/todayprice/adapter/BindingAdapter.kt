@@ -1,8 +1,10 @@
 package com.crystal.todayprice.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -23,7 +25,7 @@ fun ImageView.setImage(imageUrl: String?) {
             .load(imageUrl)
             .centerCrop()
             .transition(DrawableTransitionOptions.withCrossFade(300))
-            .error(R.drawable.no_picture)
+            .error(R.drawable.img_no_picture)
             .into(this)
     }
     this.clipToOutline = true
@@ -36,7 +38,7 @@ fun ImageView.setImage(itemId: Int?) {
         .load(url)
         .centerCrop()
         .transition(DrawableTransitionOptions.withCrossFade(300))
-        .error(R.drawable.no_picture)
+        .error(R.drawable.img_no_picture)
         .into(this)
     this.clipToOutline = true
 }
@@ -62,4 +64,21 @@ fun TextView.setDescriptionText(description: String?) {
 @BindingAdapter("countText")
 fun TextView.setCountText(count: Int?) {
     text = count?.toString() ?: "0"
+}
+
+
+//@BindingAdapter("heartDrawableImage")
+//fun TextView.setHeartDrawable() {
+//    val id = FirebaseAuth.getInstance().currentUser?.uid
+//    drawaSt
+//
+//    if (id != null) {
+//
+//    }
+//}
+@BindingAdapter("heartDrawableImage")
+fun setHeartDrawableStartCompat(textView: TextView, likeState: Boolean) {
+    val drawableResId = if (likeState) R.drawable.ic_fill_heart else R.drawable.ic_empty_heart
+    val drawable: Drawable? = ContextCompat.getDrawable(textView.context, drawableResId)
+    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
 }

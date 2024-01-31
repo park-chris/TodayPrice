@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.crystal.todayprice.data.Review" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/horizontal_padding">
+
+        <TextView
+            android:id="@+id/idTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="@{item.userName}"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/x_small_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/dateTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{item.date}"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/x_small_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/contentTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/horizontal_padding"
+            android:text="@{item.content}"
+            android:textSize="@dimen/x_small_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/idTextView" />
+
+        <TextView
+            android:id="@+id/countTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/horizontal_padding"
+            android:background="@drawable/effect_button_ripple"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:paddingHorizontal="7dp"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/x_small_text_size"
+            app:heartDrawableImage="@{item.likeState}"
+            app:countText="@{item.likeCount}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentTextView"
+            tools:text="12" />
+
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="@dimen/horizontal_padding"
+            android:background="@drawable/effect_button_ripple"
+            android:contentDescription="@string/review_menu_description"
+            android:src="@drawable/ic_see_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contentTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
