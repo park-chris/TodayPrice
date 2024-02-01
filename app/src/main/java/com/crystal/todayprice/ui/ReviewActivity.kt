@@ -1,20 +1,26 @@
 package com.crystal.todayprice.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.lifecycle.Observer
+import com.crystal.todayprice.R
 import com.crystal.todayprice.adapter.ReviewAdapter
 import com.crystal.todayprice.component.BaseActivity
+import com.crystal.todayprice.component.CustomDialog
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.databinding.ActivityReviewBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
+import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.OnItemReviewListener
 import com.crystal.todayprice.util.VerticalDividerItemDecoration
 import com.crystal.todayprice.viewmodel.MarketViewModel
@@ -46,7 +52,6 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
     private var marketId: Int = -1
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,26 +61,45 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         marketId = intent.getIntExtra(MarketActivity.MARKET_ID, -1)
 
         setRecyclerView()
+        setupEvent()
 
-        binding.addEditText.setOnTouchListener { _, event ->
+    }
 
-            if (event.action == MotionEvent.ACTION_UP) {
-                val drawableEnd = binding.addEditText.compoundDrawablesRelative[2] // 오른쪽에 있는 drawable
-                if (user != null && drawableEnd != null && event.rawX >= (binding.addEditText.right - drawableEnd.bounds.width())) {
-                    // Drawable을 클릭한 경우 여기에 처리할 내용을 추가하세요.
+    override fun onResume() {
+        super.onResume()
 
-                    return@setOnTouchListener true
-                }
-                if (user == null && drawableEnd != null && event.rawX >= (binding.addEditText.right - drawableEnd.bounds.width())) {
-                    // Drawable을 클릭한 경우 여기에 처리할 내용을 추가하세요.
+        setTextToEdit()
 
-                    Toast.makeText(this, "로그인 후 이용해주세요.", Toast.LENGTH_SHORT).show()
-                    return@setOnTouchListener true
-                }
-            }
-            false
+    }
+
+    private fun setTextToEdit() {
+        val text = if (user != null) {
+            getString(R.string.edit_hint_user)
+        } else {
+            getString(R.string.edit_hint_anonymous)
         }
 
+        binding.addEditText.hint = text
+    }
+
+    private fun setupEvent() {
+        binding.addButton.setOnClickListener {
+            if (user != null) {
+                // TODO 댓글 작성 후 전송  기능
+                val text = binding.addEditText.text.toString()
+                Toast.makeText(this, "text: ${text}", Toast.LENGTH_SHORT).show()
+            } else {
+                val dialog = CustomDialog(this, object : OnDialogListener {
+                    override fun onCancel() {}
+                    override fun onOk() {
+                        startActivity(Intent(this@ReviewActivity, LoginActivity::class.java))
+                    }
+                })
+                dialog.start(title = null, message = getString(R.string.dialog_login_message), leftButtonText = getString(R.string.cancel), rightButtonText = getString(R.string.go_login), isCanceled = true)
+
+            }
+
+        }
     }
 
     private fun setRecyclerView() {
@@ -84,6 +108,10 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
         reviewViewModel.reviews.observe(this, Observer {
             adapter.submitList(it)
+
+            if (it.isNotEmpty()) {
+                binding.infoTextView.isVisible = false
+            }
         })
 
         reviewViewModel.getReviews(marketId)
