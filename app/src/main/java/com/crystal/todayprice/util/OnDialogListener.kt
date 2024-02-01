@@ -5,6 +5,5 @@ import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.data.ViewType
 
 interface OnDialogListener {
-    fun onCancel()
     fun onOk()
 }

@@ -47,6 +47,11 @@
     <string name="search_hint">검색어를 입력하세요.</string>
     <string name="review_menu_description">신고창 메뉴</string>
 
+    <string name="login_fail_info_title_dialog">로그인 실패</string>
+    <string name="login_fail_info_message_dialog">로그인에 실패하였습니다.</string>
+
+    <string name="ok">확인</string>
+
 <!--    category 별 글-->
     <string name="all">전체</string>
     <string name="grain">곡류</string>

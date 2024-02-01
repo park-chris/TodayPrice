@@ -90,7 +90,6 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                 Toast.makeText(this, "text: ${text}", Toast.LENGTH_SHORT).show()
             } else {
                 val dialog = CustomDialog(this, object : OnDialogListener {
-                    override fun onCancel() {}
                     override fun onOk() {
                         startActivity(Intent(this@ReviewActivity, LoginActivity::class.java))
                     }

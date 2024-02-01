@@ -7,11 +7,11 @@ import androidx.core.view.isVisible
 import com.crystal.todayprice.databinding.CustomDialogBinding
 import com.crystal.todayprice.util.OnDialogListener
 
-class CustomDialog(context: Context, private val onDialogListener: OnDialogListener) {
+class CustomDialog(context: Context, private val onDialogListener: OnDialogListener?) {
     private val dialog = Dialog(context)
     private lateinit var binding: CustomDialogBinding
 
-    fun start(title: String?, message: String, leftButtonText: String, rightButtonText: String, isCanceled: Boolean) {
+    fun start(title: String?, message: String, leftButtonText: String, rightButtonText: String?, isCanceled: Boolean) {
         dialog.setTitle(title)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding =  CustomDialogBinding.inflate(dialog.layoutInflater)
@@ -25,17 +25,21 @@ class CustomDialog(context: Context, private val onDialogListener: OnDialogListe
             binding.titleTextView.isVisible = false
         }
 
+        if (rightButtonText == null) {
+            binding.rightButton.isVisible = false
+        } else {
+            binding.rightButton.text = rightButtonText
+        }
+
         binding.messageTextView.text = message
         binding.leftButton.text = leftButtonText
-        binding.rightButton.text = rightButtonText
 
         binding.leftButton.setOnClickListener {
-            onDialogListener.onCancel()
             dialog.dismiss()
         }
 
         binding.rightButton.setOnClickListener {
-            onDialogListener.onOk()
+            onDialogListener?.onOk()
             dialog.dismiss()
         }
 
