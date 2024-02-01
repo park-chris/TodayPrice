@@ -2,14 +2,17 @@ package com.crystal.todayprice.adapter
 
 import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.crystal.todayprice.R
+import com.crystal.todayprice.data.User
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -81,4 +84,28 @@ fun setHeartDrawableStartCompat(textView: TextView, likeState: Boolean) {
     val drawableResId = if (likeState) R.drawable.ic_fill_heart else R.drawable.ic_empty_heart
     val drawable: Drawable? = ContextCompat.getDrawable(textView.context, drawableResId)
     textView.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
+}
+
+
+@BindingAdapter("headerText")
+fun TextView.setHeaderText(name: String?) {
+    text = name ?: resources.getText(R.string.require_login)
+}
+
+@BindingAdapter("buttonTextView")
+fun Button.setButtonTextView(user: User?) {
+    text = if (user != null) {
+        resources.getString(R.string.profile)
+    } else {
+        resources.getString(R.string.login)
+    }
+}
+
+@BindingAdapter("isVisible")
+fun TextView.setIsVisible(user: User?) {
+    visibility = if (user != null) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
 }

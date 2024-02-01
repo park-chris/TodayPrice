@@ -51,6 +51,10 @@
     <string name="login_fail_info_message_dialog">로그인에 실패하였습니다.</string>
 
     <string name="ok">확인</string>
+    <string name="require_login">로그인이 필요합니다.</string>
+    <string name="login">로그인</string>
+    <string name="logout">로그아웃</string>
+    <string name="profile">프로필</string>
 
 <!--    category 별 글-->
     <string name="all">전체</string>

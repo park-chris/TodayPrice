@@ -16,10 +16,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
+import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
+import com.crystal.todayprice.databinding.DrawerHearderBinding
+import com.crystal.todayprice.ui.LoginActivity
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 
 open class BaseActivity(
@@ -40,7 +45,7 @@ open class BaseActivity(
 
         setAnimation()
         setSearchViewListener()
-
+        setHeaderView()
     }
 
     override fun finish() {
@@ -106,6 +111,24 @@ open class BaseActivity(
             ToolbarType.ONLY_BACK -> {}
         }
         return true
+    }
+
+    private fun setHeaderView() {
+        val headerView = baseBinding.navigationView.getHeaderView(0)
+        val drawerBinding: DrawerHearderBinding = DataBindingUtil.bind(headerView)!!
+//        drawerBinding.user = User("ser", "crystal", "zxzx4342@naver.com")
+//        drawerBinding.user = null
+        drawerBinding.nameTextView.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+        }
+        drawerBinding.loginButton.setOnClickListener {
+            if (drawerBinding.user != null) {
+                Toast.makeText(this, "프로필 화면은 추후 설정", Toast.LENGTH_SHORT).show()
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
+                drawerBinding.user =  User("ser", "crystal", "zxzx4342@naver.com")
+            }
+        }
     }
 
     private fun setAnimation() {

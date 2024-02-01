@@ -51,127 +51,128 @@ class LoginActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON)
 
     private fun setupEvent() {
         binding.googleSignInButton.setOnClickListener {
-//            googleLogin()
+            googleLogin()
         }
         binding.kakaoSignInButton.setOnClickListener {
-//            kakaoLogin()
+            kakaoLogin()
         }
     }
-//
-//    private fun googleLogin() {
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(getString(R.string.default_web_client_id))
-//            .requestEmail()
-//            .build()
-//
-//        googleSignInClient = GoogleSignIn.getClient(this, gso)
-//
-//        val signInClient = googleSignInClient?.signInIntent
-//
-//        binding.progressBar.visibility = View.VISIBLE
-//        childForResult.launch(signInClient)
-//    }
-//
-//    private val childForResult =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            when (result.resultCode) {
-//                RESULT_OK -> {
-//                    val resultData = Auth.GoogleSignInApi.getSignInResultFromIntent(result.data!!)
-//                    val account = resultData?.signInAccount
-//                    firebaseAuthWithGoogle(account)
-//                }
-//                RESULT_CANCELED -> {
-//                    binding.progressBar.visibility = View.GONE
-//                }
-//            }
-//        }
-//
-//    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-//
-//        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-//
-//        auth.signInWithCredential(credential)
-//            .addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    updateUI(auth.currentUser)
-////                    updateUserInfo()
-//                } else {
-//                    binding.progressBar.visibility = View.GONE
-//                    val alert = CustomDialog(this, null)
-//                    alert.start(getString(R.string.login_fail_info_title_dialog), getString(R.string.login_fail_info_message_dialog) + task.exception, getString(R.string.ok), null, true)
-//                }
-//            }
-//    }
-//
-//
-//    private fun kakaoLogin() {
-//        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
-//            UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-//                if (error != null) {
-//                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-//                        return@loginWithKakaoTalk
-//                    }
-//                    loginWithKaKaoAccount(this)
-//                } else if (token != null) {
-//                    getCustomToken(token.accessToken)
-//                }
-//            }
-//        } else {
-//            loginWithKaKaoAccount(this)
-//        }
-//    }
-//
-//
-//    private fun loginWithKaKaoAccount(context: Context) {
-//        UserApiClient.instance.loginWithKakaoAccount(context) { token: OAuthToken?, error: Throwable? ->
-//            if (token != null) {
-//                getCustomToken(token.accessToken)
-//            }
-//        }
-//    }
-//
-//    private fun getCustomToken(accessToken: String) {
-//
-//        binding.progressBar.visibility = View.VISIBLE
-//
-//        val functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
-//
-//        val data = hashMapOf(
-//            "token" to accessToken
-//        )
-//
-//        functions
-//            .getHttpsCallable("kakaoCustomAuth")
-//            .call(data)
-//            .addOnCompleteListener { task ->
-//                try {
-//                    val result = task.result?.data as HashMap<*, *>
-//                    var mKey: String? = null
-//                    for (key in result.keys) {
-//                        mKey = key.toString()
-//                    }
-//                    val customToken = result[mKey!!].toString()
-//
-//                    firebaseAuthWithKakao(customToken)
-//                } catch (e: RuntimeExecutionException) {
-//                    val alert = CustomDialog(this, null)
-//                    alert.start(getString(R.string.login_fail_info_title_dialog), getString(R.string.login_fail_info_message_dialog) + e.message, getString(R.string.ok), null, true)
-//                }
-//            }
-//    }
-//
-//    private fun firebaseAuthWithKakao(customToken: String) {
-//        auth.signInWithCustomToken(customToken).addOnCompleteListener { result ->
-//            if (result.isSuccessful) {
-//                updateUI(auth.currentUser)
-////                updateUserInfo()
-//            } else {
-//                binding.progressBar.visibility = View.GONE
-//            }
-//        }
-//    }
-//
-//
-//    private fun updateUI(user: FirebaseUser?) {}
+
+    private fun googleLogin() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        val signInClient = googleSignInClient?.signInIntent
+
+        binding.progressBar.visibility = View.VISIBLE
+        childForResult.launch(signInClient)
+    }
+
+    private val childForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                RESULT_OK -> {
+                    val resultData = Auth.GoogleSignInApi.getSignInResultFromIntent(result.data!!)
+                    val account = resultData?.signInAccount
+                    firebaseAuthWithGoogle(account)
+                }
+                RESULT_CANCELED -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
+        }
+
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+
+        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    updateUI(auth.currentUser)
+//                    updateUserInfo()
+                    binding.progressBar.visibility = View.GONE
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                    val alert = CustomDialog(this, null)
+                    alert.start(getString(R.string.login_fail_info_title_dialog), getString(R.string.login_fail_info_message_dialog) + task.exception, getString(R.string.ok), null, true)
+                }
+            }
+    }
+
+
+    private fun kakaoLogin() {
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+            UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
+                if (error != null) {
+                    if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                        return@loginWithKakaoTalk
+                    }
+                    loginWithKaKaoAccount(this)
+                } else if (token != null) {
+                    getCustomToken(token.accessToken)
+                }
+            }
+        } else {
+            loginWithKaKaoAccount(this)
+        }
+    }
+
+
+    private fun loginWithKaKaoAccount(context: Context) {
+        UserApiClient.instance.loginWithKakaoAccount(context) { token: OAuthToken?, error: Throwable? ->
+            if (token != null) {
+                getCustomToken(token.accessToken)
+            }
+        }
+    }
+
+    private fun getCustomToken(accessToken: String) {
+
+        binding.progressBar.visibility = View.VISIBLE
+
+        val functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
+
+        val data = hashMapOf(
+            "token" to accessToken
+        )
+
+        functions
+            .getHttpsCallable("kakaoCustomAuth")
+            .call(data)
+            .addOnCompleteListener { task ->
+                try {
+                    val result = task.result?.data as HashMap<*, *>
+                    var mKey: String? = null
+                    for (key in result.keys) {
+                        mKey = key.toString()
+                    }
+                    val customToken = result[mKey!!].toString()
+
+                    firebaseAuthWithKakao(customToken)
+                } catch (e: RuntimeExecutionException) {
+                    val alert = CustomDialog(this, null)
+                    alert.start(getString(R.string.login_fail_info_title_dialog), getString(R.string.login_fail_info_message_dialog) + e.message, getString(R.string.ok), null, true)
+                }
+            }
+    }
+
+    private fun firebaseAuthWithKakao(customToken: String) {
+        auth.signInWithCustomToken(customToken).addOnCompleteListener { result ->
+            if (result.isSuccessful) {
+                updateUI(auth.currentUser)
+//                updateUserInfo()
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+    }
+
+
+    private fun updateUI(user: FirebaseUser?) {}
 
 }
