@@ -1,14 +1,16 @@
 package com.crystal.todayprice.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.R
 import com.crystal.todayprice.adapter.ReviewAdapter
@@ -18,14 +20,19 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.databinding.ActivityReviewBinding
-import com.crystal.todayprice.repository.MarketRepositoryImpl
+import com.crystal.todayprice.repository.Result
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
+import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.OnItemReviewListener
 import com.crystal.todayprice.util.VerticalDividerItemDecoration
-import com.crystal.todayprice.viewmodel.MarketViewModel
 import com.crystal.todayprice.viewmodel.ReviewViewModel
-import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 private const val TAG = "TestLog"
 
@@ -35,8 +42,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     private val reviewViewModel: ReviewViewModel by viewModels {
         ReviewViewModel.ReviewViewModelFactory(ReviewRepositoryImpl())
     }
-    private val user = FirebaseAuth.getInstance().currentUser
-
+    private val user = userDataManager.user
 
     private val adapter = ReviewAdapter(object : OnItemReviewListener {
 
@@ -85,9 +91,15 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     private fun setupEvent() {
         binding.addButton.setOnClickListener {
             if (user != null) {
-                // TODO 댓글 작성 후 전송  기능
+
                 val text = binding.addEditText.text.toString()
-                Toast.makeText(this, "text: ${text}", Toast.LENGTH_SHORT).show()
+                val today = System.currentTimeMillis()
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
+                val date = dateFormat.format(today)
+                val review = Review(userId = user.id, marketId = marketId, userName = user.name, content = text, date = date)
+
+                addReview(review)
+
             } else {
                 val dialog = CustomDialog(this, object : OnDialogListener {
                     override fun onOk() {
@@ -98,6 +110,39 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
             }
 
+        }
+    }
+
+    private fun addReview(review: Review) {
+        reviewViewModel.addReview(review, object : FirebaseCallback {
+            override fun onResult(result: Result) {
+                when (result) {
+                    Result.SUCCESS -> {
+                        val list = mutableListOf<Review>()
+                        list.addAll(adapter.getList())
+                        list.add(0, review)
+                        adapter.submitList(list)
+
+                        clearEditText()
+                    }
+                    Result.FAIL -> {
+                    }
+                }
+            }
+        })
+    }
+
+    private fun clearEditText() {
+        binding.addEditText.text = null
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.addEditText.windowToken, 0)
+        binding.addEditText.clearFocus()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            delay(100)
+            withContext(Dispatchers.Main) {
+                binding.recyclerView.scrollToPosition(0)
+            }
         }
     }
 

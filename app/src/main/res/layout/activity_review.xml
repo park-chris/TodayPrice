@@ -42,13 +42,14 @@
             android:layout_weight="1"
             android:background="@drawable/bg_image"
             android:minHeight="50dp"
-            android:paddingHorizontal="5dp" />
+            android:paddingEnd="5dp"
+            android:paddingStart="10dp" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/addButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:backgroundTint="@android:color/transparent"
+            android:background="@drawable/effect_edit_ripple"
             android:src="@drawable/ic_send" />
 
     </LinearLayout>

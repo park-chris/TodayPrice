@@ -8,7 +8,6 @@ class UserDataManager private constructor(){
     companion object {
         @Volatile
         private var instance: UserDataManager? = null
-
         fun getInstance(): UserDataManager {
             return instance ?: synchronized(this) {
                 instance ?: UserDataManager().also { instance = it }

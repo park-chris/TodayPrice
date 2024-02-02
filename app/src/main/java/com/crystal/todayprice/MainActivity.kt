@@ -53,6 +53,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         currentUser?.let {
             CoroutineScope(Dispatchers.Default).launch {
                 val user = userViewModel.getUser(it.uid)
+                userDataManager.user = user
                 withContext(Dispatchers.Main) {
                     updateProfile(user)
                 }

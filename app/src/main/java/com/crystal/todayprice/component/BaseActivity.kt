@@ -52,9 +52,12 @@ open class BaseActivity(
     override fun onResume() {
         super.onResume()
 
-        userDataManager.user?.let {
-            updateProfile(it)
+        if (toolbarType == ToolbarType.MENU) {
+            userDataManager.user?.let {
+                updateProfile(it)
+            }
         }
+
     }
 
     override fun finish() {

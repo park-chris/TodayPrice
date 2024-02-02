@@ -66,4 +66,8 @@ class ReviewAdapter(
         differ.submitList(items)
     }
 
+    fun getList(): List<Review> {
+        return differ.currentList
+    }
+
 }

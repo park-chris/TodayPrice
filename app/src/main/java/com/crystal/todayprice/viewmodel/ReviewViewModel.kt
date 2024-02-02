@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.repository.ReviewRepository
+import com.crystal.todayprice.util.FirebaseCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,10 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel
             val reviews = reviewRepository.getReview(marketId)
             _reviews.postValue(reviews)
         }
+    }
+
+    fun addReview(review: Review, callback: FirebaseCallback) {
+        reviewRepository.addReview(review, callback)
     }
 
     class ReviewViewModelFactory(private val reviewRepository: ReviewRepository): ViewModelProvider.Factory {
