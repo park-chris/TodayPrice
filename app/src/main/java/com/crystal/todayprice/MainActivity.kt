@@ -14,6 +14,7 @@ import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.News
 import com.crystal.todayprice.data.Notice
+import com.crystal.todayprice.data.User
 import com.crystal.todayprice.data.ViewType
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.ListItemRepositoryImpl
@@ -22,6 +23,12 @@ import com.crystal.todayprice.ui.MarketListActivity
 import com.crystal.todayprice.ui.NewsListActivity
 import com.crystal.todayprice.ui.NoticeActivity
 import com.crystal.todayprice.viewmodel.ListItemViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : BaseActivity(ToolbarType.MENU) {
     private lateinit var binding: ActivityMainBinding
@@ -31,13 +38,26 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
     }
 
     private lateinit var adapter: ListItemAdapter
+    private var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
+        getUser()
         setAdapter()
         observerList()
+    }
+
+    private fun getUser() {
+        currentUser?.let {
+            CoroutineScope(Dispatchers.Default).launch {
+                val user = userViewModel.getUser(it.uid)
+                withContext(Dispatchers.Main) {
+                    updateProfile(user)
+                }
+            }
+        }
     }
 
     private fun setAdapter() {
@@ -49,7 +69,6 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
                     }
                     is News -> {
                         Toast.makeText(this@MainActivity, "news title : ${listItem.newsTitle}", Toast.LENGTH_SHORT).show()
-
                     }
                     is Notice -> {
                         moveToActivity(NoticeActivity::class.java, listItem)

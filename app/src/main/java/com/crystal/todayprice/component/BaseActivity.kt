@@ -1,30 +1,25 @@
 package com.crystal.todayprice.component
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHearderBinding
 import com.crystal.todayprice.ui.LoginActivity
+import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 
 
 open class BaseActivity(
@@ -33,6 +28,13 @@ open class BaseActivity(
 ) : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     protected lateinit var baseBinding: ActivityBaseBinding
     private var searchViewVisible = false
+    val userDataManager = UserDataManager.getInstance()
+
+    val userViewModel by lazy {
+        ViewModelProvider(this)[UserViewModel::class.java]
+    }
+
+    private lateinit var drawerHeaderBinding: DrawerHearderBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +44,17 @@ open class BaseActivity(
         setToolbar()
         baseBinding.navigationView.setNavigationItemSelectedListener(this)
 
-
         setAnimation()
         setSearchViewListener()
         setHeaderView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        userDataManager.user?.let {
+            updateProfile(it)
+        }
     }
 
     override fun finish() {
@@ -62,11 +71,9 @@ open class BaseActivity(
 
         if (baseBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             baseBinding.drawerLayout.closeDrawers()
-        }
-        else if (searchViewVisible) {
+        } else if (searchViewVisible) {
             closeSearchView()
-        }
-        else {
+        } else {
             super.onBackPressed()
 
             if (isFinishing) {
@@ -115,20 +122,16 @@ open class BaseActivity(
 
     private fun setHeaderView() {
         val headerView = baseBinding.navigationView.getHeaderView(0)
-        val drawerBinding: DrawerHearderBinding = DataBindingUtil.bind(headerView)!!
-//        drawerBinding.user = User("ser", "crystal", "zxzx4342@naver.com")
-//        drawerBinding.user = null
-        drawerBinding.nameTextView.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-        }
-        drawerBinding.loginButton.setOnClickListener {
-            if (drawerBinding.user != null) {
+        drawerHeaderBinding = DataBindingUtil.bind(headerView)!!
+
+        drawerHeaderBinding.loginButton.setOnClickListener {
+            if (drawerHeaderBinding.user != null) {
                 Toast.makeText(this, "프로필 화면은 추후 설정", Toast.LENGTH_SHORT).show()
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
-                drawerBinding.user =  User("ser", "crystal", "zxzx4342@naver.com")
             }
         }
+
     }
 
     private fun setAnimation() {
@@ -142,7 +145,8 @@ open class BaseActivity(
     private fun setSearchViewListener() {
         when (toolbarType) {
             ToolbarType.BACK -> {
-                baseBinding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                baseBinding.searchView.setOnQueryTextListener(object :
+                    androidx.appcompat.widget.SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         onSearch(query)
                         return true
@@ -198,6 +202,12 @@ open class BaseActivity(
     open fun onSearch(query: String?) {
         closeSearchView()
     }
+
+    fun updateProfile(user: User?) {
+        drawerHeaderBinding.user = user
+        drawerHeaderBinding.executePendingBindings()
+    }
+
     open fun actionMenuFavorite() {}
     private fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)

@@ -9,7 +9,10 @@ import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.CustomDialog
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
+import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityLoginBinding
+import com.crystal.todayprice.repository.Result
+import com.crystal.todayprice.util.FirebaseCallback
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -27,8 +30,11 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class LoginActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
+class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth: FirebaseAuth
@@ -80,6 +86,7 @@ class LoginActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON)
                     val account = resultData?.signInAccount
                     firebaseAuthWithGoogle(account)
                 }
+
                 RESULT_CANCELED -> {
                     binding.progressBar.visibility = View.GONE
                 }
@@ -93,13 +100,19 @@ class LoginActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON)
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    updateUI(auth.currentUser)
-//                    updateUserInfo()
-                    binding.progressBar.visibility = View.GONE
+                    auth.currentUser?.let {
+                        updateUser(it)
+                    }
                 } else {
                     binding.progressBar.visibility = View.GONE
                     val alert = CustomDialog(this, null)
-                    alert.start(getString(R.string.login_fail_info_title_dialog), getString(R.string.login_fail_info_message_dialog) + task.exception, getString(R.string.ok), null, true)
+                    alert.start(
+                        getString(R.string.login_fail_info_title_dialog),
+                        getString(R.string.login_fail_info_message_dialog) + task.exception,
+                        getString(R.string.ok),
+                        null,
+                        true
+                    )
                 }
             }
     }
@@ -156,7 +169,13 @@ class LoginActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON)
                     firebaseAuthWithKakao(customToken)
                 } catch (e: RuntimeExecutionException) {
                     val alert = CustomDialog(this, null)
-                    alert.start(getString(R.string.login_fail_info_title_dialog), getString(R.string.login_fail_info_message_dialog) + e.message, getString(R.string.ok), null, true)
+                    alert.start(
+                        getString(R.string.login_fail_info_title_dialog),
+                        getString(R.string.login_fail_info_message_dialog) + e.message,
+                        getString(R.string.ok),
+                        null,
+                        true
+                    )
                 }
             }
     }
@@ -164,15 +183,43 @@ class LoginActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON)
     private fun firebaseAuthWithKakao(customToken: String) {
         auth.signInWithCustomToken(customToken).addOnCompleteListener { result ->
             if (result.isSuccessful) {
-                updateUI(auth.currentUser)
-//                updateUserInfo()
+                auth.currentUser?.let {
+                    updateUser(it)
+                }
             } else {
                 binding.progressBar.visibility = View.GONE
             }
         }
     }
 
+    private fun updateUser(user: FirebaseUser) = CoroutineScope(Dispatchers.Main).launch {
 
-    private fun updateUI(user: FirebaseUser?) {}
+        val dbUser = userViewModel.getUser(user.uid)
 
+        if (dbUser != null) {
+            userDataManager.user = dbUser
+            binding.progressBar.visibility = View.GONE
+            finish()
+        } else {
+            val newUser = User(
+                user.uid,
+                user.displayName ?: "",
+                user.email ?: ""
+            )
+            userViewModel.createUser(newUser, object : FirebaseCallback {
+                override fun onResult(result: Result) {
+                    when (result) {
+                        Result.FAIL -> {
+                            binding.progressBar.visibility = View.GONE
+                        }
+                        Result.SUCCESS -> {
+                            userDataManager.user = newUser
+                            binding.progressBar.visibility = View.GONE
+                            finish()
+                        }
+                    }
+                }
+            })
+        }
+    }
 }
