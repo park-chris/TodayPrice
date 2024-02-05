@@ -41,15 +41,6 @@ class CustomModalBottomSheet(
         dialog.window?.setGravity(Gravity.BOTTOM)
 
         when (modalType) {
-            ModalType.BLOCK -> {
-                binding.reportTextView.visibility = View.GONE
-                binding.blockTextView.visibility = View.GONE
-                binding.infoTextView.visibility = View.VISIBLE
-                binding.leftButton.visibility = View.VISIBLE
-                binding.rightButton.visibility = View.VISIBLE
-                binding.infoTextView.text = context.getString(R.string.block_text, userName)
-                binding.rightButton.text = context.getString(R.string.button_unblock)
-            }
 
             ModalType.DELETE -> {
                 binding.reportTextView.visibility = View.GONE
@@ -67,6 +58,7 @@ class CustomModalBottomSheet(
                 binding.infoTextView.visibility = View.GONE
                 binding.leftButton.visibility = View.VISIBLE
                 binding.rightButton.visibility = View.GONE
+                binding.blockTextView.text = context.getString(R.string.block)
             }
             ModalType.MENU_ANOTHER_UNBLOCK -> {
                 binding.reportTextView.visibility = View.VISIBLE
@@ -76,6 +68,16 @@ class CustomModalBottomSheet(
                 binding.rightButton.visibility = View.GONE
                 binding.blockTextView.text = context.getString(R.string.unblock)
             }
+            ModalType.BLOCK -> {
+                binding.reportTextView.visibility = View.GONE
+                binding.blockTextView.visibility = View.GONE
+                binding.infoTextView.visibility = View.VISIBLE
+                binding.leftButton.visibility = View.VISIBLE
+                binding.rightButton.visibility = View.VISIBLE
+                binding.infoTextView.text = context.getString(R.string.block_text, userName)
+                binding.rightButton.text = context.getString(R.string.button_block)
+            }
+
             ModalType.UNBLOCK -> {
                 binding.reportTextView.visibility = View.GONE
                 binding.blockTextView.visibility = View.GONE
