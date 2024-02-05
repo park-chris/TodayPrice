@@ -12,7 +12,10 @@ import androidx.lifecycle.Observer
 import com.crystal.todayprice.R
 import com.crystal.todayprice.adapter.ReviewAdapter
 import com.crystal.todayprice.component.BaseActivity
+import com.crystal.todayprice.component.ButtonType
 import com.crystal.todayprice.component.CustomDialog
+import com.crystal.todayprice.component.CustomModalBottomSheet
+import com.crystal.todayprice.component.ModalType
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Review
@@ -20,10 +23,12 @@ import com.crystal.todayprice.databinding.ActivityReviewBinding
 import com.crystal.todayprice.repository.Result
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
 import com.crystal.todayprice.util.FirebaseCallback
+import com.crystal.todayprice.util.OnBottomSheetListener
 import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.OnItemReviewListener
 import com.crystal.todayprice.util.VerticalDividerItemDecoration
 import com.crystal.todayprice.viewmodel.ReviewViewModel
+import com.kakao.sdk.common.KakaoSdk.type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -41,7 +46,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     }
     private val user = userDataManager.user
 
-    private lateinit var adapter : ReviewAdapter
+    private lateinit var adapter: ReviewAdapter
     private var marketId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -183,13 +188,46 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         }
     }
 
+    private fun startDialog(review: Review, modalType: ModalType, userId: String) {
+        val dialog = CustomModalBottomSheet(this@ReviewActivity, object : OnBottomSheetListener {
+            override fun onClick(buttonType: ButtonType) {
+                when (buttonType) {
+                    ButtonType.REPORT -> {
+                        // TODO 신고창 열기
+                        Toast.makeText(this@ReviewActivity, "신고버튼", Toast.LENGTH_SHORT).show()
+                    }
+                    ButtonType.BLOCK -> {
+                        val isContained = review.blockUsers.contains(userId)
+                        updateReviewBlock(review, isContained, userId)
+                    }
+                    ButtonType.DELETE -> {
+                        // TODO 삭제 기능
+                        Toast.makeText(this@ReviewActivity, "삭제기능", Toast.LENGTH_SHORT).show()
+                    }
+                    ButtonType.OPEN_BLOCK -> {
+                        startDialog(review, ModalType.BLOCK, userId)
+                    }
+                    ButtonType.OPEN_UNBLOCK -> {
+                        startDialog(review, ModalType.UNBLOCK, userId)
+                    }
+                }
+            }
+
+        })
+        dialog.show(review.userName, modalType)
+    }
+
     private fun setRecyclerView() {
 
-        adapter = ReviewAdapter(object :OnItemReviewListener {
+        adapter = ReviewAdapter(object : OnItemReviewListener {
 
             override fun onLikeClick(review: Review) {
                 if (user == null) {
-                    Toast.makeText(this@ReviewActivity, getString(R.string.require_login), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ReviewActivity,
+                        getString(R.string.require_login),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return
                 }
                 val isContained = review.likeUsers.contains(user.id)
@@ -202,19 +240,22 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
             override fun onMenuClick(review: Review) {
                 if (user == null) {
-                    Toast.makeText(this@ReviewActivity, getString(R.string.require_login),Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@ReviewActivity,
+                        getString(R.string.require_login),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return
                 }
 
-                /*
-                * 1. 본인이 작성한 댓글이면 삭제, 취소가 뜨게, 다른 사람이 작성한 글이면 차단, 신고, 취소
-                * - 삭제 -> 삭제 Alert
-                * - 신고 -> 신고화면 이동
-                * - 차단 -> 차단 Alert 후 차단 시 UI 업데이트 (차단한 )
-                *
-                * */
-                val isContained = review.blockUsers.contains(user.id)
-                updateReviewBlock(review, isContained, user.id)
+                if (review.userId != user.id && review.blockUsers.contains(user.id)) {
+                    startDialog(review, ModalType.MENU_ANOTHER_UNBLOCK, user.id)
+                } else if (review.userId == user.id) {
+                    startDialog(review, ModalType.DELETE, user.id)
+                } else {
+                    startDialog(review, ModalType.MENU_ANOTHER_BLOCK, user.id)
+                }
+
             }
 
         })

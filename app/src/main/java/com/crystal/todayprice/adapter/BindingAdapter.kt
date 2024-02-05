@@ -2,10 +2,12 @@ package com.crystal.todayprice.adapter
 
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -113,4 +115,15 @@ fun TextView.setContentText(blockUsers: List<String>, content: String) {
         text = content
         setTextColor(ContextCompat.getColor(context, R.color.text))
     }
+}
+
+@BindingAdapter("menuDrawable")
+fun ImageButton.setMenuDrawable(reviewId: String) {
+    val userId = UserDataManager.getInstance().user?.id
+    val drawableResId = if (userId != null && reviewId == userId) {
+        R.drawable.ic_close
+    } else {
+        R.drawable.ic_see_more
+    }
+    setImageResource(drawableResId)
 }

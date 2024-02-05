@@ -28,4 +28,9 @@
         <item name="android:indeterminateTint">@color/highlight</item>
     </style>
 
+    <style name="CustomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/modal_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/modal_slide_out</item>
+    </style>
+
 </resources>

@@ -73,7 +73,7 @@
             android:layout_marginTop="@dimen/horizontal_padding"
             android:background="@drawable/effect_button_ripple"
             android:contentDescription="@string/review_menu_description"
-            android:src="@drawable/ic_see_more"
+            app:menuDrawable="@{item.userId}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/contentTextView" />
 
