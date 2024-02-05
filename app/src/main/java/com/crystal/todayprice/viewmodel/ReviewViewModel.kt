@@ -31,6 +31,10 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel
         reviewRepository.updateReview(review, userId)
     }
 
+    fun updateBlockUser(reviewId: String, isContained: Boolean, userId: String) {
+        reviewRepository.updateBlockUser(reviewId, isContained, userId)
+    }
+
     class ReviewViewModelFactory(private val reviewRepository: ReviewRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ReviewViewModel(reviewRepository) as T

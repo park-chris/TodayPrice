@@ -11,4 +11,6 @@ interface ReviewRepository {
 
     fun updateReview(review: Review, userId: String)
 
+    fun updateBlockUser(reviewId: String, isContained: Boolean, userId: String)
+
 }

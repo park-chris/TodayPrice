@@ -55,6 +55,7 @@
     <string name="login">로그인</string>
     <string name="logout">로그아웃</string>
     <string name="profile">프로필</string>
+    <string name="user_is_blocked">해당 사용자는 차단되었습니다.</string>
 
 <!--    category 별 글-->
     <string name="all">전체</string>

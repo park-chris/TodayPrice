@@ -2,6 +2,7 @@ package com.crystal.todayprice.repository
 
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.util.FirebaseCallback
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -33,6 +34,7 @@ class ReviewRepositoryImpl: ReviewRepository {
             "date" to review.date,
             "likeCount" to review.likeCount,
             "likeUsers" to review.likeUsers,
+            "blockUsers" to review.blockUsers,
         )
 
         reviewRef.document(review.id).set(reviewHashMap).addOnSuccessListener {
@@ -44,5 +46,13 @@ class ReviewRepositoryImpl: ReviewRepository {
 
     override fun updateReview(review: Review, userId: String) {
         reviewRef.document(review.id).set(review, SetOptions.merge())
+    }
+
+    override fun updateBlockUser(reviewId: String, isContained: Boolean, userId: String) {
+        if (isContained) {
+            reviewRef.document(reviewId).update("blockUsers", FieldValue.arrayRemove(userId))
+        } else {
+            reviewRef.document(reviewId).update("blockUsers", FieldValue.arrayUnion(userId))
+        }
     }
 }

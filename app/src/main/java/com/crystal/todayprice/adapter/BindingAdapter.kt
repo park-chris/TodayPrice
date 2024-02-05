@@ -1,11 +1,9 @@
 package com.crystal.todayprice.adapter
 
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -102,4 +100,17 @@ fun TextView.setHeartDrawable(users: List<String>) {
         R.drawable.ic_empty_heart
     }
     setCompoundDrawablesRelativeWithIntrinsicBounds(drawableResId, 0, 0, 0)
+}
+
+@BindingAdapter("blockUsers", "content")
+fun TextView.setContentText(blockUsers: List<String>, content: String) {
+    val userId = UserDataManager.getInstance().user?.id
+    val isBlocked = userId != null && blockUsers.contains(userId)
+    if (isBlocked) {
+        text = resources.getString(R.string.user_is_blocked)
+        setTextColor(ContextCompat.getColor(context, R.color.highlight))
+    } else {
+        text = content
+        setTextColor(ContextCompat.getColor(context, R.color.text))
+    }
 }

@@ -1,16 +1,12 @@
 package com.crystal.todayprice.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
-import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.R
@@ -45,29 +41,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     }
     private val user = userDataManager.user
 
-    private val adapter = ReviewAdapter(object : OnItemReviewListener {
-
-        override fun onLikeClick(review: Review) {
-
-            if (user == null) {
-                Toast.makeText(this@ReviewActivity, getString(R.string.require_login), Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            val isContained = review.likeUsers.contains(user.id)
-            if (isContained) {
-                updateReview(review, -1, user.id)
-            } else {
-                updateReview(review, 1, user.id)
-            }
-        }
-
-        override fun onMenuClick(review: Review) {
-            Log.e(TAG, "onMenuClick")
-        }
-
-    })
-
+    private lateinit var adapter : ReviewAdapter
     private var marketId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,7 +129,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         })
     }
 
-    private fun updateReview(review: Review, upCount: Int, userId: String) {
+    private fun updateReviewLike(review: Review, upCount: Int, userId: String) {
         val index = adapter.getList().indexOf(review)
         val newLikeUsers = mutableListOf<String>()
 
@@ -176,6 +150,24 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         reviewViewModel.updateReview(newReview, userId)
     }
 
+    private fun updateReviewBlock(review: Review, isContained: Boolean, userId: String) {
+        val index = adapter.getList().indexOf(review)
+        val newBlockUsers = mutableListOf<String>()
+
+        newBlockUsers.addAll(review.blockUsers)
+
+        if (isContained) {
+            newBlockUsers.remove(userId)
+        } else {
+            newBlockUsers.add(userId)
+        }
+        val newReview = review.copy(
+            blockUsers = newBlockUsers,
+        )
+        adapter.updateReview(index, newReview)
+        reviewViewModel.updateBlockUser(review.id, isContained, userId)
+    }
+
     private fun clearEditText() {
         binding.addEditText.text = null
         val inputMethodManager =
@@ -192,6 +184,42 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     }
 
     private fun setRecyclerView() {
+
+        adapter = ReviewAdapter(object :OnItemReviewListener {
+
+            override fun onLikeClick(review: Review) {
+                if (user == null) {
+                    Toast.makeText(this@ReviewActivity, getString(R.string.require_login), Toast.LENGTH_SHORT).show()
+                    return
+                }
+                val isContained = review.likeUsers.contains(user.id)
+                if (isContained) {
+                    updateReviewLike(review, -1, user.id)
+                } else {
+                    updateReviewLike(review, 1, user.id)
+                }
+            }
+
+            override fun onMenuClick(review: Review) {
+                if (user == null) {
+                    Toast.makeText(this@ReviewActivity, getString(R.string.require_login),Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                /*
+                * 1. 본인이 작성한 댓글이면 삭제, 취소가 뜨게, 다른 사람이 작성한 글이면 차단, 신고, 취소
+                * - 삭제 -> 삭제 Alert
+                * - 신고 -> 신고화면 이동
+                * - 차단 -> 차단 Alert 후 차단 시 UI 업데이트 (차단한 )
+                *
+                * */
+                val isContained = review.blockUsers.contains(user.id)
+                updateReviewBlock(review, isContained, user.id)
+            }
+
+        })
+
+
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(VerticalDividerItemDecoration(this, 20, 20))
 
