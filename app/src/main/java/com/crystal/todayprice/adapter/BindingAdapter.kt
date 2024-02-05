@@ -12,6 +12,7 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.crystal.todayprice.R
+import com.crystal.todayprice.component.UserDataManager
 import com.crystal.todayprice.data.User
 import java.text.NumberFormat
 import java.util.Locale
@@ -69,24 +70,6 @@ fun TextView.setCountText(count: Int?) {
     text = count?.toString() ?: "0"
 }
 
-
-//@BindingAdapter("heartDrawableImage")
-//fun TextView.setHeartDrawable() {
-//    val id = FirebaseAuth.getInstance().currentUser?.uid
-//    drawaSt
-//
-//    if (id != null) {
-//
-//    }
-//}
-@BindingAdapter("heartDrawableImage")
-fun setHeartDrawableStartCompat(textView: TextView, likeState: Boolean) {
-    val drawableResId = if (likeState) R.drawable.ic_fill_heart else R.drawable.ic_empty_heart
-    val drawable: Drawable? = ContextCompat.getDrawable(textView.context, drawableResId)
-    textView.setCompoundDrawablesRelativeWithIntrinsicBounds(drawable, null, null, null)
-}
-
-
 @BindingAdapter("headerText")
 fun TextView.setHeaderText(name: String?) {
     text = name ?: resources.getText(R.string.require_login)
@@ -108,4 +91,15 @@ fun TextView.setIsVisible(user: User?) {
     } else {
         View.GONE
     }
+}
+
+@BindingAdapter("heartDrawable")
+fun TextView.setHeartDrawable(users: List<String>) {
+    val userId = UserDataManager.getInstance().user?.id
+    val drawableResId = if (userId != null && users.contains(userId)) {
+        R.drawable.ic_fill_heart
+    } else {
+        R.drawable.ic_empty_heart
+    }
+    setCompoundDrawablesRelativeWithIntrinsicBounds(drawableResId, 0, 0, 0)
 }

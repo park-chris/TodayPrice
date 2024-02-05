@@ -27,9 +27,7 @@ class ReviewAdapter(
             binding.item = review
 
             binding.countTextView.setOnClickListener {
-                review.likeState = !review.likeState
                 onItemReviewListener.onLikeClick(review)
-                Log.e("TestLog", "like ${review.likeState}")
             }
             binding.menuButton.setOnClickListener {
                 onItemReviewListener.onMenuClick(review)
@@ -68,6 +66,13 @@ class ReviewAdapter(
 
     fun getList(): List<Review> {
         return differ.currentList
+    }
+
+    fun updateReview(position: Int, newReview: Review) {
+        val list = getList().mapIndexed { index, review ->
+            if (position == index) newReview else review
+        }
+        submitList(list)
     }
 
 }

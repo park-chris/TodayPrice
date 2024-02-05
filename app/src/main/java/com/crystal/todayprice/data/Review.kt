@@ -11,5 +11,5 @@ data class Review(
   val date: String = "",
   var likeCount: Int = 0,
   val likeUsers: List<String> = emptyList(),
-  var likeState: Boolean = false,
+//  var likeState: Boolean = false,
 )

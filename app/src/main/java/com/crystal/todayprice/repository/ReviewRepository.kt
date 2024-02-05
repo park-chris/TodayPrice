@@ -9,4 +9,6 @@ interface ReviewRepository {
     suspend fun getReview(marketId: Int): List<Review>
     fun addReview(review: Review, callback: FirebaseCallback)
 
+    fun updateReview(review: Review, userId: String)
+
 }

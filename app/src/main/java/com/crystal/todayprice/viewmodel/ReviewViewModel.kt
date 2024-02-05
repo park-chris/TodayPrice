@@ -27,6 +27,10 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel
         reviewRepository.addReview(review, callback)
     }
 
+    fun updateReview(review: Review, userId: String) {
+        reviewRepository.updateReview(review, userId)
+    }
+
     class ReviewViewModelFactory(private val reviewRepository: ReviewRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ReviewViewModel(reviewRepository) as T

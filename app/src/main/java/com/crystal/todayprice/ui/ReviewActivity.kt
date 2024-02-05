@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.R
@@ -47,7 +48,18 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     private val adapter = ReviewAdapter(object : OnItemReviewListener {
 
         override fun onLikeClick(review: Review) {
-            Log.e(TAG, "onLikeClick")
+
+            if (user == null) {
+                Toast.makeText(this@ReviewActivity, getString(R.string.require_login), Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            val isContained = review.likeUsers.contains(user.id)
+            if (isContained) {
+                updateReview(review, -1, user.id)
+            } else {
+                updateReview(review, 1, user.id)
+            }
         }
 
         override fun onMenuClick(review: Review) {
@@ -96,7 +108,13 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                 val today = System.currentTimeMillis()
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
                 val date = dateFormat.format(today)
-                val review = Review(userId = user.id, marketId = marketId, userName = user.name, content = text, date = date)
+                val review = Review(
+                    userId = user.id,
+                    marketId = marketId,
+                    userName = user.name,
+                    content = text,
+                    date = date
+                )
 
                 addReview(review)
 
@@ -106,10 +124,14 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                         startActivity(Intent(this@ReviewActivity, LoginActivity::class.java))
                     }
                 })
-                dialog.start(title = null, message = getString(R.string.dialog_login_message), leftButtonText = getString(R.string.cancel), rightButtonText = getString(R.string.go_login), isCanceled = true)
-
+                dialog.start(
+                    title = null,
+                    message = getString(R.string.dialog_login_message),
+                    leftButtonText = getString(R.string.cancel),
+                    rightButtonText = getString(R.string.go_login),
+                    isCanceled = true
+                )
             }
-
         }
     }
 
@@ -125,6 +147,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
                         clearEditText()
                     }
+
                     Result.FAIL -> {
                     }
                 }
@@ -132,9 +155,31 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         })
     }
 
+    private fun updateReview(review: Review, upCount: Int, userId: String) {
+        val index = adapter.getList().indexOf(review)
+        val newLikeUsers = mutableListOf<String>()
+
+        newLikeUsers.addAll(review.likeUsers)
+
+        if (upCount == -1) {
+            newLikeUsers.remove(userId)
+        } else {
+            newLikeUsers.add(userId)
+        }
+
+        val likeCount = review.likeCount + upCount
+        val newReview = review.copy(
+            likeUsers = newLikeUsers,
+            likeCount = likeCount
+        )
+        adapter.updateReview(index, newReview)
+        reviewViewModel.updateReview(newReview, userId)
+    }
+
     private fun clearEditText() {
         binding.addEditText.text = null
-        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(binding.addEditText.windowToken, 0)
         binding.addEditText.clearFocus()
 
@@ -148,7 +193,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
     private fun setRecyclerView() {
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(VerticalDividerItemDecoration(this,20, 20))
+        binding.recyclerView.addItemDecoration(VerticalDividerItemDecoration(this, 20, 20))
 
         reviewViewModel.reviews.observe(this, Observer {
             adapter.submitList(it)

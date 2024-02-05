@@ -2,6 +2,7 @@ package com.crystal.todayprice.repository
 
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.util.FirebaseCallback
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -39,5 +40,9 @@ class ReviewRepositoryImpl: ReviewRepository {
         }.addOnFailureListener {
             callback.onResult(Result.FAIL)
         }
+    }
+
+    override fun updateReview(review: Review, userId: String) {
+        reviewRef.document(review.id).set(review, SetOptions.merge())
     }
 }
