@@ -226,9 +226,9 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     if (result == Result.SUCCESS) {
                         val index = adapter.getList().indexOf(review)
                         adapter.deleteReview(index)
-                        Toast.makeText(this@ReviewActivity, "댓글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ReviewActivity, getString(R.string.review_delete_complete), Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this@ReviewActivity, "다시 한번 시도해주세요.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ReviewActivity, getString(R.string.retry), Toast.LENGTH_SHORT).show()
                     }
                 }
             })
