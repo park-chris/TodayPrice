@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -201,8 +202,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                         updateReviewBlock(review, isContained, userId)
                     }
                     ButtonType.DELETE -> {
-                        // TODO 삭제 기능
-                        Toast.makeText(this@ReviewActivity, "삭제기능", Toast.LENGTH_SHORT).show()
+                        deleteReview(review, userId)
                     }
                     ButtonType.OPEN_BLOCK -> {
                         startDialog(review, ModalType.BLOCK, userId)
@@ -217,6 +217,23 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         dialog.show(review.userName, modalType)
     }
 
+    private fun deleteReview(review: Review, userId: String) {
+        binding.progressBar.visibility = View.VISIBLE
+        if (review.userId == userId) {
+            reviewViewModel.deleteReview(review.id, object : FirebaseCallback {
+                override fun onResult(result: Result) {
+                    binding.progressBar.visibility = View.GONE
+                    if (result == Result.SUCCESS) {
+                        val index = adapter.getList().indexOf(review)
+                        adapter.deleteReview(index)
+                        Toast.makeText(this@ReviewActivity, "댓글이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@ReviewActivity, "다시 한번 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+        }
+    }
     private fun setRecyclerView() {
 
         adapter = ReviewAdapter(object : OnItemReviewListener {

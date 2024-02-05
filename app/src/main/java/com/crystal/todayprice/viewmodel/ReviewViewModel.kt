@@ -35,6 +35,10 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel
         reviewRepository.updateBlockUser(reviewId, isContained, userId)
     }
 
+    fun deleteReview(reviewId: String, callback: FirebaseCallback) {
+        reviewRepository.deleteReview(reviewId, callback)
+    }
+
     class ReviewViewModelFactory(private val reviewRepository: ReviewRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ReviewViewModel(reviewRepository) as T

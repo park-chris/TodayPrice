@@ -75,4 +75,9 @@ class ReviewAdapter(
         submitList(list)
     }
 
+    fun deleteReview(position: Int) {
+        val list = getList().filterIndexed  { index, _ -> index != position }
+        submitList(list)
+    }
+
 }

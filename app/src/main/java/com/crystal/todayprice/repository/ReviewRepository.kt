@@ -13,4 +13,5 @@ interface ReviewRepository {
 
     fun updateBlockUser(reviewId: String, isContained: Boolean, userId: String)
 
+    fun deleteReview(reviewId: String, callback: FirebaseCallback)
 }

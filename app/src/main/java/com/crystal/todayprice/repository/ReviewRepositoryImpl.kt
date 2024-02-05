@@ -55,4 +55,12 @@ class ReviewRepositoryImpl: ReviewRepository {
             reviewRef.document(reviewId).update("blockUsers", FieldValue.arrayUnion(userId))
         }
     }
+
+    override fun deleteReview(reviewId: String, callback: FirebaseCallback) {
+        reviewRef.document(reviewId).delete().addOnSuccessListener {
+            callback.onResult(Result.SUCCESS)
+        }.addOnFailureListener {
+            callback.onResult(Result.FAIL)
+        }
+    }
 }
