@@ -4,36 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minWidth="250dp"
-    android:maxWidth="300dp"
     android:background="@drawable/bg_dialog"
     android:elevation="10dp"
-    android:padding="15dp">
+    android:maxWidth="350dp"
+    android:minWidth="250dp">
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="@color/hint"
+        android:layout_margin="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:textSize="@dimen/small_text_size"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/messageTextView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/text"
+        android:layout_margin="15dp"
         android:textSize="@dimen/x_small_text_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/leftButton"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
-        android:backgroundTint="@color/background"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/effect_button_ripple"
+        android:backgroundTint="@color/white"
         android:textColor="@color/hint"
         app:layout_constraintEnd_toStartOf="@id/rightButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,9 +51,13 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/rightButton"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/effect_button_ripple"
         android:backgroundTint="@color/highlight"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

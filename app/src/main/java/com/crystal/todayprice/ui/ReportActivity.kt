@@ -71,7 +71,7 @@ class ReportActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     val dialog = CustomDialog(this@ReportActivity, object : OnDialogListener {
                         override fun onOk() { finish() }
                     })
-                    dialog.start(title =  getString(R.string.report_dialog_title), message =  getString(R.string.dialog_login_message), rightButtonText = getString(R.string.report_dialog_button), leftButtonText = null, isCanceled = false )
+                    dialog.start(title =  getString(R.string.report_dialog_title), message =  getString(R.string.report_dialog_message), rightButtonText = getString(R.string.report_dialog_button), leftButtonText = null, isCanceled = false )
                 } else {
                     Toast.makeText(this@ReportActivity, getString(R.string.report_error_toast), Toast.LENGTH_SHORT).show()
                 }
