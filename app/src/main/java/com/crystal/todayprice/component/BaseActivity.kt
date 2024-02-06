@@ -21,7 +21,6 @@ import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 
 open class BaseActivity(
@@ -46,7 +45,7 @@ open class BaseActivity(
         setToolbar()
         baseBinding.navigationView.setNavigationItemSelectedListener(this)
 
-        setAnimation()
+        setEnterAnimation()
         setSearchViewListener()
         setHeaderView()
     }
@@ -65,11 +64,7 @@ open class BaseActivity(
     override fun finish() {
         super.finish()
 
-        when (transitionMode) {
-            TransitionMode.HORIZON -> overridePendingTransition(R.anim.none, R.anim.horizon_exit)
-            TransitionMode.VERTICAL -> overridePendingTransition(R.anim.none, R.anim.vertical_exit)
-            else -> {}
-        }
+        exitAnimation()
     }
 
     override fun onBackPressed() {
@@ -80,22 +75,6 @@ open class BaseActivity(
             closeSearchView()
         } else {
             super.onBackPressed()
-
-            if (isFinishing) {
-                when (transitionMode) {
-                    TransitionMode.HORIZON -> overridePendingTransition(
-                        R.anim.none,
-                        R.anim.horizon_exit
-                    )
-
-                    TransitionMode.VERTICAL -> overridePendingTransition(
-                        R.anim.none,
-                        R.anim.vertical_exit
-                    )
-
-                    else -> Unit
-                }
-            }
         }
     }
 
@@ -125,6 +104,22 @@ open class BaseActivity(
         return true
     }
 
+    private fun exitAnimation() {
+        when (transitionMode) {
+            TransitionMode.HORIZON -> overridePendingTransition(
+                R.anim.none,
+                R.anim.horizon_exit
+            )
+
+            TransitionMode.VERTICAL -> overridePendingTransition(
+                R.anim.none,
+                R.anim.vertical_exit
+            )
+
+            else -> Unit
+        }
+    }
+
     private fun setHeaderView() {
         val headerView = baseBinding.navigationView.getHeaderView(0)
         drawerHeaderBinding = DataBindingUtil.bind(headerView)!!
@@ -142,7 +137,7 @@ open class BaseActivity(
 
     }
 
-    private fun setAnimation() {
+    private fun setEnterAnimation() {
         when (transitionMode) {
             TransitionMode.HORIZON -> overridePendingTransition(R.anim.horizon_enter, R.anim.none)
             TransitionMode.VERTICAL -> overridePendingTransition(R.anim.vertical_enter, R.anim.none)
