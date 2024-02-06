@@ -63,7 +63,6 @@ open class BaseActivity(
 
     override fun finish() {
         super.finish()
-
         exitAnimation()
     }
 
@@ -75,6 +74,7 @@ open class BaseActivity(
             closeSearchView()
         } else {
             super.onBackPressed()
+            if (isFinishing) exitAnimation()
         }
     }
 

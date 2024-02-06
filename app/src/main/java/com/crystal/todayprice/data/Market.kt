@@ -2,18 +2,6 @@ package com.crystal.todayprice.data
 
 import java.io.Serializable
 
-/**
- * @property id
- * @property name
- * @property imgUrl
- * @property address
- * @property latitude
- * @property longitude
- * @property type
- * @property borough
- * @property description
- * @property phoneNumber
- */
 data class Market(
     val id: Int = -1,
     val name: String = "",
