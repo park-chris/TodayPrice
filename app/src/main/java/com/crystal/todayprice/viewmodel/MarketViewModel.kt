@@ -30,6 +30,10 @@ class MarketViewModel(private val marketRepository: MarketRepository): ViewModel
         return list.filter { item: Market -> item.borough == borough }
     }
 
+    fun countMarketReview(marketId: Int, count: Int) {
+        marketRepository.countMarketReview(marketId, count)
+    }
+
     class MarketViewModelFactory(private val marketRepository: MarketRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return MarketViewModel(marketRepository) as T

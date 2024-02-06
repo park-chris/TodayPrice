@@ -1,6 +1,7 @@
 package com.crystal.todayprice.repository
 
 import com.crystal.todayprice.data.Market
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
@@ -20,5 +21,9 @@ class MarketRepositoryImpl: MarketRepository {
         } catch (e: Exception) {
             emptyList()
         }
+    }
+
+    override fun countMarketReview(marketId: Int, count: Int) {
+        marketCollection.document(marketId.toString()).update("reviewCount", FieldValue.increment(count.toDouble()))
     }
 }

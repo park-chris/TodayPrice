@@ -2,6 +2,7 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
@@ -23,6 +24,8 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
         baseBinding.contentLayout.addView(binding.root)
 
         market = intent.intentSerializable(MARKET_OBJECT, Market::class.java)
+
+        Log.e("TestLog", "market: ${market}")
 
         market?.let {
             binding.market = it
