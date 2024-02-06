@@ -2,6 +2,7 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -39,6 +40,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
 
         binding = ActivityMarketListBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
+        baseBinding.progressBar.visibility = View.VISIBLE
 
         setMarkets()
         observeList()
@@ -51,6 +53,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
             marketViewModel.markets.observe(this@MarketListActivity, Observer {
                 it?.let {
                     adapter.submitList(it)
+                    baseBinding.progressBar.visibility = View.GONE
                 }
             })
         }

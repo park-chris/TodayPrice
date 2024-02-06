@@ -2,6 +2,7 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -46,6 +47,7 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
 
         binding = ActivityItemListBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
+        baseBinding.progressBar.visibility = View.VISIBLE
 
         market = intent.intentSerializable(MarketActivity.MARKET_OBJECT, Market::class.java)
 
@@ -72,7 +74,7 @@ class ItemListActivity : BaseActivity(ToolbarType.BACK, TransitionMode.HORIZON) 
         lifecycleScope.launch {
             itemViewModel.items.observe(this@ItemListActivity, Observer {
                 adapter.submitList(it)
-                binding.progressBar.isVisible = false
+                baseBinding.progressBar.isVisible = false
             })
         }
 

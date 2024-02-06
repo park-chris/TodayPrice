@@ -20,6 +20,7 @@ import com.crystal.todayprice.component.ModalType
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Review
+import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityReviewBinding
 import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
@@ -29,7 +30,6 @@ import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.OnItemReviewListener
 import com.crystal.todayprice.util.VerticalDividerItemDecoration
 import com.crystal.todayprice.viewmodel.ReviewViewModel
-import com.kakao.sdk.common.KakaoSdk.type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -37,7 +37,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.Locale
 
-private const val TAG = "TestLog"
 
 class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
@@ -45,7 +44,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     private val reviewViewModel: ReviewViewModel by viewModels {
         ReviewViewModel.ReviewViewModelFactory(ReviewRepositoryImpl())
     }
-    private val user = userDataManager.user
+    private  var user: User? = null
 
     private lateinit var adapter: ReviewAdapter
     private var marketId: Int = -1
@@ -55,7 +54,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
         binding = ActivityReviewBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
-
+        baseBinding.progressBar.visibility = View.VISIBLE
         marketId = intent.getIntExtra(MarketActivity.MARKET_ID, -1)
 
         setRecyclerView()
@@ -65,6 +64,8 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
     override fun onResume() {
         super.onResume()
+
+        user = userDataManager.user
 
         setTextToEdit()
 
@@ -83,15 +84,14 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     private fun setupEvent() {
         binding.addButton.setOnClickListener {
             if (user != null) {
-
                 val text = binding.addEditText.text.toString()
                 val today = System.currentTimeMillis()
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
                 val date = dateFormat.format(today)
                 val review = Review(
-                    userId = user.id,
+                    userId = user!!.id,
                     marketId = marketId,
-                    userName = user.name,
+                    userName = user!!.name,
                     content = text,
                     date = date
                 )
@@ -219,11 +219,11 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     }
 
     private fun deleteReview(review: Review, userId: String) {
-        binding.progressBar.visibility = View.VISIBLE
+        baseBinding.progressBar.visibility = View.VISIBLE
         if (review.userId == userId) {
             reviewViewModel.deleteReview(review.id, object : FirebaseCallback {
                 override fun onResult(result: Result) {
-                    binding.progressBar.visibility = View.GONE
+                    baseBinding.progressBar.visibility = View.GONE
                     if (result == Result.SUCCESS) {
                         val index = adapter.getList().indexOf(review)
                         adapter.deleteReview(index)
@@ -248,11 +248,11 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     ).show()
                     return
                 }
-                val isContained = review.likeUsers.contains(user.id)
+                val isContained = review.likeUsers.contains(user!!.id)
                 if (isContained) {
-                    updateReviewLike(review, -1, user.id)
+                    updateReviewLike(review, -1, user!!.id)
                 } else {
-                    updateReviewLike(review, 1, user.id)
+                    updateReviewLike(review, 1, user!!.id)
                 }
             }
 
@@ -265,12 +265,12 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     ).show()
                     return
                 }
-                if (review.userId != user.id && review.blockUsers.contains(user.id)) {
-                    startDialog(review, ModalType.MENU_ANOTHER_UNBLOCK, user.id)
-                } else if (review.userId == user.id) {
-                    startDialog(review, ModalType.DELETE, user.id)
+                if (review.userId != user!!.id && review.blockUsers.contains(user!!.id)) {
+                    startDialog(review, ModalType.MENU_ANOTHER_UNBLOCK, user!!.id)
+                } else if (review.userId == user!!.id) {
+                    startDialog(review, ModalType.DELETE, user!!.id)
                 } else {
-                    startDialog(review, ModalType.MENU_ANOTHER_BLOCK, user.id)
+                    startDialog(review, ModalType.MENU_ANOTHER_BLOCK, user!!.id)
                 }
             }
         })
@@ -278,7 +278,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         binding.recyclerView.addItemDecoration(VerticalDividerItemDecoration(this, 20, 20))
         reviewViewModel.reviews.observe(this, Observer {
             adapter.submitList(it)
-            binding.progressBar.visibility = View.GONE
+            baseBinding.progressBar.visibility = View.GONE
 
             if (it.isNotEmpty()) {
                 binding.infoTextView.isVisible = false

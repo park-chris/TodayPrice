@@ -74,7 +74,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
 
         val signInClient = googleSignInClient?.signInIntent
 
-        binding.progressBar.visibility = View.VISIBLE
+        baseBinding.progressBar.visibility = View.VISIBLE
         childForResult.launch(signInClient)
     }
 
@@ -88,7 +88,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
                 }
 
                 RESULT_CANCELED -> {
-                    binding.progressBar.visibility = View.GONE
+                    baseBinding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -104,7 +104,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
                         updateUser(it)
                     }
                 } else {
-                    binding.progressBar.visibility = View.GONE
+                    baseBinding.progressBar.visibility = View.GONE
                     val alert = CustomDialog(this, null)
                     alert.start(
                         getString(R.string.login_fail_info_title_dialog),
@@ -146,7 +146,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
 
     private fun getCustomToken(accessToken: String) {
 
-        binding.progressBar.visibility = View.VISIBLE
+        baseBinding.progressBar.visibility = View.VISIBLE
 
         val functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
 
@@ -187,7 +187,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
                     updateUser(it)
                 }
             } else {
-                binding.progressBar.visibility = View.GONE
+                baseBinding.progressBar.visibility = View.GONE
             }
         }
     }
@@ -198,7 +198,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
 
         if (dbUser != null) {
             userDataManager.user = dbUser
-            binding.progressBar.visibility = View.GONE
+            baseBinding.progressBar.visibility = View.GONE
             finish()
         } else {
             val newUser = User(
@@ -211,11 +211,11 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
                     when (result) {
                         Result.FAIL
                         -> {
-                            binding.progressBar.visibility = View.GONE
+                            baseBinding.progressBar.visibility = View.GONE
                         }
                         Result.SUCCESS -> {
                             userDataManager.user = newUser
-                            binding.progressBar.visibility = View.GONE
+                            baseBinding.progressBar.visibility = View.GONE
                             finish()
                         }
                     }

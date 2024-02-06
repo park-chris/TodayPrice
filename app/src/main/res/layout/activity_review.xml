@@ -14,17 +14,6 @@
         app:layout_constraintBottom_toTopOf="@id/editLayout"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="50dp"
-        style="@style/CustomProgressBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="50dp" />
-
     <TextView
         android:id="@+id/infoTextView"
         android:layout_width="match_parent"

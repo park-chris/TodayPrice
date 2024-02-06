@@ -2,6 +2,7 @@ package com.crystal.todayprice
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -44,6 +45,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
+        baseBinding.progressBar.visibility = View.VISIBLE
         getUser()
         setAdapter()
         observerList()
@@ -91,7 +93,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         listItemViewModel.listItem.observe(this, Observer { listItem ->
             listItem?.let {
                 setMarketList(it)
-                binding.progressBar.isVisible = false
+                baseBinding.progressBar.isVisible = false
             }
         })
 

@@ -20,6 +20,8 @@ import com.crystal.todayprice.databinding.DrawerHearderBinding
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 
 
 open class BaseActivity(
@@ -130,6 +132,9 @@ open class BaseActivity(
         drawerHeaderBinding.loginButton.setOnClickListener {
             if (drawerHeaderBinding.user != null) {
                 Toast.makeText(this, "프로필 화면은 추후 설정", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut()
+                userDataManager.user = null
+                updateProfile(null)
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
