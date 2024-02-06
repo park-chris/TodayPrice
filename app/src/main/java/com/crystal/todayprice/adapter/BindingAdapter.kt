@@ -7,12 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.UserDataManager
+import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.data.User
 import java.text.NumberFormat
 import java.util.Locale
@@ -126,4 +126,9 @@ fun ImageButton.setMenuDrawable(reviewId: String) {
         R.drawable.ic_see_more
     }
     setImageResource(drawableResId)
+}
+
+@BindingAdapter("surveyDate")
+fun TextView.setSurveyDate(price: Price?) {
+    text = ( "업데이트 날짜 ${price?.surveyDate}\n가격은 변동이 있을 수 있습니다.") ?: "-"
 }

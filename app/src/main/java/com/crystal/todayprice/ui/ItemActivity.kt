@@ -25,7 +25,6 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
 
     private var item: Item? = null
     private var market: Market? = null
-    private var prices: List<Price> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +36,11 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         market = intent.intentSerializable(MarketActivity.MARKET_OBJECT, Market::class.java)
 
         itemViewModel.prices.observe(this, Observer {
-            prices = it
-            binding.graphView.setData(prices.takeLast(4))
+            binding.price = it.last()
+            binding.graphView.setData(it.takeLast(4))
         })
 
         item?.let {
-            // market ID를 어디서 받아와야함. (item 넘기면서 마켓도 같이 넘기는걸루 )
             itemViewModel.getItem(market!!.id, it.itemId.toInt())
             binding.item = it
             binding.priceTextView.text = TextUtil.priceFormat(this, it.itemPrice.toDouble())
