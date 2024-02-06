@@ -6,8 +6,7 @@ import com.crystal.todayprice.util.FirebaseCallback
 interface UserRepository {
     fun createUser(user: User, callback: FirebaseCallback)
     suspend fun getUser(userId: String): User?
+
+    fun submitReport( reviewId: String, userId: String, reportTitle: String, reportContent: String?, callback: FirebaseCallback)
 }
 
-enum class Result {
-    SUCCESS, FAIL
-}

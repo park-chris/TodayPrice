@@ -21,7 +21,7 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.databinding.ActivityReviewBinding
-import com.crystal.todayprice.repository.Result
+import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.OnBottomSheetListener
@@ -119,7 +119,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         reviewViewModel.addReview(review, object : FirebaseCallback {
             override fun onResult(result: Result) {
                 when (result) {
-                    Result.SUCCESS -> {
+                    com.crystal.todayprice.util.Result.SUCCESS -> {
                         val list = mutableListOf<Review>()
                         list.addAll(adapter.getList())
                         list.add(0, review)
@@ -128,7 +128,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                         clearEditText()
                     }
 
-                    Result.FAIL -> {
+                    com.crystal.todayprice.util.Result.FAIL -> {
                     }
                 }
             }
@@ -194,8 +194,9 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
             override fun onClick(buttonType: ButtonType) {
                 when (buttonType) {
                     ButtonType.REPORT -> {
-                        // TODO 신고창 열기
-                        Toast.makeText(this@ReviewActivity, "신고버튼", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@ReviewActivity, ReportActivity::class.java)
+                        intent.putExtra(ReportActivity.REVIEW_ID, review.id)
+                        startActivity(intent)
                     }
                     ButtonType.BLOCK -> {
                         val isContained = review.blockUsers.contains(userId)
@@ -264,7 +265,6 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     ).show()
                     return
                 }
-
                 if (review.userId != user.id && review.blockUsers.contains(user.id)) {
                     startDialog(review, ModalType.MENU_ANOTHER_UNBLOCK, user.id)
                 } else if (review.userId == user.id) {
@@ -272,23 +272,18 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                 } else {
                     startDialog(review, ModalType.MENU_ANOTHER_BLOCK, user.id)
                 }
-
             }
-
         })
-
-
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(VerticalDividerItemDecoration(this, 20, 20))
-
         reviewViewModel.reviews.observe(this, Observer {
             adapter.submitList(it)
+            binding.progressBar.visibility = View.GONE
 
             if (it.isNotEmpty()) {
                 binding.infoTextView.isVisible = false
             }
         })
-
         reviewViewModel.getReviews(marketId)
     }
 

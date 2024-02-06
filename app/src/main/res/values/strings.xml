@@ -70,6 +70,20 @@
     <string name="review_delete_complete">댓글이 삭제되었습니다.</string>
     <string name="retry">다시 한번 시도해주세요.</string>
 
+    <string name="report_gender">성적인 수치심</string>
+    <string name="report_violent">폭력적 또는 혐오 표현</string>
+    <string name="report_harmful">유해한 표현</string>
+    <string name="report_spam">스팸 또는 혼동을 야기</string>
+    <string name="report_abuse">학대 표현</string>
+    <string name="report_etc">기타</string>
+    <string name="report_etc_hint">기타 의견을 입력해주세요.</string>
+    <string name="report_submit">신고 등록하기</string>
+
+    <string name="report_dialog_title">접수 완료</string>
+    <string name="report_dialog_message">신고 접수가 완료되었습니다.</string>
+    <string name="report_dialog_button">뒤로 가기</string>
+    <string name="report_error_toast">신고 접수가 완료되지 못했습니다. 다시 시도해주십시오.</string>
+
 <!--    category 별 글-->
     <string name="all">전체</string>
     <string name="grain">곡류</string>

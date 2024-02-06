@@ -8,10 +8,10 @@ import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.CustomDialog
 import com.crystal.todayprice.component.ToolbarType
+import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityLoginBinding
-import com.crystal.todayprice.repository.Result
 import com.crystal.todayprice.util.FirebaseCallback
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -209,7 +209,8 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
             userViewModel.createUser(newUser, object : FirebaseCallback {
                 override fun onResult(result: Result) {
                     when (result) {
-                        Result.FAIL -> {
+                        Result.FAIL
+                        -> {
                             binding.progressBar.visibility = View.GONE
                         }
                         Result.SUCCESS -> {

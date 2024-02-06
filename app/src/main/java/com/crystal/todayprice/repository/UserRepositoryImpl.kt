@@ -1,7 +1,9 @@
 package com.crystal.todayprice.repository
 
+import android.icu.text.SimpleDateFormat
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.util.FirebaseCallback
+import com.crystal.todayprice.util.Result
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -9,6 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.util.Date
+import java.util.Locale
 
 class UserRepositoryImpl : UserRepository {
     private val database = Firebase.firestore
@@ -35,4 +39,31 @@ class UserRepositoryImpl : UserRepository {
             null
         }
     }
+
+    override fun submitReport(
+        reviewId: String,
+        userId: String,
+        reportTitle: String,
+        reportContent: String?,
+        callback: FirebaseCallback
+    ) {
+        val today = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
+        val date = dateFormat.format(today)
+        val reportHashMap = hashMapOf(
+            "reviewId" to reviewId,
+            "userId" to userId,
+            "title" to reportTitle,
+            "content" to reportContent,
+            "date" to  date,
+            "isChecked" to false
+        )
+
+        database.collection("report").document().set(reportHashMap).addOnSuccessListener {
+            callback.onResult(Result.SUCCESS)
+        }.addOnFailureListener {
+            callback.onResult(Result.FAIL)
+        }
+    }
+
 }

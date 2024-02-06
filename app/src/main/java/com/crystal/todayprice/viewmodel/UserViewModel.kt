@@ -18,4 +18,13 @@ class UserViewModel() : ViewModel() {
 
     suspend fun getUser(userId: String): User? = userRepository.getUser(userId)
 
+    fun submitReport(
+        reviewId: String,
+        userId: String,
+        reportTitle: String,
+        reportContent: String?,
+        callback: FirebaseCallback
+    ) {
+        userRepository.submitReport(reviewId, userId, reportTitle, reportContent, callback)
+    }
 }

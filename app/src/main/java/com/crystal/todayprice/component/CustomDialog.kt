@@ -11,7 +11,7 @@ class CustomDialog(context: Context, private val onDialogListener: OnDialogListe
     private val dialog = Dialog(context)
     private lateinit var binding: CustomDialogBinding
 
-    fun start(title: String?, message: String, leftButtonText: String, rightButtonText: String?, isCanceled: Boolean) {
+    fun start(title: String?, message: String, leftButtonText: String?, rightButtonText: String?, isCanceled: Boolean) {
         dialog.setTitle(title)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         binding =  CustomDialogBinding.inflate(dialog.layoutInflater)
@@ -23,6 +23,12 @@ class CustomDialog(context: Context, private val onDialogListener: OnDialogListe
             binding.titleTextView.text = title
         } else {
             binding.titleTextView.isVisible = false
+        }
+
+        if (leftButtonText == null) {
+            binding.leftButton.isVisible = false
+        } else {
+            binding.leftButton.text = leftButtonText
         }
 
         if (rightButtonText == null) {
