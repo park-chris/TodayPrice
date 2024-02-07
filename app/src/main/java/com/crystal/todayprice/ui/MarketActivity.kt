@@ -10,7 +10,15 @@ import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketBinding
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
+import com.kakao.vectormap.KakaoMap
+import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.LatLng
+import com.kakao.vectormap.MapLifeCycleCallback
+import com.kakao.vectormap.MapType
+import com.kakao.vectormap.MapViewInfo
+import java.lang.Exception
 
+private const val TAG = "TestLog"
 class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketBinding
@@ -25,8 +33,6 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
         market = intent.intentSerializable(MARKET_OBJECT, Market::class.java)
 
-        Log.e("TestLog", "market: ${market}")
-
         market?.let {
             binding.market = it
         }
@@ -38,6 +44,31 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
         setScrollEvent()
         setupEvent()
+        setMap()
+    }
+
+    private fun setMap() {
+        binding.mapView.start(object : MapLifeCycleCallback() {
+            override fun onMapDestroy() {
+                Log.e(TAG, "onMapDestroy")
+            }
+
+            override fun onMapError(error: Exception?) {
+                Log.e(TAG, "onMApError", error)
+
+            }
+
+        }, object : KakaoMapReadyCallback() {
+            override fun onMapReady(kakaoMap: KakaoMap) {
+                Log.e(TAG, "onMapReady")
+            }
+
+            override fun getPosition(): LatLng {
+                market ?: return super.getPosition()
+                return LatLng.from(market!!.latitude, market!!.longitude)
+            }
+
+        })
     }
 
     private fun setupEvent() {

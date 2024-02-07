@@ -67,7 +67,7 @@
         </activity>
         <meta-data
             android:name="com.kakao.vectormap.APP_KEY"
-            android:value="${KAKAO_KEY}"/>
+            android:value="@string/kakao_api_key"/>
     </application>
 
 </manifest>
