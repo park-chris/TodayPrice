@@ -117,15 +117,15 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
             }
     }
 
-
     private fun kakaoLogin() {
+        baseBinding.progressBar.visibility = View.VISIBLE
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
             UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
                 if (error != null) {
+                    baseBinding.progressBar.visibility = View.GONE
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
                     }
-                    loginWithKaKaoAccount(this)
                 } else if (token != null) {
                     getCustomToken(token.accessToken)
                 }
@@ -140,22 +140,22 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
         UserApiClient.instance.loginWithKakaoAccount(context) { token: OAuthToken?, error: Throwable? ->
             if (token != null) {
                 getCustomToken(token.accessToken)
+            } else {
+                baseBinding.progressBar.visibility = View.GONE
+                return@loginWithKakaoAccount
             }
         }
     }
 
     private fun getCustomToken(accessToken: String) {
-
         baseBinding.progressBar.visibility = View.VISIBLE
-
         val functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
-
         val data = hashMapOf(
             "token" to accessToken
         )
 
         functions
-            .getHttpsCallable("kakaoCustomAuth")
+            .getHttpsCallable("getKakaoCustomAuth")
             .call(data)
             .addOnCompleteListener { task ->
                 try {
@@ -168,12 +168,13 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
 
                     firebaseAuthWithKakao(customToken)
                 } catch (e: RuntimeExecutionException) {
+                    baseBinding.progressBar.visibility = View.GONE
                     val alert = CustomDialog(this, null)
                     alert.start(
                         getString(R.string.login_fail_info_title_dialog),
                         getString(R.string.login_fail_info_message_dialog) + e.message,
-                        getString(R.string.ok),
                         null,
+                        getString(R.string.ok),
                         true
                     )
                 }
