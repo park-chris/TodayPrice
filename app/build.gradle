@@ -23,6 +23,14 @@ android {
         buildConfigField "String", "PUBLIC_API_KEY", properties['public_api_key']
         buildConfigField "String", "FIREBASE_URL", properties['firebase_url']
         buildConfigField "String", "KAKAO_KEY", properties['kakao_key']
+
+        def kakao_key = project.findProperty("kakao_key")
+
+        if (kakao_key == null) {
+            kakao_key = "DEFAULT_KAKAO_API_KEY"
+        }
+        manifestPlaceholders = [KAKAO_KEY: kakao_key]
+
     }
 
     buildTypes {
@@ -92,5 +100,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     implementation "com.kakao.sdk:v2-user:2.12.1"
+    implementation 'com.kakao.maps.open:android:2.6.0'
 
 }

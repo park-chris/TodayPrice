@@ -62,9 +62,12 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:host="oauth"
-                    android:scheme="kakaod6948e364c271c17762eca48fa0912c1" />
+                    android:scheme="kakao${KAKAO_KEY}" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.kakao.vectormap.APP_KEY"
+            android:value="${KAKAO_KEY}"/>
     </application>
 
 </manifest>
