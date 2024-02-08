@@ -9,7 +9,7 @@
 
         <KeyFrameSet>
             <KeyAttribute
-                motion:framePosition="50"
+                motion:framePosition="0"
                 motion:motionTarget="@id/pricesButton">
                 <CustomAttribute
                     app:attributeName="alpha"
@@ -37,7 +37,7 @@
             motion:layout_constraintEnd_toEndOf="parent"/>
 
         <Constraint
-            android:id="@+id/scrollView"
+            android:id="@+id/scrollLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             motion:layout_constraintTop_toTopOf="parent"
@@ -65,14 +65,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toTopOf="parent"
             motion:layout_constraintTop_toBottomOf="@id/nameTextView"/>
 
+
+        <Constraint
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            motion:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Constraint
+            android:id="@+id/addressTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/mapView"
+            motion:layout_constraintStart_toStartOf="@id/mapView"
+            motion:layout_constraintEnd_toEndOf="@id/mapView"
+            motion:layout_constraintBottom_toTopOf="parent"/>
 
         <Constraint
             android:id="@+id/pricesButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/horizontal_padding"
             android:layout_marginStart="@dimen/horizontal_padding"
@@ -92,7 +110,7 @@
             motion:layout_constraintEnd_toEndOf="parent"/>
 
         <Constraint
-            android:id="@+id/scrollView"
+            android:id="@+id/scrollLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             motion:layout_constraintTop_toTopOf="parent"
@@ -120,14 +138,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintBottom_toTopOf="parent"
             motion:layout_constraintTop_toBottomOf="@id/nameTextView"/>
 
+
+        <Constraint
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            motion:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent" />
+
+
+        <Constraint
+            android:id="@+id/addressTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toBottomOf="@id/mapView"
+            motion:layout_constraintStart_toStartOf="@id/mapView"
+            motion:layout_constraintEnd_toEndOf="@id/mapView"
+            motion:layout_constraintBottom_toTopOf="parent"/>
 
         <Constraint
             android:id="@+id/pricesButton"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/horizontal_padding"
             android:layout_marginStart="@dimen/horizontal_padding"

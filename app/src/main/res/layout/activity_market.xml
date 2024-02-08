@@ -16,7 +16,7 @@
     android:id="@+id/motionLayout"
     app:layoutDescription="@xml/activity_market_scene">
 
-    <ScrollView
+    <com.crystal.todayprice.component.CustomScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -24,7 +24,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/scrollLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/marketImageView"
@@ -79,20 +79,33 @@
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
                 android:layout_marginHorizontal="10dp"
-                android:background="@color/hint"
                 android:layout_marginTop="20dp"
+                android:layout_height="250dp" />
+
+            <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="10dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_map_address"
+                app:layout_constraintTop_toBottomOf="@id/mapView"
+                app:layout_constraintStart_toStartOf="@id/mapView"
+                app:layout_constraintEnd_toEndOf="@id/mapView"
+                android:textSize="@dimen/medium_text_size"
+                android:text="@{market.address}"
                 android:layout_marginBottom="100dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_height="300dp" />
-
+                app:drawableEndCompat="@drawable/ic_navigation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </com.crystal.todayprice.component.CustomScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/pricesButton"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
+        android:layout_height="400dp"
         android:background="@drawable/bg_fill_button"
         android:textColor="@color/white"
         android:text="@string/market_prices_button" />

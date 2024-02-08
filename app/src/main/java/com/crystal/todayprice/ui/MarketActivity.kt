@@ -1,5 +1,6 @@
 package com.crystal.todayprice.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -47,10 +48,16 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
         setMap()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private fun setMap() {
         binding.mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
-                Log.e(TAG, "onMapDestroy")
+                binding.mapView.removeAllViews()
             }
 
             override fun onMapError(error: Exception?) {
@@ -60,7 +67,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaoMap: KakaoMap) {
-                Log.e(TAG, "onMapReady")
+                binding.scrollView.setHitRect(binding.mapView.left, binding.mapView.top, binding.mapView.right, binding.mapView.bottom)
             }
 
             override fun getPosition(): LatLng {
@@ -69,6 +76,9 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
             }
 
         })
+
+
+
     }
 
     private fun setupEvent() {
@@ -86,30 +96,24 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
     private fun setScrollEvent() {
         binding.scrollView.apply {
+            var beforeY = 0
+
             viewTreeObserver.addOnScrollChangedListener {
-                if (scrollY == 0
-                    && binding.motionLayout.currentState == R.id.end
+// 아래로 스크롤할 때의 처리
+                if (scrollY > beforeY && binding.motionLayout.currentState == R.id.start
+                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+                ) {
+                    binding.motionLayout.transitionToEnd()
+                }
+
+// 위로 스크롤할 때의 처리
+                if (scrollY < beforeY && binding.motionLayout.currentState == R.id.end
                     && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
                 ) {
                     binding.motionLayout.transitionToStart()
                 }
 
-                // 아래로 스크롤할 때의 처리
-                 if (scrollY > 0 && binding.motionLayout.currentState == R.id.start
-                     && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
-                 ) {
-                     binding.motionLayout.transitionToEnd()
-                 }
-
-                val maxScroll = getChildAt(0).height - height
-
-                if (scrollY == maxScroll
-                    && binding.motionLayout.currentState == R.id.end
-                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
-                ) {
-                    binding.motionLayout.transitionToStart()
-                }
-
+                beforeY = scrollY
             }
 
         }
