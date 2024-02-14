@@ -3,12 +3,9 @@ package com.crystal.todayprice.component
 import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
-import android.view.View
 import android.widget.ScrollView
-import com.kakao.vectormap.MapView
 
 class CustomScrollView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -51,7 +48,6 @@ class CustomScrollView @JvmOverloads constructor(
             MotionEvent.ACTION_SCROLL-> return false
             MotionEvent.ACTION_UP -> {
                 mapTouchStarted = false
-                return true
             }
         }
         return gestureDetector.onTouchEvent(event)

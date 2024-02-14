@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
@@ -100,20 +101,42 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
             viewTreeObserver.addOnScrollChangedListener {
 // 아래로 스크롤할 때의 처리
-                if (scrollY > beforeY && binding.motionLayout.currentState == R.id.start
-                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
-                ) {
-                    binding.motionLayout.transitionToEnd()
-                }
-
-// 위로 스크롤할 때의 처리
-                if (scrollY < beforeY && binding.motionLayout.currentState == R.id.end
-                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+                // 스크롤을 위로 올렸을 경우, 첫 번째 항목이 완전히 보이는지 확인 (맨 위까지 스크롤),
+                // 버벅거림 방지를 위해 transition 상태가 확인 후,
+                // 현재 애니메이션이 진행되고 있지 않다면 motion transition 수행
+                if (scrollY <= 0
+                    && binding.motionLayout.currentState == R.id.end
+                    && (binding.motionLayout.progress >= 1f
+                            || binding.motionLayout.progress <= 0f)
                 ) {
                     binding.motionLayout.transitionToStart()
                 }
 
-                beforeY = scrollY
+                // 스크롤을 아래로 내렸을 경우, 버벅거림 방지를 위해 transition 상태 확인 후,
+                // 현재 애니메이션이 진행되고 있지 않다면 motion transition 수행
+                if (scrollY > 0
+                    && binding.motionLayout.currentState == R.id.start
+                    && (binding.motionLayout.progress >= 1f
+                            || binding.motionLayout.progress <= 0f)
+                ) {
+                    binding.motionLayout.transitionToEnd()
+                }
+
+
+//                if (scrollY > beforeY && binding.motionLayout.currentState == R.id.start
+//                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+//                ) {
+//                    binding.motionLayout.transitionToEnd()
+//                }
+//
+//// 위로 스크롤할 때의 처리
+//                if (scrollY < beforeY && binding.motionLayout.currentState == R.id.end
+//                    && (binding.motionLayout.progress >= 1f || binding.motionLayout.progress <= 0f)
+//                ) {
+//                    binding.motionLayout.transitionToStart()
+//                }
+//
+//                beforeY = scrollY
             }
 
         }
