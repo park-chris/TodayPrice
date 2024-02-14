@@ -18,6 +18,10 @@ import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapType
 import com.kakao.vectormap.MapViewInfo
+import com.kakao.vectormap.label.LabelOptions
+import com.kakao.vectormap.label.LabelStyle
+import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.shape.MapPoints
 import java.lang.Exception
 
 private const val TAG = "TestLog"
@@ -50,35 +54,26 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
     }
 
     override fun onDestroy() {
+        binding.mapView.removeAllViews()
         super.onDestroy()
-
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private fun setMap() {
-        binding.mapView.start(object : MapLifeCycleCallback() {
-            override fun onMapDestroy() {
-                binding.mapView.removeAllViews()
-            }
-
-            override fun onMapError(error: Exception?) {
-                Log.e(TAG, "onMApError", error)
-
-            }
-
-        }, object : KakaoMapReadyCallback() {
+        binding.mapView.start(object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaoMap: KakaoMap) {
+                val style = kakaoMap.labelManager?.addLabelStyles(LabelStyles.from(LabelStyle.from(R.drawable.ic_mark)))
+                val options = LabelOptions.from(LatLng.from(market!!.latitude, market!!.longitude)).setStyles(style)
+                val layer = kakaoMap.labelManager?.layer
+                layer?.addLabel(options)
+
                 binding.scrollView.setHitRect(binding.mapView.left, binding.mapView.top, binding.mapView.right, binding.mapView.bottom)
             }
-
             override fun getPosition(): LatLng {
                 market ?: return super.getPosition()
                 return LatLng.from(market!!.latitude, market!!.longitude)
             }
-
         })
-
-
 
     }
 
