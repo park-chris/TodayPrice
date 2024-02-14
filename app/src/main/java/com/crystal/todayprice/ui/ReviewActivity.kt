@@ -48,6 +48,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
     private lateinit var adapter: ReviewAdapter
     private var marketId: Int = -1
+    private lateinit var marketName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         baseBinding.contentLayout.addView(binding.root)
         baseBinding.progressBar.visibility = View.VISIBLE
         marketId = intent.getIntExtra(MarketActivity.MARKET_ID, -1)
+        marketName = intent.getStringExtra(MarketActivity.MARKET_NAME) ?: ""
 
         setRecyclerView()
         setupEvent()
@@ -92,6 +94,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     userId = user!!.id,
                     marketId = marketId,
                     userName = user!!.name,
+                    marketName = marketName,
                     content = text,
                     date = date
                 )

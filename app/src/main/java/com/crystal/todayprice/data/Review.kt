@@ -7,6 +7,7 @@ data class Review(
   val userId: String = "",
   val marketId: Int = 0,
   val userName: String = "",
+  val marketName: String = "",
   val content: String = "",
   val date: String = "",
   var likeCount: Int = 0,

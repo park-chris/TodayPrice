@@ -86,6 +86,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
         binding.reviewTextView.setOnClickListener {
             val intent = Intent(this, ReviewActivity::class.java)
             intent.putExtra(MARKET_ID, market?.id)
+            intent.putExtra(MARKET_NAME, market?.name)
             startActivity(intent)
         }
     }
@@ -115,6 +116,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
     companion object {
         const val MARKET_OBJECT = "market_object"
+        const val MARKET_NAME = "market_name"
         const val MARKET_ID = "market_id"
     }
 }

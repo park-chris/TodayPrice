@@ -32,6 +32,7 @@ class ReviewRepositoryImpl: ReviewRepository {
             "userId" to review.userId,
             "marketId" to review.marketId,
             "userName" to review.userName,
+            "marketName" to review.marketName,
             "content" to review.content,
             "date" to review.date,
             "likeCount" to review.likeCount,
