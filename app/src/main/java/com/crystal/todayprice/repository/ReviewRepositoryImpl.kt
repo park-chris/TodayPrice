@@ -10,6 +10,7 @@ import kotlinx.coroutines.tasks.await
 import com.google.firebase.firestore.ktx.toObjects
 import java.lang.Exception
 import com.crystal.todayprice.util.Result
+import com.google.firebase.firestore.Query
 
 
 class ReviewRepositoryImpl: ReviewRepository {
@@ -19,7 +20,7 @@ class ReviewRepositoryImpl: ReviewRepository {
     override suspend fun getReview(marketId: Int): List<Review> {
         return try {
             val snapshot = reviewRef.whereEqualTo("marketId", marketId).get().await()
-            snapshot.toObjects()
+            snapshot.toObjects<Review>().sortedBy { it.date }.reversed()
         } catch (e: Exception) {
             emptyList()
         }
@@ -38,7 +39,10 @@ class ReviewRepositoryImpl: ReviewRepository {
             "blockUsers" to review.blockUsers,
         )
 
-        reviewRef.document(review.id).set(reviewHashMap).addOnSuccessListener {
+        val batch = database.batch()
+        batch.set(reviewRef.document(review.id), reviewHashMap)
+        batch.update(database.collection("markets").document(review.marketId.toString()), "reviewCount", FieldValue.increment(1))
+        batch.commit().addOnSuccessListener {
             callback.onResult(Result.SUCCESS)
         }.addOnFailureListener {
             callback.onResult(Result.FAIL)

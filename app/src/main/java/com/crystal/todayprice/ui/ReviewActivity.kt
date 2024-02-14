@@ -119,7 +119,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         reviewViewModel.addReview(review, object : FirebaseCallback {
             override fun onResult(result: Result) {
                 when (result) {
-                    com.crystal.todayprice.util.Result.SUCCESS -> {
+                    Result.SUCCESS -> {
                         val list = mutableListOf<Review>()
                         list.addAll(adapter.getList())
                         list.add(0, review)
@@ -128,7 +128,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                         clearEditText()
                     }
 
-                    com.crystal.todayprice.util.Result.FAIL -> {
+                    Result.FAIL -> {
                     }
                 }
             }
