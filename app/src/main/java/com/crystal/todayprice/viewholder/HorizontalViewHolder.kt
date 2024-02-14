@@ -1,5 +1,6 @@
 package com.crystal.todayprice.viewholder
 
+import android.view.View
 import androidx.core.view.isVisible
 import com.crystal.todayprice.adapter.HorizontalListAdapter
 import com.crystal.todayprice.util.OnItemListItemListener
@@ -27,7 +28,7 @@ class HorizontalViewHolder(
         binding.titleTextView.text = item.title
         adapter.submitList(item.items)
 
-        if (item.items.isNotEmpty()) {
+        if (item.items.isNotEmpty() && item.titleVisible) {
             binding.seeMoreTextView.setOnClickListener {
                 onItemClickListener.onSeeMoreClick(item.items[0].viewType)
             }

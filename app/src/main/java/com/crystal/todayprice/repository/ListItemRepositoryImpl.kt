@@ -10,4 +10,10 @@ class ListItemRepositoryImpl: ListItemRepository {
         val response = RetrofitManager.firebaseService.getHomeList()
         response.list
     }
+
+    override suspend fun searchQuery(query: String?) = withContext(Dispatchers.IO) {
+        val response = RetrofitManager.firebaseService.getSearch(query)
+        response.list
+    }
+
 }

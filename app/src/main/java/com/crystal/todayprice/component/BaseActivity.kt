@@ -14,10 +14,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.R
+import com.crystal.todayprice.data.ListItem
+import com.crystal.todayprice.data.Market
+import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHearderBinding
 import com.crystal.todayprice.ui.LoginActivity
+import com.crystal.todayprice.ui.MarketActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -215,6 +219,18 @@ open class BaseActivity(
     private fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    fun moveToActivity(destinationClass: Class<*>, argument: ListItem?) {
+        val intent = Intent(this, destinationClass)
+        argument?.let {
+            when (it) {
+                is Market -> { intent.putExtra(MarketActivity.MARKET_OBJECT, it) }
+                is Notice -> { intent.putExtra(MainActivity.NOTICE_OBJECT, it) }
+                else -> {}
+            }
+        }
         startActivity(intent)
     }
 

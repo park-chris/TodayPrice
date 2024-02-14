@@ -22,6 +22,13 @@ class ListItemViewModel(private val listItemRepository: ListItemRepository): Vie
         }
     }
 
+    fun getSearchListItem(query: String?) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val markets = listItemRepository.searchQuery(query)
+            _listItem.postValue(markets)
+        }
+    }
+
     class ListItemViewModelFactory(private val listItemRepository: ListItemRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return ListItemViewModel(listItemRepository) as T
