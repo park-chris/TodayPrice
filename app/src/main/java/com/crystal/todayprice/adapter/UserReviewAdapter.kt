@@ -1,17 +1,13 @@
 package com.crystal.todayprice.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.todayprice.R
-import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Review
-import com.crystal.todayprice.databinding.ItemPriceBinding
-import com.crystal.todayprice.databinding.ItemReviewBinding
+import com.crystal.todayprice.databinding.ItemUserReviewBinding
 import com.crystal.todayprice.util.OnItemReviewListener
 
 class UserReviewAdapter(
@@ -20,7 +16,7 @@ class UserReviewAdapter(
 
     inner class ViewHolder(
         private val onItemReviewListener: OnItemReviewListener,
-        private val binding: ItemReviewBinding
+        private val binding: ItemUserReviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(review: Review) {
@@ -49,8 +45,8 @@ class UserReviewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_review, parent, false)
-        val binding = ItemReviewBinding.bind(view)
+            .inflate(R.layout.item_user_review, parent, false)
+        val binding = ItemUserReviewBinding.bind(view)
         return ViewHolder(onItemReviewListener, binding)
     }
 
