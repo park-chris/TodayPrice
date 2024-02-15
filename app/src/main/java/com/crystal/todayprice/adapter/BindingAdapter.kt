@@ -73,7 +73,7 @@ fun TextView.setCountText(count: Int?) {
 
 @BindingAdapter("headerText")
 fun TextView.setHeaderText(name: String?) {
-    text = name ?: resources.getText(R.string.require_login)
+    text = resources.getString(R.string.welcome_user, name) ?: resources.getText(R.string.require_login)
 }
 
 @BindingAdapter("buttonTextView")
@@ -91,15 +91,6 @@ fun TextView.setIsVisible(user: User?) {
         View.VISIBLE
     } else {
         View.GONE
-    }
-}
-
-@BindingAdapter("titleVisible")
-fun TextView.setTitleVisible(list: List<ListItem>) {
-    visibility = if (list.isEmpty()) {
-        View.GONE
-    } else {
-        View.VISIBLE
     }
 }
 
