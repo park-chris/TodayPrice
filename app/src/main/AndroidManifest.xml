@@ -48,6 +48,9 @@
             android:name=".ui.SearchActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.UserReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

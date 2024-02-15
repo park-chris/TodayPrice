@@ -24,6 +24,7 @@ import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHeaderBinding
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
+import com.crystal.todayprice.ui.UserReviewActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -208,7 +209,7 @@ open class BaseActivity(
 
     }
 
-    open fun actionMenuFavorite() {}
+//    open fun actionMenuFavorite() {}
     private fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -263,7 +264,7 @@ open class BaseActivity(
                 userDataManager.user = null
                 updateProfile(null)
             }
-            R.id.action_my_review -> {}
+            R.id.action_my_review -> startActivity(Intent(this, UserReviewActivity::class.java))
             R.id.action_notice -> { }
         }
         return false
