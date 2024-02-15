@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.UserDataManager
+import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.data.User
 import java.text.NumberFormat
@@ -90,6 +91,15 @@ fun TextView.setIsVisible(user: User?) {
         View.VISIBLE
     } else {
         View.GONE
+    }
+}
+
+@BindingAdapter("titleVisible")
+fun TextView.setTitleVisible(list: List<ListItem>) {
+    visibility = if (list.isEmpty()) {
+        View.GONE
+    } else {
+        View.VISIBLE
     }
 }
 

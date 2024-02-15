@@ -33,7 +33,10 @@ class HorizontalViewHolder(
                 onItemClickListener.onSeeMoreClick(item.items[0].viewType)
             }
         } else {
-            binding.seeMoreTextView.isVisible = false
+            binding.seeMoreTextView.visibility = View.GONE
+        }
+        if (item.items.isEmpty()) {
+            binding.titleTextView.visibility = View.GONE
         }
 
     }

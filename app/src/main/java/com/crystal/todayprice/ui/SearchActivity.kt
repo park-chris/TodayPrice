@@ -2,8 +2,6 @@ package com.crystal.todayprice.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -18,9 +16,9 @@ import com.crystal.todayprice.adapter.ListItemAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
+import com.crystal.todayprice.data.Horizontal
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.data.News
 import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.data.ViewType
 import com.crystal.todayprice.databinding.ActivitySearchBinding
@@ -28,7 +26,7 @@ import com.crystal.todayprice.repository.ListItemRepositoryImpl
 import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.viewmodel.ListItemViewModel
 
-class SearchActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON)  {
+class SearchActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivitySearchBinding
 
@@ -40,20 +38,21 @@ class SearchActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         binding = ActivitySearchBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
         baseBinding.progressBar.visibility = View.VISIBLE
 
         setAdapter()
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-
         observerList()
         setSearch()
+        clickEvent()
+    }
+
+    private fun clickEvent() {
+        binding.recyclerView.setOnClickListener {
+            hideKeyboard()
+        }
     }
 
     private fun setSearch() {
@@ -62,7 +61,11 @@ class SearchActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
         }
 
         binding.searchEditText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction(textView: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+            override fun onEditorAction(
+                textView: TextView?,
+                actionId: Int,
+                event: KeyEvent?
+            ): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     search()
                     return true
@@ -74,20 +77,13 @@ class SearchActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
 
     private fun search() {
         val query = binding.searchEditText.text.toString()
-
-        val inputMethodManager =
-            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
-        binding.searchEditText.clearFocus()
-
+        hideKeyboard()
         if (query.isBlank()) {
             Toast.makeText(this, getString(R.string.search_hint), Toast.LENGTH_SHORT).show()
         } else {
             baseBinding.progressBar.visibility = View.VISIBLE
             listItemViewModel.getSearchListItem(query)
         }
-
-
     }
 
     private fun setAdapter() {
@@ -97,6 +93,7 @@ class SearchActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
                     is Market -> {
                         moveToActivity(MarketActivity::class.java, listItem)
                     }
+
                     is Notice -> {
                         moveToActivity(NoticeActivity::class.java, listItem)
                     }
@@ -118,18 +115,33 @@ class SearchActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
         adapter.submitList(listItem)
     }
 
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.searchEditText.windowToken, 0)
+        binding.searchEditText.clearFocus()
+    }
 
     private fun observerList() {
         listItemViewModel.listItem.observe(this, Observer { listItem ->
             listItem?.let {
-                setMarketList(it)
+                if (listItem.size > 1) {
+                    for (item in listItem) {
+                        val horizontal = item as Horizontal
+                        if (horizontal.items.isEmpty()) {
+                            binding.infoTextView.visibility = View.VISIBLE
+                        }
+                    }
+                } else {
+                    binding.infoTextView.visibility = View.GONE
+                    setMarketList(it)
+                }
                 baseBinding.progressBar.isVisible = false
             }
         })
 
         listItemViewModel.getSearchListItem(null)
     }
-
 
 
 }
