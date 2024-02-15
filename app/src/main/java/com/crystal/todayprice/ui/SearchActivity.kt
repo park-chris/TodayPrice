@@ -134,8 +134,8 @@ class SearchActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                     }
                 } else {
                     binding.infoTextView.visibility = View.GONE
-                    setMarketList(it)
                 }
+                setMarketList(it)
                 baseBinding.progressBar.isVisible = false
             }
         })
