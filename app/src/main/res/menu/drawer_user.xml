@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/action_my_review"
-        android:paddingHorizontal="0dp"
-        android:title="@string/my_review" />
+    <group android:id="@+id/profile_group" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_my_review"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:title="@string/my_review" />
+    </group>
 
-    <item
-        android:id="@+id/action_notice"
-        android:paddingHorizontal="0dp"
-        android:title="@string/notice" />
+    <group android:id="@+id/settings_group" android:checkableBehavior="single">
 
-    <item
-        android:id="@+id/action_inquiry"
-        android:paddingHorizontal="@dimen/horizontal_padding"
-        android:title="@string/inquiry" />
+        <item
+            android:id="@+id/action_notice"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:title="@string/notice" />
 
-    <item
-        android:id="@+id/action_logout"
-        android:paddingHorizontal="0dp"
-        android:title="@string/logout" />
+        <item
+            android:id="@+id/action_inquiry"
+            android:paddingHorizontal="@dimen/horizontal_padding"
+            android:gravity="end"
+            android:title="@string/inquiry" />
 
+    </group>
+
+    <group android:id="@+id/category_login" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_logout"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:title="@string/logout" />
+    </group>
 </menu>

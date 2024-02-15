@@ -11,8 +11,9 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="20dp"
-    android:paddingTop="70dp"
+    android:paddingTop="20dp"
     android:paddingBottom="30dp"
+    android:background="@color/highlight"
     android:layout_height="match_parent">
 
     <TextView
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         app:headerText="@{user.name}"
         android:background="@android:color/transparent"
-        android:textColor="@color/hint"
+        android:textColor="@color/white"
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         android:textSize="@dimen/large_text_size"

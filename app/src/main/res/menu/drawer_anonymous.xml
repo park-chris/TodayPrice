@@ -2,19 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
+
+    <group android:id="@+id/category_settings" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_notice"
+            android:paddingHorizontal="0dp"
+            android:title="@string/notice" />
+
+        <item
+            android:id="@+id/action_inquiry"
+            android:paddingHorizontal="@dimen/horizontal_padding"
+            android:title="@string/inquiry" />
+
+    </group>
+
+    <group android:id="@+id/category_login" android:checkableBehavior="single">
     <item
         android:id="@+id/action_login"
         android:paddingHorizontal="0dp"
         android:title="@string/login" />
-
-    <item
-        android:id="@+id/action_notice"
-        android:paddingHorizontal="0dp"
-        android:title="@string/notice" />
-
-    <item
-        android:id="@+id/action_inquiry"
-        android:paddingHorizontal="@dimen/horizontal_padding"
-        android:title="@string/inquiry" />
+    </group>
 
 </menu>

@@ -28,5 +28,8 @@
         <item name="android:listPreferredItemPaddingLeft">@dimen/horizontal_padding</item>
         <item name="android:listPreferredItemPaddingRight">@dimen/horizontal_padding</item>
     </style>
+    <style name="MenuItemTextStyle" parent="@style/Widget.AppCompat.TextView">
+        <item name="android:gravity">end</item>
+    </style>
 
 </resources>
