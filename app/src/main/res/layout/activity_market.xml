@@ -70,7 +70,7 @@
                 android:layout_marginHorizontal="@dimen/horizontal_padding"
                 android:textSize="@dimen/item_content_text_size"
                 app:layout_constraintTop_toBottomOf="@id/nameTextView"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 app:descriptionText="@{market.description}"
                 android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
                 android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_height="250dp" />
 
             <TextView
