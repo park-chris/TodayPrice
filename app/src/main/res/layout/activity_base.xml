@@ -82,9 +82,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:theme="@style/CustomDrawerMenuStyle"
         android:background="@color/background"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_hearder"
-        app:menu="@menu/drawer" />
+        app:headerLayout="@layout/drawer_header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

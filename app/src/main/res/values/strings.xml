@@ -87,6 +87,10 @@
     <string name="report_dialog_button">뒤로 가기</string>
     <string name="report_error_toast">신고 접수가 완료되지 못했습니다. 다시 시도해주십시오.</string>
 
+    <string name="notice">공지사항</string>
+    <string name="inquiry">문의하기</string>
+    <string name="my_review">내가 작성한 후기</string>
+
 <!--    category 별 글-->
     <string name="all">전체</string>
     <string name="grain">곡류</string>

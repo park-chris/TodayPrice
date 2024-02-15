@@ -73,7 +73,11 @@ fun TextView.setCountText(count: Int?) {
 
 @BindingAdapter("headerText")
 fun TextView.setHeaderText(name: String?) {
-    text = resources.getString(R.string.welcome_user, name) ?: resources.getText(R.string.require_login)
+    text = if  (name != null) {
+        resources.getString(R.string.welcome_user, name)
+    } else {
+        resources.getText(R.string.require_login)
+    }
 }
 
 @BindingAdapter("buttonTextView")

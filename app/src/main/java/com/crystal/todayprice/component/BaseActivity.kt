@@ -1,7 +1,9 @@
 package com.crystal.todayprice.component
 
+import android.app.ProgressDialog.show
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -19,9 +21,10 @@ import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
-import com.crystal.todayprice.databinding.DrawerHearderBinding
+import com.crystal.todayprice.databinding.DrawerHeaderBinding
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
+import com.crystal.todayprice.ui.ProfileActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +42,7 @@ open class BaseActivity(
         ViewModelProvider(this)[UserViewModel::class.java]
     }
 
-    private lateinit var drawerHeaderBinding: DrawerHearderBinding
+    private lateinit var drawerHeaderBinding: DrawerHeaderBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +59,7 @@ open class BaseActivity(
 
     override fun onResume() {
         super.onResume()
-
-        if (toolbarType == ToolbarType.MENU) {
-            userDataManager.user?.let {
-                updateProfile(it)
-            }
-        }
-
+        updateProfile(userDataManager.user)
     }
 
     override fun finish() {
@@ -126,18 +123,6 @@ open class BaseActivity(
     private fun setHeaderView() {
         val headerView = baseBinding.navigationView.getHeaderView(0)
         drawerHeaderBinding = DataBindingUtil.bind(headerView)!!
-
-        drawerHeaderBinding.loginButton.setOnClickListener {
-            if (drawerHeaderBinding.user != null) {
-                Toast.makeText(this, "프로필 화면은 추후 설정", Toast.LENGTH_SHORT).show()
-                FirebaseAuth.getInstance().signOut()
-                userDataManager.user = null
-                updateProfile(null)
-            } else {
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
-        }
-
     }
 
     private fun setEnterAnimation() {
@@ -163,6 +148,7 @@ open class BaseActivity(
                     }
                 })
             }
+
             else -> {}
         }
     }
@@ -186,6 +172,7 @@ open class BaseActivity(
         }
 
     }
+
     open fun actionMenuSearch() {
         if (toolbarType == ToolbarType.BACK) {
             openSearchView()
@@ -212,6 +199,14 @@ open class BaseActivity(
     fun updateProfile(user: User?) {
         drawerHeaderBinding.user = user
         drawerHeaderBinding.executePendingBindings()
+        if (userDataManager.user != null) {
+            baseBinding.navigationView.menu.clear()
+            baseBinding.navigationView.inflateMenu(R.menu.drawer_user)
+        } else {
+            baseBinding.navigationView.menu.clear()
+            baseBinding.navigationView.inflateMenu(R.menu.drawer_anonymous)
+        }
+
     }
 
     open fun actionMenuFavorite() {}
@@ -225,8 +220,14 @@ open class BaseActivity(
         val intent = Intent(this, destinationClass)
         argument?.let {
             when (it) {
-                is Market -> { intent.putExtra(MarketActivity.MARKET_OBJECT, it) }
-                is Notice -> { intent.putExtra(MainActivity.NOTICE_OBJECT, it) }
+                is Market -> {
+                    intent.putExtra(MarketActivity.MARKET_OBJECT, it)
+                }
+
+                is Notice -> {
+                    intent.putExtra(MainActivity.NOTICE_OBJECT, it)
+                }
+
                 else -> {}
             }
         }
@@ -255,9 +256,17 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menuItem1 -> Toast.makeText(this, "item1 is clicked", Toast.LENGTH_SHORT).show()
-            R.id.menuItem2 -> Toast.makeText(this, "item2 is clicked", Toast.LENGTH_SHORT).show()
-            R.id.menuItem3 -> Toast.makeText(this, "item3 is clicked", Toast.LENGTH_SHORT).show()
+            R.id.action_profile -> startActivity(Intent(this, ProfileActivity::class.java))
+            R.id.action_inquiry -> {}
+            R.id.action_login -> startActivity(Intent(this, LoginActivity::class.java))
+            R.id.action_logout -> {
+                userDataManager.user ?: return false
+                FirebaseAuth.getInstance().signOut()
+                userDataManager.user = null
+                updateProfile(null)
+            }
+            R.id.action_my_review -> {}
+            R.id.action_notice -> { }
         }
         return false
     }

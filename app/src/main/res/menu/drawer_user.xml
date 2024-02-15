@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_profile"
+        android:paddingHorizontal="0dp"
+        android:title="@string/profile" />
+
+    <item
+        android:id="@+id/action_my_review"
+        android:paddingHorizontal="0dp"
+        android:title="@string/my_review" />
+
+    <item
+        android:id="@+id/action_notice"
+        android:paddingHorizontal="0dp"
+        android:title="@string/notice" />
+
+    <item
+        android:id="@+id/action_inquiry"
+        android:paddingHorizontal="@dimen/horizontal_padding"
+        android:title="@string/inquiry" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:paddingHorizontal="0dp"
+        android:title="@string/logout" />
+
+</menu>
