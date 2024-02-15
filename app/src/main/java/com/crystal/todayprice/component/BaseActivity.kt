@@ -91,7 +91,6 @@ open class BaseActivity(
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_search -> actionMenuSearch()
-            R.id.action_favorite -> actionMenuFavorite()
             R.id.action_home -> actionMenuHome()
             android.R.id.home -> actionHome()
         }
