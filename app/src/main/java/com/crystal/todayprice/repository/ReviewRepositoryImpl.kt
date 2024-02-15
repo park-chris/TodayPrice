@@ -26,6 +26,15 @@ class ReviewRepositoryImpl: ReviewRepository {
         }
     }
 
+    override suspend fun getUserReview(userId: String): List<Review> {
+        return try {
+            val snapshot = reviewRef.whereEqualTo("userId", userId).get().await()
+            snapshot.toObjects<Review>().sortedBy { it.date }.reversed()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
     override fun addReview(review: Review, callback: FirebaseCallback) {
         val reviewHashMap = hashMapOf(
             "id" to review.id,

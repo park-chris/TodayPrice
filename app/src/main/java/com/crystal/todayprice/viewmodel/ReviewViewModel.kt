@@ -23,6 +23,13 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel
         }
     }
 
+    fun getReviews(userId: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val reviews = reviewRepository.getUserReview(userId)
+            _reviews.postValue(reviews)
+        }
+    }
+
     fun addReview(review: Review, callback: FirebaseCallback) {
         reviewRepository.addReview(review, callback)
     }
