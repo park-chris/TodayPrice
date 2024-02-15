@@ -33,4 +33,9 @@
         <item name="android:windowExitAnimation">@anim/modal_slide_out</item>
     </style>
 
+    <style name="CustomDrawerMenuStyle" parent="Widget.Design.NavigationView">
+        <item name="android:listPreferredItemPaddingLeft">@dimen/horizontal_padding</item>
+        <item name="android:listPreferredItemPaddingRight">@dimen/horizontal_padding</item>
+    </style>
+
 </resources>

@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_profile"
-        android:paddingHorizontal="0dp"
-        android:title="@string/profile" />
-
-    <item
         android:id="@+id/action_my_review"
         android:paddingHorizontal="0dp"
         android:title="@string/my_review" />

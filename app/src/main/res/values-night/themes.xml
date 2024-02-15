@@ -24,5 +24,9 @@
     <style name="CustomProgressBar" parent="Widget.AppCompat.ProgressBar">
         <item name="android:indeterminateTint">@color/highlight</item>
     </style>
+    <style name="CustomDrawerMenuStyle" parent="Widget.Design.NavigationView">
+        <item name="android:listPreferredItemPaddingLeft">@dimen/horizontal_padding</item>
+        <item name="android:listPreferredItemPaddingRight">@dimen/horizontal_padding</item>
+    </style>
 
 </resources>
