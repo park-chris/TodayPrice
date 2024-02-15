@@ -66,11 +66,8 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
 
     override fun onResume() {
         super.onResume()
-
         user = userDataManager.user
-
         setTextToEdit()
-
     }
 
     private fun setTextToEdit() {
@@ -128,6 +125,9 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
                         list.add(0, review)
                         adapter.submitList(list)
 
+                        if (binding.infoTextView.isVisible) {
+                            binding.infoTextView.visibility = View.GONE
+                        }
                         clearEditText()
                     }
 
