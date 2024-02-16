@@ -8,7 +8,30 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="@string/inquiry_title"
+        android:textColor="@color/hint" />
+
+    <EditText
+        android:id="@+id/titleEditText"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:background="@drawable/bg_edit"
+        android:hint="@string/inquiry_title_hint"
+        android:textColorHint="@color/hint"
+        android:gravity="top"
+        android:textSize="@dimen/medium_text_size"
+        android:padding="@dimen/horizontal_padding"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:inputType="textLongMessage" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/inquiry_type"
+        android:layout_marginTop="20dp"
         android:textColor="@color/hint" />
 
     <Spinner

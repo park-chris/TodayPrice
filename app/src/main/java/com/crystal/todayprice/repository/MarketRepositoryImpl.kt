@@ -14,7 +14,6 @@ class MarketRepositoryImpl: MarketRepository {
     private val marketCollection = database.collection("markets")
 
     override suspend fun getAllMarkets(): List<Market> {
-
         return try {
             val snapshot = marketCollection.get().await()
             snapshot.toObjects()
