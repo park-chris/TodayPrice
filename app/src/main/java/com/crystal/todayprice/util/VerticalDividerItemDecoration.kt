@@ -15,7 +15,7 @@ class VerticalDividerItemDecoration (context: Context, private val marginLeft: I
         val left = parent.paddingLeft + marginLeft
         val right = parent.width - parent.paddingRight - marginRight
 
-        for (i in 0 until parent.childCount - 1) {
+        for (i in 0 until parent.childCount) {
             val child = parent.getChildAt(i)
             val params = child.layoutParams as RecyclerView.LayoutParams
             val top = child.bottom + params.bottomMargin
