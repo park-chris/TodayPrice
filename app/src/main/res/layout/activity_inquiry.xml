@@ -62,7 +62,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:importantForAutofill="no"
-        android:inputType="textLongMessage" />
+        android:inputType="textMultiLine" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submitButton"
