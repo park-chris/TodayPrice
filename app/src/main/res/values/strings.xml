@@ -91,6 +91,11 @@
     <string name="inquiry">문의하기</string>
     <string name="my_review">내가 작성한 후기</string>
 
+    <string name="inquiry_type">문의 종류</string>
+    <string name="inquiry_content">문의 내용</string>
+    <string name="inquiry_content_hint">문의 내용을 입력하세요.</string>
+
+
 <!--    category 별 글-->
     <string name="all">전체</string>
     <string name="grain">곡류</string>

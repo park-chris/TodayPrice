@@ -22,6 +22,7 @@ import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHeaderBinding
+import com.crystal.todayprice.ui.InquiryActivity
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
 import com.crystal.todayprice.ui.NoticeListActivity
@@ -257,7 +258,7 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_inquiry -> {}
+            R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))
             R.id.action_login -> startActivity(Intent(this, LoginActivity::class.java))
             R.id.action_logout -> {
                 userDataManager.user ?: return false

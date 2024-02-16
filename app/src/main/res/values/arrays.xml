@@ -44,4 +44,9 @@
         <item>중구</item>
         <item>중랑구</item>
     </array>
+
+    <array name="inquiry_spinner_type">
+        <item>문의</item>
+        <item>정보 수정 요청</item>
+    </array>
 </resources>
