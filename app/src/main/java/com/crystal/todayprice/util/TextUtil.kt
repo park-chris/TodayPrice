@@ -1,10 +1,12 @@
 package com.crystal.todayprice.util
 
 import android.content.Context
+import android.icu.text.SimpleDateFormat
 import com.crystal.todayprice.R
 import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.ItemType
 import java.text.DecimalFormat
+import java.util.Locale
 
 class TextUtil {
     companion object {
@@ -88,6 +90,12 @@ class TextUtil {
                 ItemType.UNDEFINED -> R.id.undefined
                 else -> R.id.all
             }
+        }
+
+        fun todayDateString(): String {
+            val today = System.currentTimeMillis()
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
+            return dateFormat.format(today)
         }
 
     }

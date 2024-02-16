@@ -28,6 +28,7 @@ import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.OnBottomSheetListener
 import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.OnItemReviewListener
+import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.util.VerticalDividerItemDecoration
 import com.crystal.todayprice.viewmodel.ReviewViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -84,20 +85,15 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         binding.addButton.setOnClickListener {
             if (user != null) {
                 val text = binding.addEditText.text.toString()
-                val today = System.currentTimeMillis()
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
-                val date = dateFormat.format(today)
                 val review = Review(
                     userId = user!!.id,
                     marketId = marketId,
                     userName = user!!.name,
                     marketName = marketName,
                     content = text,
-                    date = date
+                    date = TextUtil.todayDateString()
                 )
-
                 addReview(review)
-
             } else {
                 val dialog = CustomDialog(this, object : OnDialogListener {
                     override fun onOk() {

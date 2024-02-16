@@ -4,6 +4,7 @@ import android.icu.text.SimpleDateFormat
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.Result
+import com.crystal.todayprice.util.TextUtil
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -47,15 +48,12 @@ class UserRepositoryImpl : UserRepository {
         reportContent: String?,
         callback: FirebaseCallback
     ) {
-        val today = System.currentTimeMillis()
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREAN)
-        val date = dateFormat.format(today)
         val reportHashMap = hashMapOf(
             "reviewId" to reviewId,
             "userId" to userId,
             "title" to reportTitle,
             "content" to reportContent,
-            "date" to  date,
+            "date" to  TextUtil.todayDateString(),
             "isChecked" to false
         )
 

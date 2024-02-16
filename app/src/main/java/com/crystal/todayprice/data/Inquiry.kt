@@ -1,5 +1,6 @@
 package com.crystal.todayprice.data
 
+import com.crystal.todayprice.util.TextUtil
 import java.util.UUID
 
 data class Inquiry(
@@ -9,5 +10,6 @@ data class Inquiry(
     val content: String = "",
     val userId: String = "",
     val answer: String = "",
+    val date: String = TextUtil.todayDateString(),
     val isChecked: Boolean = false,
 )
