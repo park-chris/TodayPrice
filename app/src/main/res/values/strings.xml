@@ -96,6 +96,7 @@
     <string name="inquiry_title">문의 제목</string>
     <string name="inquiry_type">문의 종류</string>
     <string name="inquiry_content">문의 내용</string>
+    <string name="inquiry_answer">문의 답변</string>
     <string name="inquiry_content_hint">문의 내용을 입력하세요.</string>
     <string name="inquiry_title_hint">문의 제목을 입력하세요.</string>
     <string name="inquiry_info_user">문의하기는 로그인이 필요합니다.</string>

@@ -2,7 +2,15 @@ package com.crystal.todayprice.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.Transformation
+import android.view.animation.TranslateAnimation
+import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -18,6 +26,7 @@ import com.crystal.todayprice.databinding.ItemPriceBinding
 import com.crystal.todayprice.databinding.ItemReviewBinding
 import com.crystal.todayprice.util.CommonUtil.Companion.dpToPx
 import com.crystal.todayprice.util.OnItemReviewListener
+import com.crystal.todayprice.util.ToggleAnimation
 
 class InquiryAdapter(
     private val onClick: (Inquiry) -> Unit
@@ -27,9 +36,26 @@ class InquiryAdapter(
         private val binding: ItemInquiryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(notice: Inquiry) {
-            binding.item = notice
+        fun bind(inquiry: Inquiry) {
+            binding.item = inquiry
+            var isExpanded = false
 
+            binding.root.setOnClickListener {
+                val show = toggleLayout(!isExpanded, it, binding.contentLayout)
+                isExpanded = show
+            }
+            binding.removeButton.setOnClickListener {
+                onClick(inquiry)
+            }
+        }
+
+        private fun toggleLayout(isExpanded: Boolean, view: View, layoutExpand: LinearLayout): Boolean {
+            if (isExpanded) {
+                ToggleAnimation.expand(layoutExpand)
+            } else {
+                ToggleAnimation.collapse(layoutExpand)
+            }
+            return isExpanded
         }
     }
 

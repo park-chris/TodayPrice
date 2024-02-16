@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,51 +10,100 @@
             type="com.crystal.todayprice.data.Inquiry" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_image"
         android:padding="@dimen/horizontal_padding"
-        android:layout_margin="@dimen/horizontal_padding"
-        app:layoutDescription="@xml/item_inquiry_scene">
+        android:layout_margin="@dimen/horizontal_padding">
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{item.date}"
+            tools:text="2012.10.10"
+            android:textColor="@color/hint"
+            android:textSize="@dimen/x_x_small_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/stateTextView"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
             android:text="@{item.title}"
+            tools:text="타이틀"
             android:textSize="@dimen/small_text_size"
-            app:layout_constraintBottom_toTopOf="@id/dateTextView"
             app:layout_constraintEnd_toStartOf="@id/stateTextView"
-            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/dateTextView"/>
 
         <TextView
             android:id="@+id/stateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            tools:text="응답없음"
             android:textColor="@color/white"
             android:textSize="@dimen/x_x_small_text_size"
             app:answerState="@{item.answer}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/titleTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/dateTextView" />
 
-        <TextView
-            android:id="@+id/dateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:text="@{item.date}"
-            android:textColor="@color/hint"
-            android:textSize="@dimen/x_x_small_text_size"
+        <LinearLayout
+            android:id="@+id/contentLayout"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView" />
+            android:orientation="vertical"
+            android:gravity="end"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/inquiry_content"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/x_x_small_text_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.content}"
+                android:textSize="@dimen/small_text_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/inquiry_answer"
+                android:textColor="@color/hint"
+                android:textSize="@dimen/x_x_small_text_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{item.answer}"
+                android:textSize="@dimen/small_text_size"/>
+
+            <TextView
+                android:id="@+id/removeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/hint"
+                android:text="삭제"
+                android:textSize="@dimen/x_x_small_text_size" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
