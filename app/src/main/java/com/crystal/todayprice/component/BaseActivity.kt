@@ -24,6 +24,7 @@ import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHeaderBinding
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
+import com.crystal.todayprice.ui.NoticeListActivity
 import com.crystal.todayprice.ui.UserReviewActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
@@ -265,7 +266,7 @@ open class BaseActivity(
                 updateProfile(null)
             }
             R.id.action_my_review -> startActivity(Intent(this, UserReviewActivity::class.java))
-            R.id.action_notice -> { }
+            R.id.action_notice -> startActivity(Intent(this, NoticeListActivity::class.java))
         }
         return false
     }

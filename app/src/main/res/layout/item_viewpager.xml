@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="@dimen/horizontal_padding"
         android:layout_height="120dp">
 
         <androidx.viewpager2.widget.ViewPager2
