@@ -39,6 +39,7 @@
     <string name="no_stock">미입고</string>
 
     <string name="welcome_user">%s님 반갑습니다.</string>
+    <string name="price_info">업데이트 날짜 %s\n가격은 변동이 있을 수 있습니다.</string>
 
     <string name="see_more">더보기</string>
 
@@ -90,6 +91,7 @@
     <string name="notice">공지사항</string>
     <string name="inquiry">문의하기</string>
     <string name="my_review">내가 작성한 후기</string>
+    <string name="my_inquiry_list">내 문의 내역</string>
 
     <string name="inquiry_title">문의 제목</string>
     <string name="inquiry_type">문의 종류</string>
@@ -97,8 +99,12 @@
     <string name="inquiry_content_hint">문의 내용을 입력하세요.</string>
     <string name="inquiry_title_hint">문의 제목을 입력하세요.</string>
     <string name="inquiry_info_user">문의하기는 로그인이 필요합니다.</string>
+    <string name="no_inquiry">문의하신 내역이 없습니다.</string>
     <string name="inquiry_info_submit_success">문의가 정상적으로 등록되었습니다.\n문의 내역은 [메뉴>내 문의 내역]에서 확인해주세요.</string>
     <string name="inquiry_info_submit_fail">문의 등록이 실패했습니다. 다시 시도해주세요.</string>
+
+    <string name="complete_answer">답변 완료</string>
+    <string name="incomplete_answer">답변 미완료</string>
 
 
 

@@ -57,6 +57,9 @@
             android:name=".ui.InquiryActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.MyInquiryActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

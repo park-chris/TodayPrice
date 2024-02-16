@@ -25,6 +25,7 @@ import com.crystal.todayprice.databinding.DrawerHeaderBinding
 import com.crystal.todayprice.ui.InquiryActivity
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
+import com.crystal.todayprice.ui.MyInquiryActivity
 import com.crystal.todayprice.ui.NoticeListActivity
 import com.crystal.todayprice.ui.UserReviewActivity
 import com.crystal.todayprice.viewmodel.UserViewModel
@@ -165,14 +166,12 @@ open class BaseActivity(
                 )
             )
         )
-
         when (toolbarType) {
             ToolbarType.MENU -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
             ToolbarType.BACK -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
             ToolbarType.HOME -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
             ToolbarType.ONLY_BACK -> supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         }
-
     }
 
     open fun actionMenuSearch() {
@@ -259,6 +258,7 @@ open class BaseActivity(
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))
+            R.id.action_my_inquiry_list -> startActivity(Intent(this, MyInquiryActivity::class.java))
             R.id.action_login -> startActivity(Intent(this, LoginActivity::class.java))
             R.id.action_logout -> {
                 userDataManager.user ?: return false

@@ -7,6 +7,12 @@
             android:paddingHorizontal="0dp"
             android:gravity="end"
             android:title="@string/my_review" />
+
+        <item
+            android:id="@+id/action_my_inquiry_list"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:title="@string/my_inquiry_list" />
     </group>
 
     <group android:id="@+id/settings_group" android:checkableBehavior="single">

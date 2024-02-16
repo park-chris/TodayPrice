@@ -135,5 +135,16 @@ fun ImageButton.setMenuDrawable(reviewId: String) {
 
 @BindingAdapter("surveyDate")
 fun TextView.setSurveyDate(price: Price?) {
-    text = ( "업데이트 날짜 ${price?.surveyDate}\n가격은 변동이 있을 수 있습니다.") ?: "-"
+    text = resources.getString(R.string.price_info, price?.surveyDate ?: "")
+}
+
+@BindingAdapter("answerState")
+fun TextView.setAnswerState(answer: String) {
+    if (answer.isNotEmpty()) {
+        text = resources.getString(R.string.complete_answer)
+        background = ContextCompat.getDrawable(rootView.context, R.drawable.bg_state_true)
+    } else {
+        text =  resources.getString(R.string.incomplete_answer)
+        background = ContextCompat.getDrawable(rootView.context, R.drawable.bg_state_false)
+    }
 }
