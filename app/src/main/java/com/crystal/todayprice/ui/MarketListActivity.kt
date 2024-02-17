@@ -1,6 +1,5 @@
 package com.crystal.todayprice.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,18 +18,14 @@ import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketListBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
-import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.GridSpacingItemDecoration
-import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.viewmodel.MarketViewModel
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-private const val TAG = "TestLog"
 class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketListBinding
@@ -58,7 +53,6 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
             marketViewModel.markets.observe(this@MarketListActivity, Observer {
                 it?.let {
                     adapter.submitList(it)
-                    Log.e(TAG, "observe")
                     baseBinding.progressBar.visibility = View.GONE
                 }
             })
@@ -81,8 +75,8 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
             }
 
             CoroutineScope(Dispatchers.Main).launch {
-                if (market.isFavorite) {
-                    val newMarket = market.copy(isFavorite = false)
+                if (market.favoriteState) {
+                    val newMarket = market.copy(favoriteState = false)
                     val newMarkets = adapter.getList().mapIndexed { _, data ->
                         if (market.id == data.id) newMarket else data
                     }
@@ -92,7 +86,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
                     newList.remove(market.id)
                     userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
                 } else {
-                    val newMarket = market.copy(isFavorite = true)
+                    val newMarket = market.copy(favoriteState = true)
                     val newMarkets = adapter.getList().mapIndexed { _, data ->
                         if (market.id == data.id) newMarket else data
                     }

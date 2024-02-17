@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="@id/marketImageView"
             android:layout_margin="5dp"
             android:background="@drawable/effect_favorite_button_ripple"
-            app:heartDrawable="@{item.favorite}" />
+            app:heartDrawable="@{item.favoriteState}" />
 
         <TextView
             android:id="@+id/addressTextView"

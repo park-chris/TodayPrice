@@ -15,7 +15,7 @@ data class Market(
     val description: String = "",
     val phoneNumber: String = "",
     val reviewCount: Int = 0,
-    var isFavorite: Boolean = UserDataManager.getInstance().user?.favoriteList?.contains(id) ?: false,
+    var favoriteState: Boolean = UserDataManager.getInstance().user?.favoriteList?.contains(id) ?: false,
 ) : Serializable, ListItem {
 
     override val viewType: ViewType

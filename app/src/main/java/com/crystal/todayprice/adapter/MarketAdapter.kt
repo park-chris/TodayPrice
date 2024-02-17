@@ -78,7 +78,7 @@ class MarketAdapter(
     fun updateMarket(market: Market) {
         val position = differ.currentList.indexOf(market)
         val list = differ.currentList.mapIndexed { index, beforeMarket ->
-            if (position == index) beforeMarket.copy(isFavorite = !beforeMarket.isFavorite) else beforeMarket
+            if (position == index) beforeMarket.copy(favoriteState = !beforeMarket.favoriteState) else beforeMarket
         }
         submitList(list)
     }

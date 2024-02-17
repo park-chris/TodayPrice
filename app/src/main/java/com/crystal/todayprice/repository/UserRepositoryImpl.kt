@@ -77,7 +77,7 @@ class UserRepositoryImpl : UserRepository {
 
             if (user != null) {
                 list.forEach { market ->
-                    market.isFavorite = user.favoriteList.contains(market.id) // isFavorite 속성 설정
+                    market.favoriteState = user.favoriteList.contains(market.id)
                 }
             }
             list

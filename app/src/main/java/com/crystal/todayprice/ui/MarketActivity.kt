@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
@@ -22,13 +23,14 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.shape.MapPoints
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
-private const val TAG = "TestLog"
 class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketBinding
-
     private var market: Market? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
         market?.let {
             binding.market = it
+            Log.e("TestLog", "market: $market")
         }
 
     }
@@ -88,6 +91,38 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
             intent.putExtra(MARKET_ID, market?.id)
             intent.putExtra(MARKET_NAME, market?.name)
             startActivity(intent)
+        }
+        binding.favoriteButton.setOnClickListener {
+
+            market?.let {
+                if (userDataManager.user == null) {
+                    Toast.makeText(
+                        this@MarketActivity,
+                        getString(R.string.require_login),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@setOnClickListener
+                }
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (market!!.favoriteState) {
+                        userViewModel.removeFavorite(userDataManager.user!!.id, market!!.id)
+                        val newList = userDataManager.user!!.favoriteList.toMutableList()
+                        newList.remove(market!!.id)
+                        userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                        binding.market?.favoriteState = false
+                        binding.market = market
+                    } else {
+                        val newMarket = market!!.copy(favoriteState = true)
+                        userViewModel.addFavorite(userDataManager.user!!.id, newMarket)
+                        val newList = userDataManager.user!!.favoriteList.toMutableList()
+                        newList.add(market!!.id)
+                        userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                        binding.market?.favoriteState = true
+                        binding.market = market
+                    }
+                }
+            }
         }
     }
 
