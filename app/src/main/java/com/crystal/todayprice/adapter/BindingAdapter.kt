@@ -158,3 +158,4 @@ fun TextView.setAnswerText(answer: String) {
         setTextColor(ContextCompat.getColor(rootView.context,  R.color.hint))
     }
 }
+
