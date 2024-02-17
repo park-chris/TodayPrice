@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="@id/marketImageView"
             app:layout_constraintEnd_toEndOf="@id/marketImageView"
             android:layout_margin="5dp"
-            android:background="@drawable/effect_button_ripple"
+            android:background="@drawable/effect_favorite_button_ripple"
             app:heartDrawable="@{item.favorite}" />
 
         <TextView
