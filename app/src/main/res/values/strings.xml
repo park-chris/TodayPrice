@@ -92,6 +92,7 @@
     <string name="inquiry">문의하기</string>
     <string name="my_review">내가 작성한 후기</string>
     <string name="my_inquiry_list">내 문의 내역</string>
+    <string name="my_favorite_market">내 즐겨찾기</string>
 
     <string name="inquiry_title">문의 제목</string>
     <string name="inquiry_type">문의 종류</string>

@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:id="@+id/profile_group" android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/action_my_favorite"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:title="@string/my_favorite_market" />
+
         <item
             android:id="@+id/action_my_review"
             android:paddingHorizontal="0dp"

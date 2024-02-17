@@ -1,23 +1,24 @@
 package com.crystal.todayprice.repository
 
-import android.icu.text.SimpleDateFormat
+import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.util.TextUtil
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.lang.Exception
-import java.util.Date
-import java.util.Locale
 
 class UserRepositoryImpl : UserRepository {
     private val database = Firebase.firestore
     private val userRef = database.collection("users")
+    private val favoriteRef = database.collection("favorites")
 
     override fun createUser(user: User, callback: FirebaseCallback) {
         val userHashMap = hashMapOf(
@@ -61,6 +62,45 @@ class UserRepositoryImpl : UserRepository {
             callback.onResult(Result.SUCCESS)
         }.addOnFailureListener {
             callback.onResult(Result.FAIL)
+        }
+    }
+
+    override suspend fun getFavoriteMarkets(userId: String): List<Market> =  withContext(Dispatchers.IO) {
+        try {
+            val snapshot = favoriteRef.document(userId).collection("markets").get().await()
+            snapshot.toObjects()
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    override fun addFavoriteMarket(
+        userId: String,
+        market: Market,
+        firebaseCallback: FirebaseCallback
+    ) {
+        val batch = database.batch()
+        batch.update(userRef.document(userId), "favoriteList", FieldValue.arrayUnion(market.id))
+        batch.set(favoriteRef.document(userId).collection("market").document(market.id.toString()), market)
+        batch.commit().addOnSuccessListener {
+            firebaseCallback.onResult(Result.SUCCESS)
+        }.addOnFailureListener {
+            firebaseCallback.onResult(Result.FAIL)
+        }
+    }
+
+    override fun removeFavoriteMarket(
+        userId: String,
+        marketId: String,
+        firebaseCallback: FirebaseCallback
+    ) {
+        val batch = database.batch()
+        batch.update(userRef.document(userId), "favoriteList", FieldValue.arrayRemove(marketId))
+        batch.delete(favoriteRef.document(userId).collection("market").document(marketId))
+        batch.commit().addOnSuccessListener {
+            firebaseCallback.onResult(Result.SUCCESS)
+        }.addOnFailureListener {
+            firebaseCallback.onResult(Result.FAIL)
         }
     }
 
