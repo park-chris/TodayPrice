@@ -25,6 +25,7 @@ import com.crystal.todayprice.databinding.DrawerHeaderBinding
 import com.crystal.todayprice.ui.InquiryActivity
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
+import com.crystal.todayprice.ui.MyFavoriteActivity
 import com.crystal.todayprice.ui.MyInquiryActivity
 import com.crystal.todayprice.ui.NoticeListActivity
 import com.crystal.todayprice.ui.UserReviewActivity
@@ -257,6 +258,7 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_my_favorite -> startActivity(Intent(this, MyFavoriteActivity::class.java))
             R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))
             R.id.action_my_inquiry_list -> startActivity(Intent(this, MyInquiryActivity::class.java))
             R.id.action_login -> startActivity(Intent(this, LoginActivity::class.java))

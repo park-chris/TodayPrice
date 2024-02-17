@@ -60,6 +60,7 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         marketId = intent.getIntExtra(MarketActivity.MARKET_ID, -1)
         marketName = intent.getStringExtra(MarketActivity.MARKET_NAME) ?: ""
 
+        observeData()
         setRecyclerView()
         setupEvent()
 
@@ -275,16 +276,15 @@ class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(VerticalDividerItemDecoration(this, 20, 20))
-        reviewViewModel.reviews.observe(this, Observer {
-            adapter.submitList(it)
-            baseBinding.progressBar.visibility = View.GONE
-
-            if (it.isNotEmpty()) {
-                binding.infoTextView.isVisible = false
-            }
-        })
         reviewViewModel.getReviews(marketId)
     }
 
+    private fun observeData() {
+        reviewViewModel.reviews.observe(this, Observer {
+            adapter.submitList(it)
+            baseBinding.progressBar.visibility = View.GONE
+            binding.infoTextView.isVisible = it.isEmpty()
+        })
+    }
 
 }
