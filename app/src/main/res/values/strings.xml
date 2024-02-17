@@ -103,13 +103,16 @@
     <string name="no_inquiry">문의하신 내역이 없습니다.</string>
     <string name="inquiry_info_submit_success">문의가 정상적으로 등록되었습니다.\n문의 내역은 [메뉴>내 문의 내역]에서 확인해주세요.</string>
     <string name="inquiry_info_submit_fail">문의 등록이 실패했습니다. 다시 시도해주세요.</string>
+    <string name="inquiry_info_delete">"문의를 삭제하시겠습니까?\n삭제하신 문의는 복구되지 않습니다.</string>
+
+    <string name="inquiry_dialog_delete_complete">삭제가 완료되었습니다.</string>
+    <string name="inquiry_dialog_delete_incomplete">삭제가 완료되지 않았습니다. 다시 한번 시도해주세요.</string>
 
     <string name="complete_answer">답변 완료</string>
     <string name="incomplete_answer">답변 미완료</string>
+    <string name="incomplete_answer_text">답변을 준비 중입니다.</string>
 
-
-
-<!--    category 별 글-->
+    <!--    category 별 글-->
     <string name="all">전체</string>
     <string name="grain">곡류</string>
     <string name="fruits">과일</string>

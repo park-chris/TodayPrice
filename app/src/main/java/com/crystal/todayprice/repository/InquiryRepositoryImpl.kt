@@ -31,4 +31,12 @@ class InquiryRepositoryImpl: InquiryRepository {
         }
     }
 
+    override fun deleteInquiry(inquiry: Inquiry, callback: FirebaseCallback) {
+        inquiryRef.document(inquiry.id).delete().addOnSuccessListener {
+            callback.onResult(Result.SUCCESS)
+        }.addOnFailureListener {
+            callback.onResult(Result.FAIL)
+        }
+    }
+
 }

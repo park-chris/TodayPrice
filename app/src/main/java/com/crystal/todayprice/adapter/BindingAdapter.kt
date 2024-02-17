@@ -148,3 +148,13 @@ fun TextView.setAnswerState(answer: String) {
         background = ContextCompat.getDrawable(rootView.context, R.drawable.bg_state_false)
     }
 }
+
+@BindingAdapter("answerText")
+fun TextView.setAnswerText(answer: String) {
+    if (answer.isNotEmpty()) {
+        text = answer
+    } else {
+        text =  resources.getString(R.string.incomplete_answer_text)
+        setTextColor(ContextCompat.getColor(rootView.context,  R.color.hint))
+    }
+}

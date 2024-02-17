@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.crystal.todayprice.data.Inquiry" />
@@ -91,7 +90,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{item.answer}"
+                app:answerText="@{item.answer}"
                 android:textSize="@dimen/small_text_size"/>
 
             <TextView
@@ -100,7 +99,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/hint"
-                android:text="삭제"
+                android:text="@string/button_delete"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:paddingTop="10dp"
                 android:textSize="@dimen/x_x_small_text_size" />
 
         </LinearLayout>

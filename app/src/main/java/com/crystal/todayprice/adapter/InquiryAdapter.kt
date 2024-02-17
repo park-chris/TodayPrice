@@ -88,4 +88,13 @@ class InquiryAdapter(
         differ.submitList(items)
     }
 
+
+    fun getList(): List<Inquiry> {
+        return differ.currentList
+    }
+    fun deleteInquiry(position: Int) {
+        val list = getList().filterIndexed  { index, _ -> index != position }
+        submitList(list)
+    }
+
 }

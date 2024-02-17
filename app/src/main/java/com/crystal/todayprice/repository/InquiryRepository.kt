@@ -7,4 +7,5 @@ import com.crystal.todayprice.util.FirebaseCallback
 interface InquiryRepository {
     suspend fun getMyInquiry(userId: String): List<Inquiry>
     fun addInquiry(inquiry: Inquiry, callback: FirebaseCallback)
+    fun deleteInquiry(inquiry: Inquiry, callback: FirebaseCallback)
 }

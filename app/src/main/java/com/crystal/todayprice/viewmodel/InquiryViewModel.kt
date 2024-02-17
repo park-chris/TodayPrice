@@ -29,6 +29,10 @@ class InquiryViewModel(private val inquiryRepository: InquiryRepository): ViewMo
         inquiryRepository.addInquiry(inquiry, callback)
     }
 
+    fun deleteInquiry(inquiry: Inquiry, callback: FirebaseCallback) {
+        inquiryRepository.deleteInquiry(inquiry, callback)
+    }
+
     class InquiryViewModelFactory(private val inquiryRepository: InquiryRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return InquiryViewModel(inquiryRepository) as T
