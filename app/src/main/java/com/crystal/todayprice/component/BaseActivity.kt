@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,6 +20,7 @@ import com.crystal.todayprice.R
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.Notice
+import com.crystal.todayprice.data.Result
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHeaderBinding
@@ -29,9 +31,14 @@ import com.crystal.todayprice.ui.MyFavoriteActivity
 import com.crystal.todayprice.ui.MyInquiryActivity
 import com.crystal.todayprice.ui.NoticeListActivity
 import com.crystal.todayprice.ui.UserReviewActivity
+import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 open class BaseActivity(
@@ -211,10 +218,16 @@ open class BaseActivity(
 
     }
 
-//    open fun actionMenuFavorite() {}
+    //    open fun actionMenuFavorite() {}
     private fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+    }
+
+    fun moveToMarket(market: Market) {
+        val intent = Intent(this, MarketActivity::class.java)
+        intent.putExtra(MarketActivity.MARKET_OBJECT, market)
         startActivity(intent)
     }
 
@@ -260,7 +273,13 @@ open class BaseActivity(
         when (item.itemId) {
             R.id.action_my_favorite -> startActivity(Intent(this, MyFavoriteActivity::class.java))
             R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))
-            R.id.action_my_inquiry_list -> startActivity(Intent(this, MyInquiryActivity::class.java))
+            R.id.action_my_inquiry_list -> startActivity(
+                Intent(
+                    this,
+                    MyInquiryActivity::class.java
+                )
+            )
+
             R.id.action_login -> startActivity(Intent(this, LoginActivity::class.java))
             R.id.action_logout -> {
                 userDataManager.user ?: return false
@@ -268,6 +287,7 @@ open class BaseActivity(
                 userDataManager.user = null
                 updateProfile(null)
             }
+
             R.id.action_my_review -> startActivity(Intent(this, UserReviewActivity::class.java))
             R.id.action_notice -> startActivity(Intent(this, NoticeListActivity::class.java))
         }

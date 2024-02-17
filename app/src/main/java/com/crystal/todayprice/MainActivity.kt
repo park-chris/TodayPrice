@@ -71,9 +71,7 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
                     is Market -> {
                         moveToActivity(MarketActivity::class.java, listItem)
                     }
-                    is News -> {
-                        Toast.makeText(this@MainActivity, "news title : ${listItem.newsTitle}", Toast.LENGTH_SHORT).show()
-                    }
+                    is News -> {}
                     is Notice -> {
                         moveToActivity(NoticeActivity::class.java, listItem)
                     }

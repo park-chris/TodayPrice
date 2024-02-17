@@ -2,6 +2,7 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -73,12 +74,34 @@ class MyFavoriteActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HO
     }
 
     private fun setRecyclerView() {
+        adapter = MarketAdapter(onClick = { moveToMarket(it) }, onFavorite = {market ->
 
-        adapter = MarketAdapter { market ->
-            val intent = Intent(this, MarketActivity::class.java)
-            intent.putExtra(MarketActivity.MARKET_OBJECT, market)
-            startActivity(intent)
-        }
+            if (userDataManager.user == null) {
+                Toast.makeText(
+                    this@MyFavoriteActivity,
+                    getString(R.string.require_login),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@MarketAdapter
+            }
+            val dialog = CustomDialog(this, object : OnDialogListener {
+                override fun onOk() {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        userViewModel.removeFavorite(userDataManager.user!!.id, market.id)
+                        val newList = userDataManager.user!!.favoriteList.toMutableList()
+                        newList.remove(market.id)
+                        userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                        val list = mutableListOf<Market>()
+                        list.addAll(adapter.getList())
+                        list.remove(market)
+                        submitList(list)
+                    }
+                }
+            })
+
+            dialog.start(null, getString(R.string.favorite_remove_dialog_message), getString(R.string.cancel), getString(R.string.button_delete), true)
+
+        })
 
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.horizontal_padding)
         val spanCount = 2

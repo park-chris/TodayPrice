@@ -1,5 +1,6 @@
 package com.crystal.todayprice.data
 
+import com.crystal.todayprice.component.UserDataManager
 import java.io.Serializable
 
 data class Market(
@@ -14,7 +15,9 @@ data class Market(
     val description: String = "",
     val phoneNumber: String = "",
     val reviewCount: Int = 0,
+    var isFavorite: Boolean = UserDataManager.getInstance().user?.favoriteList?.contains(id) ?: false,
 ) : Serializable, ListItem {
+
     override val viewType: ViewType
         get() = ViewType.MARKET
 }

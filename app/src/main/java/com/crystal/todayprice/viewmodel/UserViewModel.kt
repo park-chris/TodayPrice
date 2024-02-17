@@ -8,6 +8,7 @@ import com.crystal.todayprice.data.User
 import com.crystal.todayprice.repository.UserRepository
 import com.crystal.todayprice.repository.UserRepositoryImpl
 import com.crystal.todayprice.util.FirebaseCallback
+import com.crystal.todayprice.util.Result
 
 class UserViewModel() : ViewModel() {
 
@@ -27,20 +28,17 @@ class UserViewModel() : ViewModel() {
     ) {
         userRepository.submitReport(reviewId, userId, reportTitle, reportContent, callback)
     }
-    suspend fun getFavoriteMarkets(userId: String): List<Market> = userRepository.getFavoriteMarkets(userId)
-    fun addFavorite(
-        userId: String,
-        market: Market,
-        firebaseCallback: FirebaseCallback
-    ) {
-        userRepository.addFavoriteMarket(userId, market, firebaseCallback)
-    }
 
-    fun removeFavorite(
+    suspend fun getFavoriteMarkets(userId: String): List<Market> =
+        userRepository.getFavoriteMarkets(userId)
+
+    suspend fun addFavorite(
         userId: String,
-        marketId: String,
-        firebaseCallback: FirebaseCallback
-    ) {
-        userRepository.removeFavoriteMarket(userId, marketId, firebaseCallback)
-    }
+        market: Market
+    ): Result = userRepository.addFavoriteMarket(userId, market)
+
+    suspend fun removeFavorite(
+        userId: String,
+        marketId: Int
+    ): Result = userRepository.removeFavoriteMarket(userId, marketId)
 }

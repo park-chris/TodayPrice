@@ -2,7 +2,9 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -17,12 +19,18 @@ import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketListBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
+import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.GridSpacingItemDecoration
+import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.viewmodel.MarketViewModel
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
+private const val TAG = "TestLog"
 class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketListBinding
@@ -31,10 +39,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
         MarketViewModel.MarketViewModelFactory(MarketRepositoryImpl())
     }
 
-    private val adapter: MarketAdapter = MarketAdapter {
-        moveToMarket(it)
-    }
-
+    private lateinit var adapter: MarketAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +58,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
             marketViewModel.markets.observe(this@MarketListActivity, Observer {
                 it?.let {
                     adapter.submitList(it)
+                    Log.e(TAG, "observe")
                     baseBinding.progressBar.visibility = View.GONE
                 }
             })
@@ -64,17 +70,46 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
         val spanCount = 2
         val includeEdge = true
 
+        adapter = MarketAdapter(onClick = { moveToMarket(it) }, onFavorite = {market ->
+            if (userDataManager.user == null) {
+                Toast.makeText(
+                    this@MarketListActivity,
+                    getString(R.string.require_login),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@MarketAdapter
+            }
+
+            CoroutineScope(Dispatchers.Main).launch {
+                if (market.isFavorite) {
+                    val newMarket = market.copy(isFavorite = false)
+                    val newMarkets = adapter.getList().mapIndexed { _, data ->
+                        if (market.id == data.id) newMarket else data
+                    }
+                    marketViewModel.updateMarkets(newMarkets)
+                    userViewModel.removeFavorite(userDataManager.user!!.id, market.id)
+                    val newList = userDataManager.user!!.favoriteList.toMutableList()
+                    newList.remove(market.id)
+                    userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                } else {
+                    val newMarket = market.copy(isFavorite = true)
+                    val newMarkets = adapter.getList().mapIndexed { _, data ->
+                        if (market.id == data.id) newMarket else data
+                    }
+                    marketViewModel.updateMarkets(newMarkets)
+                    userViewModel.addFavorite(userDataManager.user!!.id, newMarket)
+                    val newList = userDataManager.user!!.favoriteList.toMutableList()
+                    newList.add(market.id)
+                    userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                }
+            }
+        })
+
         binding.itemRecyclerView.layoutManager = GridLayoutManager(this, spanCount)
         val itemDecoration = GridSpacingItemDecoration(spanCount, spacingInPixels, includeEdge)
         binding.itemRecyclerView.addItemDecoration(itemDecoration)
         binding.itemRecyclerView.adapter = adapter
     }
-    private fun moveToMarket(market: Market) {
-        val intent = Intent(this, MarketActivity::class.java)
-        intent.putExtra(MarketActivity.MARKET_OBJECT, market)
-        startActivity(intent)
-    }
-
     private fun addChip() {
 
         val boroughArray = resources.getStringArray(R.array.market_borough_array)

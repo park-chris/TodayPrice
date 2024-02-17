@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.TextViewCompat.setCompoundDrawablesRelativeWithIntrinsicBounds
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -158,4 +159,15 @@ fun TextView.setAnswerText(answer: String) {
         setTextColor(ContextCompat.getColor(rootView.context,  R.color.hint))
     }
 }
+
+@BindingAdapter("heartDrawable")
+fun ImageButton.setHeartDrawable(isFavorite: Boolean) {
+    val drawableResId = if (isFavorite) {
+        R.drawable.ic_fill_heart
+    } else {
+        R.drawable.ic_empty_heart
+    }
+    setImageResource(drawableResId)
+}
+
 

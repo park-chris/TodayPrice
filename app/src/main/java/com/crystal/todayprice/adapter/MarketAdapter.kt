@@ -2,6 +2,7 @@ package com.crystal.todayprice.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,8 @@ import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ItemMarketBinding
 
 class MarketAdapter(
-    private val onClick: (Market) -> Unit
+    private val onClick: (Market) -> Unit,
+    private val onFavorite: (Market) -> Unit,
 ) : RecyclerView.Adapter<MarketAdapter.ViewHolder>() {
 
     inner class ViewHolder(
@@ -21,11 +23,12 @@ class MarketAdapter(
         fun bind(market: Market?) {
             market?.let {
                 binding.item = market
-
                 binding.layout.setOnClickListener {
                     onClick(market)
                 }
-
+                binding.favoriteButton.setOnClickListener {
+                    onFavorite(market)
+                }
                 binding.marketImageView.clipToOutline = true
 
             }
@@ -71,5 +74,21 @@ class MarketAdapter(
 
     fun submitList(markets: List<Market>) {
         differ.submitList(markets)
+    }
+    fun updateMarket(market: Market) {
+        val position = differ.currentList.indexOf(market)
+        val list = differ.currentList.mapIndexed { index, beforeMarket ->
+            if (position == index) beforeMarket.copy(isFavorite = !beforeMarket.isFavorite) else beforeMarket
+        }
+        submitList(list)
+    }
+
+    fun getPosition(market: Market): Int {
+       return differ.currentList.indexOf(market)
+    }
+
+
+    fun getList(): List<Market> {
+        return differ.currentList
     }
 }
