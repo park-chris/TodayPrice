@@ -42,6 +42,10 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
         market = intent.intentSerializable(MARKET_OBJECT, Market::class.java)
 
         market?.let {
+            if (userDataManager.user != null) {
+                val isFavorite = userDataManager.user!!.favoriteList.contains(it.id)
+                it.favoriteState = isFavorite
+            }
             binding.market = it
         }
 
@@ -118,25 +122,28 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
                     ).show()
                     return@setOnClickListener
                 }
+                setFavorite()
+            }
+        }
+    }
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    if (market!!.favoriteState) {
-                        userViewModel.removeFavorite(userDataManager.user!!.id, market!!.id)
-                        val newList = userDataManager.user!!.favoriteList.toMutableList()
-                        newList.remove(market!!.id)
-                        userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
-                       market?.favoriteState = false
-                        binding.market = market
-                    } else {
-                        val newMarket = market!!.copy(favoriteState = true)
-                        userViewModel.addFavorite(userDataManager.user!!.id, newMarket)
-                        val newList = userDataManager.user!!.favoriteList.toMutableList()
-                        newList.add(market!!.id)
-                        userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
-                        market?.favoriteState = true
-                        binding.market = market
-                    }
-                }
+    private fun setFavorite() {
+        CoroutineScope(Dispatchers.Main).launch {
+            if (market!!.favoriteState) {
+                userViewModel.removeFavorite(userDataManager.user!!.id, market!!.id)
+                val newList = userDataManager.user!!.favoriteList.toMutableList()
+                newList.remove(market!!.id)
+                userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                market?.favoriteState = false
+                binding.market = market
+            } else {
+                val newMarket = market!!.copy(favoriteState = true)
+                userViewModel.addFavorite(userDataManager.user!!.id, newMarket)
+                val newList = userDataManager.user!!.favoriteList.toMutableList()
+                newList.add(market!!.id)
+                userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+                market?.favoriteState = true
+                binding.market = market
             }
         }
     }
