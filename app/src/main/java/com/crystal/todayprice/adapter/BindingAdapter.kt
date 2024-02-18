@@ -64,10 +64,17 @@ fun TextView.setMoneyText(money: Int?) {
 
 @BindingAdapter("descriptionText")
 fun TextView.setDescriptionText(description: String?) {
-    text = if (description != null && description.isEmpty()) {
-        resources.getString(R.string.market_empty_description)
+    text = if (!description.isNullOrEmpty()) {
+        description.replace(" ", "\u00A0")
     } else {
-        description
+        resources.getString(R.string.market_empty_description)
+    }
+}
+
+@BindingAdapter("clearText")
+fun TextView.setClearText(string: String?) {
+    string?.let {
+        text = string.replace(" ", "\u00A0").replace("\\n", "\n")
     }
 }
 
