@@ -129,6 +129,9 @@ class MarketListActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HO
         binding.itemRecyclerView.layoutManager = GridLayoutManager(this, spanCount)
         val itemDecoration = GridSpacingItemDecoration(spanCount, spacingInPixels, includeEdge)
         binding.itemRecyclerView.addItemDecoration(itemDecoration)
+        binding.itemRecyclerView.apply {
+            itemAnimator = null
+        }
         binding.itemRecyclerView.adapter = adapter
     }
 

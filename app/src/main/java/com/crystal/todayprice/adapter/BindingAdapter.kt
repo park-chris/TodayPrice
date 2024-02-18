@@ -30,8 +30,10 @@ fun ImageView.setImage(imageUrl: String?) {
         Glide.with(this)
             .load(imageUrl)
             .centerCrop()
-            .transition(DrawableTransitionOptions.withCrossFade(300))
+            .skipMemoryCache(true)
+            .dontAnimate()
             .error(R.drawable.img_no_picture)
+            .transition(DrawableTransitionOptions.withCrossFade(300))
             .into(this)
     }
     this.clipToOutline = true
