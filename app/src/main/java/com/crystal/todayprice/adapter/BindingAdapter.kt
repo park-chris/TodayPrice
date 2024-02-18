@@ -29,6 +29,7 @@ fun ImageView.setImage(imageUrl: String?) {
     if (!imageUrl.isNullOrBlank()) {
         Glide.with(this)
             .load(imageUrl)
+            .thumbnail(Glide.with(this).load(imageUrl).centerCrop())
             .centerCrop()
             .skipMemoryCache(true)
             .dontAnimate()
@@ -44,6 +45,7 @@ fun ImageView.setImage(itemId: Int?) {
     val url = "https://firebasestorage.googleapis.com/v0/b/today-price-94264.appspot.com/o/item%2F${itemId}.webp?alt=media"
     Glide.with(this)
         .load(url)
+        .thumbnail(Glide.with(this).load(url).centerCrop())
         .centerCrop()
         .transition(DrawableTransitionOptions.withCrossFade(300))
         .error(R.drawable.img_no_picture)
@@ -165,9 +167,9 @@ fun TextView.setAnswerText(answer: String) {
 @BindingAdapter("heartDrawable")
 fun ImageButton.setHeartDrawable(isFavorite: Boolean) {
     val drawableResId = if (isFavorite) {
-        R.drawable.ic_fill_heart
+        R.drawable.ic_large_fill_heart
     } else {
-        R.drawable.ic_empty_heart
+        R.drawable.ic_large_empty_heart
     }
     setImageResource(drawableResId)
 }
