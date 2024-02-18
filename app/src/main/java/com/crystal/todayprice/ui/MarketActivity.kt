@@ -43,7 +43,6 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
 
         market?.let {
             binding.market = it
-            Log.e("TestLog", "market: $market")
         }
 
     }
@@ -54,6 +53,14 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
         setScrollEvent()
         setupEvent()
         setMap()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent().apply {
+            putExtra(MarketListActivity.RETURN_MARKET, market)
+        }
+        setResult(RESULT_OK, intent)
+        finish()
     }
 
     override fun onDestroy() {
@@ -77,8 +84,16 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
                 return LatLng.from(market!!.latitude, market!!.longitude)
             }
         })
-
     }
+
+    override fun onBackButton() {
+        val intent = Intent().apply {
+            putExtra(MarketListActivity.RETURN_MARKET, market)
+        }
+        setResult(RESULT_OK, intent)
+        super.onBackButton()
+    }
+
 
     private fun setupEvent() {
         binding.pricesButton.setOnClickListener {
@@ -110,7 +125,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
                         val newList = userDataManager.user!!.favoriteList.toMutableList()
                         newList.remove(market!!.id)
                         userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
-                        binding.market?.favoriteState = false
+                       market?.favoriteState = false
                         binding.market = market
                     } else {
                         val newMarket = market!!.copy(favoriteState = true)
@@ -118,7 +133,7 @@ class MarketActivity : BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON) {
                         val newList = userDataManager.user!!.favoriteList.toMutableList()
                         newList.add(market!!.id)
                         userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
-                        binding.market?.favoriteState = true
+                        market?.favoriteState = true
                         binding.market = market
                     }
                 }

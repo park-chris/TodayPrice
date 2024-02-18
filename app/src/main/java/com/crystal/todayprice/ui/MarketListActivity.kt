@@ -1,9 +1,11 @@
 package com.crystal.todayprice.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -17,16 +19,19 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketListBinding
+import com.crystal.todayprice.databinding.ActivityUserReviewBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
+import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.util.GridSpacingItemDecoration
 import com.crystal.todayprice.viewmodel.MarketViewModel
+import com.google.android.gms.auth.api.Auth
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
+class MarketListActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 
     private lateinit var binding: ActivityMarketListBinding
 
@@ -59,51 +64,74 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
         }
     }
 
+    private val launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                RESULT_OK -> {
+                    val market = result.data?.intentSerializable(RETURN_MARKET, Market::class.java)
+                    market?.let {
+                        adapter.updateMarket(it)
+                    }
+                }
+                RESULT_CANCELED -> {
+                }
+            }
+
+        }
+
     private fun setMarkets() {
         val spacingInPixels = resources.getDimensionPixelSize(R.dimen.horizontal_padding)
         val spanCount = 2
         val includeEdge = true
 
-        adapter = MarketAdapter(onClick = { moveToMarket(it) }, onFavorite = {market ->
-            if (userDataManager.user == null) {
-                Toast.makeText(
-                    this@MarketListActivity,
-                    getString(R.string.require_login),
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@MarketAdapter
-            }
-
-            CoroutineScope(Dispatchers.Main).launch {
-                if (market.favoriteState) {
-                    val newMarket = market.copy(favoriteState = false)
-                    val newMarkets = adapter.getList().mapIndexed { _, data ->
-                        if (market.id == data.id) newMarket else data
-                    }
-                    marketViewModel.updateMarkets(newMarkets)
-                    userViewModel.removeFavorite(userDataManager.user!!.id, market.id)
-                    val newList = userDataManager.user!!.favoriteList.toMutableList()
-                    newList.remove(market.id)
-                    userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
-                } else {
-                    val newMarket = market.copy(favoriteState = true)
-                    val newMarkets = adapter.getList().mapIndexed { _, data ->
-                        if (market.id == data.id) newMarket else data
-                    }
-                    marketViewModel.updateMarkets(newMarkets)
-                    userViewModel.addFavorite(userDataManager.user!!.id, newMarket)
-                    val newList = userDataManager.user!!.favoriteList.toMutableList()
-                    newList.add(market.id)
-                    userDataManager.user = userDataManager.user!!.copy(favoriteList = newList.toList())
+        adapter = MarketAdapter(onClick = {
+            val intent = Intent(this, MarketActivity::class.java)
+            intent.putExtra(MarketActivity.MARKET_OBJECT, it)
+            launcher.launch(intent)
+        },
+            onFavorite = { market ->
+                if (userDataManager.user == null) {
+                    Toast.makeText(
+                        this@MarketListActivity,
+                        getString(R.string.require_login),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@MarketAdapter
                 }
-            }
-        })
+
+                CoroutineScope(Dispatchers.Main).launch {
+                    if (market.favoriteState) {
+                        val newMarket = market.copy(favoriteState = false)
+                        val newMarkets = adapter.getList().mapIndexed { _, data ->
+                            if (market.id == data.id) newMarket else data
+                        }
+                        marketViewModel.updateMarkets(newMarkets)
+                        userViewModel.removeFavorite(userDataManager.user!!.id, market.id)
+                        val newList = userDataManager.user!!.favoriteList.toMutableList()
+                        newList.remove(market.id)
+                        userDataManager.user =
+                            userDataManager.user!!.copy(favoriteList = newList.toList())
+                    } else {
+                        val newMarket = market.copy(favoriteState = true)
+                        val newMarkets = adapter.getList().mapIndexed { _, data ->
+                            if (market.id == data.id) newMarket else data
+                        }
+                        marketViewModel.updateMarkets(newMarkets)
+                        userViewModel.addFavorite(userDataManager.user!!.id, newMarket)
+                        val newList = userDataManager.user!!.favoriteList.toMutableList()
+                        newList.add(market.id)
+                        userDataManager.user =
+                            userDataManager.user!!.copy(favoriteList = newList.toList())
+                    }
+                }
+            })
 
         binding.itemRecyclerView.layoutManager = GridLayoutManager(this, spanCount)
         val itemDecoration = GridSpacingItemDecoration(spanCount, spacingInPixels, includeEdge)
         binding.itemRecyclerView.addItemDecoration(itemDecoration)
         binding.itemRecyclerView.adapter = adapter
     }
+
     private fun addChip() {
 
         val boroughArray = resources.getStringArray(R.array.market_borough_array)
@@ -112,14 +140,22 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
             binding.chipGroup.addView(Chip(this).apply {
                 text = borough
                 textSize = 15F
-                chipStrokeColor = ContextCompat.getColorStateList(this@MarketListActivity, R.color.stroke_chip_state)
+                chipStrokeColor = ContextCompat.getColorStateList(
+                    this@MarketListActivity,
+                    R.color.stroke_chip_state
+                )
                 chipStrokeWidth = 2F
                 isCheckable = true
                 isCheckedIconVisible = false
                 isChecked = borough == resources.getString(R.string.all)
                 chipBackgroundColor =
                     ContextCompat.getColorStateList(this@MarketListActivity, R.color.bg_chip_state)
-                setTextColor(ContextCompat.getColorStateList(this@MarketListActivity, R.color.text_chip_state))
+                setTextColor(
+                    ContextCompat.getColorStateList(
+                        this@MarketListActivity,
+                        R.color.text_chip_state
+                    )
+                )
 
                 this.setOnClickListener {
                     if (!this.isChecked) {
@@ -128,7 +164,7 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
                     }
                     if (text.toString() == resources.getString(R.string.all)) {
                         submitList(marketViewModel.markets.value ?: emptyList())
-                    }else {
+                    } else {
                         submitList(marketViewModel.getFilterItems(borough))
                     }
                 }
@@ -144,5 +180,9 @@ class MarketListActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HOR
             delay(300)
             binding.itemRecyclerView.scrollToPosition(0)
         }
+    }
+
+    companion object {
+        const val RETURN_MARKET = "return_market"
     }
 }

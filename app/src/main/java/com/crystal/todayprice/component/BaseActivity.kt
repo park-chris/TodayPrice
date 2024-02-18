@@ -264,10 +264,12 @@ open class BaseActivity(
             }
 
             ToolbarType.ONLY_BACK -> {
-                finish()
+                onBackButton()
             }
         }
     }
+
+    open fun onBackButton() { finish() }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
