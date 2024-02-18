@@ -126,11 +126,13 @@ class SearchActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
         listItemViewModel.listItem.observe(this, Observer { listItem ->
             listItem?.let {
                 if (listItem.size > 1) {
+                    var isEmpty = false
                     for (item in listItem) {
                         val horizontal = item as Horizontal
                         if (horizontal.items.isEmpty()) {
-                            binding.infoTextView.visibility = View.VISIBLE
+                            isEmpty = true
                         }
+                        if (isEmpty) binding.infoTextView.visibility = View.VISIBLE else binding.infoTextView.visibility = View.GONE
                     }
                 } else {
                     binding.infoTextView.visibility = View.GONE
