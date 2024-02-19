@@ -4,6 +4,12 @@
     <group android:id="@+id/profile_group" android:checkableBehavior="single">
 
         <item
+            android:id="@+id/action_my_profile"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:title="@string/my_profile" />
+
+        <item
             android:id="@+id/action_my_favorite"
             android:paddingHorizontal="0dp"
             android:gravity="end"

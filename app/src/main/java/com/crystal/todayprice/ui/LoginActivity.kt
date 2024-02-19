@@ -11,6 +11,7 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.User
+import com.crystal.todayprice.data.UserProvider
 import com.crystal.todayprice.databinding.ActivityLoginBinding
 import com.crystal.todayprice.util.FirebaseCallback
 import com.google.android.gms.auth.api.Auth
@@ -101,7 +102,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     auth.currentUser?.let {
-                        updateUser(it)
+                        updateUser(it, UserProvider.GOOGLE)
                     }
                 } else {
                     baseBinding.progressBar.visibility = View.GONE
@@ -185,7 +186,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
         auth.signInWithCustomToken(customToken).addOnCompleteListener { result ->
             if (result.isSuccessful) {
                 auth.currentUser?.let {
-                    updateUser(it)
+                    updateUser(it, UserProvider.KAKAO)
                 }
             } else {
                 baseBinding.progressBar.visibility = View.GONE
@@ -193,7 +194,7 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
         }
     }
 
-    private fun updateUser(user: FirebaseUser) = CoroutineScope(Dispatchers.Main).launch {
+    private fun updateUser(user: FirebaseUser, provider: UserProvider) = CoroutineScope(Dispatchers.Main).launch {
 
         val dbUser = userViewModel.getUser(user.uid)
 
@@ -205,7 +206,9 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
             val newUser = User(
                 user.uid,
                 user.displayName ?: "",
-                user.email ?: ""
+                user.email ?: "",
+                provider = provider,
+
             )
             userViewModel.createUser(newUser, object : FirebaseCallback {
                 override fun onResult(result: Result) {

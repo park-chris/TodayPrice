@@ -273,6 +273,7 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_my_profile -> startActivity(Intent(this, MyFavoriteActivity::class.java))
             R.id.action_my_favorite -> startActivity(Intent(this, MyFavoriteActivity::class.java))
             R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))
             R.id.action_my_inquiry_list -> startActivity(

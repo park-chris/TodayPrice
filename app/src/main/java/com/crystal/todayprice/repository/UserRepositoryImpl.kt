@@ -23,13 +23,7 @@ class UserRepositoryImpl : UserRepository {
     private val favoriteRef = database.collection("favorites")
 
     override fun createUser(user: User, callback: FirebaseCallback) {
-        val userHashMap = hashMapOf(
-            "id" to user.id,
-            "name" to user.name,
-            "email" to user.email,
-            "favoriteList" to user.favoriteList,
-        )
-        userRef.document(user.id).set(userHashMap).addOnSuccessListener {
+        userRef.document(user.id).set(user).addOnSuccessListener {
             callback.onResult(Result.SUCCESS)
         }.addOnFailureListener {
             callback.onResult(Result.FAIL)
