@@ -16,6 +16,7 @@ import com.crystal.todayprice.component.UserDataManager
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.data.User
+import com.crystal.todayprice.data.UserProvider
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -181,4 +182,18 @@ fun ImageButton.setHeartDrawable(isFavorite: Boolean) {
     setImageResource(drawableResId)
 }
 
+@BindingAdapter("providerDrawable")
+fun TextView.setProviderDrawable(provider: UserProvider?) {
+    provider?.let {
+        val drawableResId = when (provider) {
+            UserProvider.KAKAO -> {
+                R.drawable.ic_kakao
+            }
+            UserProvider.GOOGLE -> {
+                R.drawable.ic_google
+            }
+        }
+        setCompoundDrawablesRelativeWithIntrinsicBounds(drawableResId, 0, 0, 0)
+    }
 
+}

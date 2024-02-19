@@ -30,6 +30,7 @@ import com.crystal.todayprice.ui.MarketActivity
 import com.crystal.todayprice.ui.MyFavoriteActivity
 import com.crystal.todayprice.ui.MyInquiryActivity
 import com.crystal.todayprice.ui.NoticeListActivity
+import com.crystal.todayprice.ui.ProfileActivity
 import com.crystal.todayprice.ui.UserReviewActivity
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.viewmodel.UserViewModel
@@ -219,7 +220,7 @@ open class BaseActivity(
     }
 
     //    open fun actionMenuFavorite() {}
-    private fun actionMenuHome() {
+    fun actionMenuHome() {
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
@@ -273,7 +274,7 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_my_profile -> startActivity(Intent(this, MyFavoriteActivity::class.java))
+            R.id.action_my_profile -> startActivity(Intent(this, ProfileActivity::class.java))
             R.id.action_my_favorite -> startActivity(Intent(this, MyFavoriteActivity::class.java))
             R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))
             R.id.action_my_inquiry_list -> startActivity(
@@ -289,6 +290,7 @@ open class BaseActivity(
                 FirebaseAuth.getInstance().signOut()
                 userDataManager.user = null
                 updateProfile(null)
+                actionMenuHome()
             }
 
             R.id.action_my_review -> startActivity(Intent(this, UserReviewActivity::class.java))

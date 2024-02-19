@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/profile_group" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_my_favorite"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:icon="@drawable/ic_large_empty_heart"
+            android:title="@string/my_favorite_market" />
+        <item
+            android:id="@+id/action_my_review"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:icon="@drawable/ic_speech"
+            android:title="@string/my_review" />
+        <item
+            android:id="@+id/action_my_inquiry_list"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:icon="@drawable/ic_question"
+            android:title="@string/my_inquiry_list" />
+    </group>
+
+    <group android:id="@+id/category_account" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_delete_account"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:icon="@drawable/ic_delete"
+            android:title="@string/delete_account" />
+    </group>
+    <group android:id="@+id/category_login" android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_logout"
+            android:paddingHorizontal="0dp"
+            android:gravity="end"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
+    </group>
+</menu>
