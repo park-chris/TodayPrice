@@ -1,14 +1,11 @@
 package com.crystal.todayprice.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
-import com.crystal.todayprice.component.CustomDialog
 import com.crystal.todayprice.component.ToolbarType
-import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.databinding.ActivityProfileBinding
 import com.google.android.material.navigation.NavigationView
@@ -24,10 +21,14 @@ class ProfileActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZ
         binding = ActivityProfileBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
         binding.navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
         userDataManager.user?.let {
             binding.item = userDataManager.user
         }
-
+        setupEvent()
     }
 
     override fun onDestroy() {
@@ -55,6 +56,13 @@ class ProfileActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZ
             R.id.action_delete_account -> {}
         }
         return false
+    }
+
+
+    private fun setupEvent() {
+        binding.editTextView.setOnClickListener {
+            startActivity(Intent(this, EditNameActivity::class.java))
+        }
     }
 
 }

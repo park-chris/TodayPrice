@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/horizontal_padding"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/edit_name_info_1"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/hint" />
+
+    <EditText
+        android:id="@+id/titleEditText"
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:maxLines="1"
+        android:background="@drawable/bg_edit"
+        android:hint="@string/edit_name_hint"
+        android:textColorHint="@color/hint"
+        android:gravity="top"
+        android:textSize="@dimen/medium_text_size"
+        android:padding="@dimen/horizontal_padding"
+        android:layout_height="wrap_content"
+        android:importantForAutofill="no"
+        android:inputType="textLongMessage" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/edit_name_info_2"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/hint" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submitButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        style="@style/CustomButton"
+        android:text="@string/edit_name" />
+
+
+
+</LinearLayout>

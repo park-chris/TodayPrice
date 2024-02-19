@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -7,7 +8,7 @@
             type="com.crystal.todayprice.data.User" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:padding="20dp"
         android:elevation="0dp"
@@ -38,15 +39,17 @@
 
         <TextView
             android:id="@+id/editTextView"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:text="수정"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:textColor="@color/hint"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@id/nameTextView"
             app:layout_constraintBottom_toBottomOf="@id/nameTextView"
-            android:layout_marginTop="30dp" />
+            android:focusable="true" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
