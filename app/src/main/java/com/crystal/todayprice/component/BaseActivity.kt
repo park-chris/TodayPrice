@@ -226,11 +226,13 @@ open class BaseActivity(
     }
 
     fun hideKeyboard(editText: EditText, isClear: Boolean = true) {
-        editText.text = null
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
-        if (isClear) editText.clearFocus()
+        editText.clearFocus()
+        if (isClear) {
+            editText.text = null
+        }
     }
 
 

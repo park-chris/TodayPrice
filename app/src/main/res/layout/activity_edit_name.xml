@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:background="@drawable/bg_edit"
+        android:maxLength="11"
         android:gravity="top"
         android:hint="@string/edit_name_hint"
         android:importantForAutofill="no"
