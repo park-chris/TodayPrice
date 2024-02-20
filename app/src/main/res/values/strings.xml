@@ -98,8 +98,11 @@
 
     <string name="edit_name_hint">닉네임 입력</string>
     <string name="edit_name">변경하기</string>
-    <string name="edit_name_info_2">닉네임은 12자 미만이어야 합니다. 또한 이모티콘 및 특수문자를 입력할 수 없습니다.</string>
+    <string name="edit_name_info_2">닉네임은 10자 미만이어야 합니다. 또한 이모티콘 및 특수문자를 입력할 수 없습니다.</string>
     <string name="edit_name_info_1">닉네임은 앱 내에서 리뷰나 기타 콘텐츠를 게시할 경우에 표시됩니다.</string>
+
+    <string name="delete_account_info_1">계정 삭제 시 복구가 되지않습니다.\n\n 삭제 항목\n  - 계정 정보\n  - 즐겨찾기\n  - 문의사항</string>
+    <string name="delete_account_info_2">계정 삭제를 원하시면 아래 버튼을 눌러주십시오.</string>
 
     <string name="delete_account">계정 삭제</string>
     <string name="inquiry_title">문의 제목</string>

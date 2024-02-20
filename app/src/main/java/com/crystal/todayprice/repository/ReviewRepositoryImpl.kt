@@ -28,7 +28,7 @@ class ReviewRepositoryImpl: ReviewRepository {
 
     override suspend fun getUserReview(userId: String): List<Review> {
         return try {
-            val snapshot = reviewRef.whereEqualTo("userId", userId).get().await()
+            val snapshot = reviewRef.whereEqualTo("userId", userId).whereEqualTo("state", true).get().await()
             snapshot.toObjects<Review>().sortedBy { it.date }.reversed()
         } catch (e: Exception) {
             emptyList()
@@ -36,21 +36,8 @@ class ReviewRepositoryImpl: ReviewRepository {
     }
 
     override fun addReview(review: Review, callback: FirebaseCallback) {
-        val reviewHashMap = hashMapOf(
-            "id" to review.id,
-            "userId" to review.userId,
-            "marketId" to review.marketId,
-            "userName" to review.userName,
-            "marketName" to review.marketName,
-            "content" to review.content,
-            "date" to review.date,
-            "likeCount" to review.likeCount,
-            "likeUsers" to review.likeUsers,
-            "blockUsers" to review.blockUsers,
-        )
-
         val batch = database.batch()
-        batch.set(reviewRef.document(review.id), reviewHashMap)
+        batch.set(reviewRef.document(review.id), review)
         batch.update(database.collection("markets").document(review.marketId.toString()), "reviewCount", FieldValue.increment(1))
         batch.commit().addOnSuccessListener {
             callback.onResult(Result.SUCCESS)
@@ -76,6 +63,20 @@ class ReviewRepositoryImpl: ReviewRepository {
             callback.onResult(Result.SUCCESS)
         }.addOnFailureListener {
             callback.onResult(Result.FAIL)
+        }
+    }
+
+    override suspend fun deleteAccount(userId: String): Result {
+        return try {
+            val list = getUserReview(userId)
+            val batch = database.batch()
+            for (review in list ) {
+                batch.update(reviewRef.document(review.id), "state", false)
+            }
+            batch.commit()
+            Result.SUCCESS
+        } catch (e: Exception) {
+            Result.FAIL
         }
     }
 }

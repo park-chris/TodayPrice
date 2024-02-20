@@ -1,5 +1,6 @@
 package com.crystal.todayprice.repository
 
+import android.util.Log
 import com.crystal.todayprice.component.UserDataManager
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.User
@@ -112,6 +113,21 @@ class UserRepositoryImpl : UserRepository {
         batch.delete(favoriteRef.document(userId).collection("market").document(marketId.toString()))
         return try {
             batch.commit().await()
+            Result.SUCCESS
+        } catch (e: Exception) {
+            Result.FAIL
+        }
+    }
+
+    override suspend fun deleteAccount(user: User): Result {
+        return try {
+            val batch = database.batch()
+            val doc = favoriteRef.document(user.id).collection("market")
+            for (favoriteId in user.favoriteList) {
+                batch.delete(doc.document(favoriteId.toString()))
+            }
+            batch.delete(userRef.document(user.id))
+            batch.commit()
             Result.SUCCESS
         } catch (e: Exception) {
             Result.FAIL

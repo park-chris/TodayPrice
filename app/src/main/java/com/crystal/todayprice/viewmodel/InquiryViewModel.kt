@@ -9,9 +9,11 @@ import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.repository.InquiryRepository
 import com.crystal.todayprice.repository.NoticeRepository
 import com.crystal.todayprice.util.FirebaseCallback
+import com.crystal.todayprice.util.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class InquiryViewModel(private val inquiryRepository: InquiryRepository): ViewModel() {
 
@@ -32,6 +34,8 @@ class InquiryViewModel(private val inquiryRepository: InquiryRepository): ViewMo
     fun deleteInquiry(inquiry: Inquiry, callback: FirebaseCallback) {
         inquiryRepository.deleteInquiry(inquiry, callback)
     }
+
+    suspend fun deleteAccountInquiry(userId: String) = withContext(Dispatchers.IO) { inquiryRepository.deleteAccountInquiry(userId) }
 
     class InquiryViewModelFactory(private val inquiryRepository: InquiryRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

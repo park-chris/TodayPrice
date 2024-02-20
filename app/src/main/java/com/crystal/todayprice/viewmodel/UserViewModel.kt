@@ -9,6 +9,8 @@ import com.crystal.todayprice.repository.UserRepository
 import com.crystal.todayprice.repository.UserRepositoryImpl
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class UserViewModel() : ViewModel() {
 
@@ -45,4 +47,6 @@ class UserViewModel() : ViewModel() {
         userId: String,
         marketId: Int
     ): Result = userRepository.removeFavoriteMarket(userId, marketId)
+
+    suspend fun deleteAccount(user: User): Result = withContext(Dispatchers.IO) {userRepository.deleteAccount(user)}
 }

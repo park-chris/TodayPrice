@@ -13,5 +13,7 @@ interface UserRepository {
     suspend fun addFavoriteMarket(userId: String, market: Market): Result
     suspend fun removeFavoriteMarket(userId: String, marketId: Int): Result
 
+    suspend fun deleteAccount(user: User): Result
+
 }
 

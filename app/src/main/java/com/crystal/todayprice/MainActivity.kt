@@ -2,6 +2,7 @@ package com.crystal.todayprice
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -50,6 +51,8 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         getUser()
         setAdapter()
         observerList()
+
+        Log.e("TestLog", "currentUser: ${currentUser}")
     }
 
     private fun getUser() {

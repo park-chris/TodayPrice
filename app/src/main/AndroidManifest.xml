@@ -69,6 +69,9 @@
             android:name=".ui.EditNameActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.DeleteUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

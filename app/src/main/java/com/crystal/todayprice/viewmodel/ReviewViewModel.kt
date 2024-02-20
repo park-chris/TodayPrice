@@ -7,9 +7,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.repository.ReviewRepository
 import com.crystal.todayprice.util.FirebaseCallback
+import com.crystal.todayprice.util.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel() {
 
@@ -45,6 +47,8 @@ class ReviewViewModel(private val reviewRepository: ReviewRepository): ViewModel
     fun deleteReview(reviewId: String, callback: FirebaseCallback) {
         reviewRepository.deleteReview(reviewId, callback)
     }
+
+    suspend fun deleteAccount(userId: String): Result = withContext(Dispatchers.IO) { reviewRepository.deleteAccount(userId)}
 
     class ReviewViewModelFactory(private val reviewRepository: ReviewRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

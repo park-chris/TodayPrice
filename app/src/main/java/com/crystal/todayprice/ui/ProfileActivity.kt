@@ -41,29 +41,6 @@ class ProfileActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZ
         super.onDestroy()
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_my_favorite -> startActivity(Intent(this, MyFavoriteActivity::class.java))
-            R.id.action_my_inquiry_list -> startActivity(
-                Intent(
-                    this,
-                    MyInquiryActivity::class.java
-                )
-            )
-            R.id.action_logout -> {
-                userDataManager.user ?: return false
-                FirebaseAuth.getInstance().signOut()
-                userDataManager.user = null
-                updateProfile(null)
-                actionMenuHome()
-            }
-            R.id.action_my_review -> startActivity(Intent(this, UserReviewActivity::class.java))
-            R.id.action_delete_account -> {}
-        }
-        return false
-    }
-
-
     private fun setupEvent() {
         binding.editTextView.setOnClickListener {
             startActivity(Intent(this, EditNameActivity::class.java))

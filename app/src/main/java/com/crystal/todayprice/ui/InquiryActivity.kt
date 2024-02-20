@@ -25,7 +25,6 @@ class InquiryActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZ
     private val inquiryViewModel: InquiryViewModel by viewModels {
         InquiryViewModel.InquiryViewModelFactory(InquiryRepositoryImpl())
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

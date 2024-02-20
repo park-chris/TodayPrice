@@ -27,6 +27,7 @@ import com.crystal.todayprice.data.Result
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHeaderBinding
+import com.crystal.todayprice.ui.DeleteUserActivity
 import com.crystal.todayprice.ui.InquiryActivity
 import com.crystal.todayprice.ui.LoginActivity
 import com.crystal.todayprice.ui.MarketActivity
@@ -291,6 +292,7 @@ open class BaseActivity(
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.action_delete_account -> startActivity(Intent(this, DeleteUserActivity::class.java))
             R.id.action_my_profile -> startActivity(Intent(this, ProfileActivity::class.java))
             R.id.action_my_favorite -> startActivity(Intent(this, MyFavoriteActivity::class.java))
             R.id.action_inquiry -> startActivity(Intent(this, InquiryActivity::class.java))

@@ -13,4 +13,5 @@ data class Review(
   var likeCount: Int = 0,
   val likeUsers: List<String> = emptyList(),
   val blockUsers: List<String> = emptyList(),
+  val state: Boolean = true,
 )

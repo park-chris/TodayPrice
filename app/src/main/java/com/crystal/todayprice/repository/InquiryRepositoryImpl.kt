@@ -39,4 +39,21 @@ class InquiryRepositoryImpl: InquiryRepository {
         }
     }
 
+    override suspend fun deleteAccountInquiry(userId: String): Result {
+        return try {
+            val inquiries = getMyInquiry(userId)
+
+            val batch = database.batch()
+
+            for (inquiry in inquiries) {
+                val doc = inquiryRef.document(inquiry.id)
+                batch.delete(doc)
+            }
+            batch.commit()
+            Result.SUCCESS
+        } catch (e: Exception) {
+            Result.FAIL
+        }
+    }
+
 }
