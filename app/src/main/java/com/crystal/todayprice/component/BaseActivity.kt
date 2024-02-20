@@ -1,6 +1,7 @@
 package com.crystal.todayprice.component
 
 import android.app.ProgressDialog.show
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
@@ -9,6 +10,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -38,6 +41,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -71,6 +75,7 @@ open class BaseActivity(
 
     override fun onResume() {
         super.onResume()
+        Log.e("TestLog", "userDaraManager.user ${userDataManager.user}")
         updateProfile(userDataManager.user)
     }
 
@@ -207,6 +212,7 @@ open class BaseActivity(
     }
 
     fun updateProfile(user: User?) {
+        userDataManager.user = user
         drawerHeaderBinding.user = user
         drawerHeaderBinding.executePendingBindings()
         if (userDataManager.user != null) {
@@ -218,6 +224,15 @@ open class BaseActivity(
         }
 
     }
+
+    fun hideKeyboard(editText: EditText, isClear: Boolean = true) {
+        editText.text = null
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(editText.windowToken, 0)
+        if (isClear) editText.clearFocus()
+    }
+
 
     //    open fun actionMenuFavorite() {}
     fun actionMenuHome() {

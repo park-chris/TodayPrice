@@ -40,10 +40,7 @@ class ReportActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZO
     private fun setupEvent() {
 
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(binding.addEditText.windowToken, 0)
-            binding.addEditText.clearFocus()
+            hideKeyboard(binding.addEditText)
             val radioButton = findViewById<RadioButton>(checkedId)
             reportTitle = radioButton.text.toString()
             binding.submitButton.setTextColor(ContextCompat.getColor(this, R.color.white) )

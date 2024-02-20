@@ -6,6 +6,7 @@ import com.crystal.todayprice.util.*
 
 interface UserRepository {
     fun createUser(user: User, callback: FirebaseCallback)
+    fun updateUserName(user: User, callback: FirebaseCallback)
     suspend fun getUser(userId: String): User?
     fun submitReport( reviewId: String, userId: String, reportTitle: String, reportContent: String?, callback: FirebaseCallback)
     suspend fun getFavoriteMarkets(userId: String): List<Market>

@@ -1,8 +1,12 @@
 package com.crystal.todayprice.ui
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
@@ -21,6 +25,7 @@ class ProfileActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZ
         binding = ActivityProfileBinding.inflate(layoutInflater)
         baseBinding.contentLayout.addView(binding.root)
         binding.navigationView.setNavigationItemSelectedListener(this)
+        binding.navigationView.elevation = 0f
     }
 
     override fun onResume() {

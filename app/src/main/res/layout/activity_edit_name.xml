@@ -1,48 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout"
     android:orientation="vertical"
-    android:padding="@dimen/horizontal_padding"
-    android:layout_height="match_parent">
+    android:padding="@dimen/horizontal_padding">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/edit_name_info_1"
         android:layout_marginTop="10dp"
-        android:textColor="@color/hint" />
+        android:textColor="@color/hint"
+        android:text="@string/edit_name_info_1" />
 
     <EditText
-        android:id="@+id/titleEditText"
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
-        android:layout_marginTop="30dp"
-        android:maxLines="1"
-        android:background="@drawable/bg_edit"
-        android:hint="@string/edit_name_hint"
-        android:textColorHint="@color/hint"
-        android:gravity="top"
-        android:textSize="@dimen/medium_text_size"
-        android:padding="@dimen/horizontal_padding"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_edit"
+        android:gravity="top"
+        android:hint="@string/edit_name_hint"
         android:importantForAutofill="no"
-        android:inputType="textLongMessage" />
-
+        android:inputType="textLongMessage"
+        android:maxLines="1"
+        android:padding="@dimen/horizontal_padding"
+        android:textColorHint="@color/hint"
+        android:textSize="@dimen/medium_text_size" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/edit_name_info_2"
         android:layout_marginTop="10dp"
+        android:text="@string/edit_name_info_2"
         android:textColor="@color/hint" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submitButton"
+        style="@style/CustomButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        style="@style/CustomButton"
         android:text="@string/edit_name" />
 
-
-
 </LinearLayout>
+</layout>

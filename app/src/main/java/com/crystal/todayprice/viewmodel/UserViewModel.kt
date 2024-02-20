@@ -18,6 +18,10 @@ class UserViewModel() : ViewModel() {
         userRepository.createUser(user, callback)
     }
 
+    fun updateUserName(user: User, callback: FirebaseCallback) {
+        userRepository.updateUserName(user, callback)
+    }
+
     suspend fun getUser(userId: String): User? = userRepository.getUser(userId)
     fun submitReport(
         reviewId: String,

@@ -118,6 +118,9 @@
     <string name="inquiry_dialog_delete_incomplete">삭제가 완료되지 않았습니다. 다시 한번 시도해주세요.</string>
 
     <string name="favorite_remove_dialog_message">즐겨찾기를 해제하시겠습니까?</string>
+    <string name="complete_edit_nickname">닉네임이 변경되었습니다.</string>
+    <string name="incomplete_edit_nickname">에러가 발생했습니다.
+다시 시도해주세요.</string>
 
     <string name="complete_answer">답변 완료</string>
     <string name="incomplete_answer">답변 미완료</string>

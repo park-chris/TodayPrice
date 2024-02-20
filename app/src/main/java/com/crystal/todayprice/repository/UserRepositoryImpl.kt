@@ -30,6 +30,14 @@ class UserRepositoryImpl : UserRepository {
         }
     }
 
+    override fun updateUserName(user: User, callback: FirebaseCallback) {
+        userRef.document(user.id).update("name", user.name).addOnSuccessListener {
+            callback.onResult(Result.SUCCESS)
+        }.addOnFailureListener {
+            callback.onResult(Result.FAIL)
+        }
+    }
+
     override suspend fun getUser(userId: String): User? = withContext(Dispatchers.IO) {
         try {
             val snapshot = userRef.document(userId).get().await()
