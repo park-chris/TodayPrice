@@ -51,8 +51,6 @@ class MainActivity : BaseActivity(ToolbarType.MENU) {
         getUser()
         setAdapter()
         observerList()
-
-        Log.e("TestLog", "currentUser: ${currentUser}")
     }
 
     private fun getUser() {

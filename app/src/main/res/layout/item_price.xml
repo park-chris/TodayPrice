@@ -23,6 +23,7 @@
             android:layout_height="170dp"
             android:scaleType="centerCrop"
             android:background="@drawable/bg_image"
+            android:src="@drawable/img_no_picture"
             app:itemImageUrl="@{item.itemId}" />
 
         <TextView

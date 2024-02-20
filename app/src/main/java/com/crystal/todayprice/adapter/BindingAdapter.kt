@@ -34,6 +34,7 @@ fun ImageView.setImage(imageUrl: String?) {
             .centerCrop()
             .skipMemoryCache(true)
             .dontAnimate()
+            .placeholder(R.drawable.img_no_picture)
             .error(R.drawable.img_no_picture)
             .transition(DrawableTransitionOptions.withCrossFade(300))
             .into(this)
@@ -48,7 +49,9 @@ fun ImageView.setImage(itemId: Int?) {
         .load(url)
         .thumbnail(Glide.with(this).load(url).centerCrop())
         .centerCrop()
+        .dontAnimate()
         .transition(DrawableTransitionOptions.withCrossFade(300))
+        .placeholder(R.drawable.img_no_picture)
         .error(R.drawable.img_no_picture)
         .into(this)
     this.clipToOutline = true
