@@ -56,8 +56,8 @@ fun ImageView.setNoticeImageUrl(imageUrl: String?) {
 }
 
 @BindingAdapter("itemImageUrl")
-fun ImageView.setImage(itemId: Int?) {
-    val url = "https://firebasestorage.googleapis.com/v0/b/today-price-94264.appspot.com/o/item%2F${itemId}.webp?alt=media"
+fun ImageView.setItemImage(itemName: String?) {
+    val url = "https://firebasestorage.googleapis.com/v0/b/today-price-94264.appspot.com/o/item%2F${itemName}.webp?alt=media"
     Glide.with(this)
         .load(url)
         .thumbnail(Glide.with(this).load(url).centerCrop())

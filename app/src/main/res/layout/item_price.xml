@@ -24,7 +24,7 @@
             android:scaleType="centerCrop"
             android:background="@drawable/bg_image"
             android:src="@drawable/img_no_picture"
-            app:itemImageUrl="@{item.itemId}" />
+            app:itemImageUrl="@{item.itemName}" />
 
         <TextView
             android:id="@+id/priceTextView"
