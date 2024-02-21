@@ -20,7 +20,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:background="@drawable/bg_image"
-            app:imageUrl="@{item.imageUrl}"
+            app:noticeImageUrl="@{item.imageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

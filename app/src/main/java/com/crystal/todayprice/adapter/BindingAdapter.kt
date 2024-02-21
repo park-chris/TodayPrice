@@ -40,6 +40,21 @@ fun ImageView.setImage(imageUrl: String?) {
     this.clipToOutline = true
 }
 
+@BindingAdapter("noticeImageUrl")
+fun ImageView.setNoticeImageUrl(imageUrl: String?) {
+    if (!imageUrl.isNullOrBlank()) {
+        Glide.with(this)
+            .load(imageUrl)
+            .centerCrop()
+            .skipMemoryCache(true)
+            .dontAnimate()
+            .error(R.drawable.img_no_picture)
+            .transition(DrawableTransitionOptions.withCrossFade(300))
+            .into(this)
+    }
+    this.clipToOutline = true
+}
+
 @BindingAdapter("itemImageUrl")
 fun ImageView.setImage(itemId: Int?) {
     val url = "https://firebasestorage.googleapis.com/v0/b/today-price-94264.appspot.com/o/item%2F${itemId}.webp?alt=media"
