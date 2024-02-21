@@ -27,6 +27,7 @@
     <string name="login_title">전통 시장.</string>
     <string name="login_subtitle">오랜 기간에 걸쳐 일정한 지역에서 자연 발생적으로 \n형성된 상설 시장이나 정기 시장.</string>
     <string name="policy">개인정보처리방침</string>
+    <string name="use_policy">이용약관</string>
 
     <string name="edit_hint_anonymous">로그인 후 댓글 작성이 가능합니다.</string>
     <string name="edit_hint_user">후기를 공유해주세요.</string>

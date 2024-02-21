@@ -1,6 +1,7 @@
 package com.crystal.todayprice.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -62,6 +63,18 @@ class LoginActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON
         }
         binding.kakaoSignInButton.setOnClickListener {
             kakaoLogin()
+        }
+        binding.usePolicyTextView.setOnClickListener {
+            val intent = Intent(this, WebViewActivity::class.java).apply {
+                putExtra(WebViewActivity.WEB_VIEW_URL, "https://park-chris.github.io/pages/use_policy_market.html")
+            }
+            startActivity(intent)
+        }
+        binding.policyTextView.setOnClickListener {
+            val intent = Intent(this, WebViewActivity::class.java).apply {
+                putExtra(WebViewActivity.WEB_VIEW_URL, "https://park-chris.github.io/pages/data_policy_market.html")
+            }
+            startActivity(intent)
         }
     }
 
