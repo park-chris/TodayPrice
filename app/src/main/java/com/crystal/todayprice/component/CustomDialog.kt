@@ -37,7 +37,7 @@ class CustomDialog(context: Context, private val onDialogListener: OnDialogListe
             binding.rightButton.text = rightButtonText
         }
 
-        binding.messageTextView.text = message
+        binding.messageTextView.text = message.replace(" ", "\u00A0")
         binding.leftButton.text = leftButtonText
 
         binding.leftButton.setOnClickListener {
