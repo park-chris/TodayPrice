@@ -3,18 +3,12 @@ package com.crystal.todayprice.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.crystal.todayprice.MainActivity
 import com.crystal.todayprice.adapter.NoticeAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
-import com.crystal.todayprice.data.Notice
-import com.crystal.todayprice.databinding.ActivityNoticeBinding
 import com.crystal.todayprice.databinding.ActivityNoticeListBinding
-import com.crystal.todayprice.repository.ListItemRepositoryImpl
 import com.crystal.todayprice.repository.NoticeRepositoryImpl
-import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
-import com.crystal.todayprice.viewmodel.ListItemViewModel
 import com.crystal.todayprice.viewmodel.NoticeViewModel
 
 class NoticeListActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {

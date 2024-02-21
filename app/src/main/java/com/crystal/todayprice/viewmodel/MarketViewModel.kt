@@ -1,15 +1,11 @@
 package com.crystal.todayprice.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.map
-import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.repository.MarketRepository
-import com.crystal.todayprice.util.TextUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

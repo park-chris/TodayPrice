@@ -1,7 +1,5 @@
 package com.crystal.todayprice.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.User

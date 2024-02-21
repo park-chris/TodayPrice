@@ -1,31 +1,15 @@
 package com.crystal.todayprice.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.Transformation
-import android.view.animation.TranslateAnimation
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.todayprice.R
 import com.crystal.todayprice.data.Inquiry
-import com.crystal.todayprice.data.Item
-import com.crystal.todayprice.data.Notice
-import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.databinding.ItemInquiryBinding
-import com.crystal.todayprice.databinding.ItemNoticeBinding
-import com.crystal.todayprice.databinding.ItemPriceBinding
-import com.crystal.todayprice.databinding.ItemReviewBinding
-import com.crystal.todayprice.util.CommonUtil.Companion.dpToPx
-import com.crystal.todayprice.util.OnItemReviewListener
 import com.crystal.todayprice.util.ToggleAnimation
 
 class InquiryAdapter(

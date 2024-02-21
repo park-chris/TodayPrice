@@ -23,8 +23,6 @@ class WebViewActivity: BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.VERTIC
 
         url = intent.getStringExtra(WEB_VIEW_URL) ?: ""
 
-        Log.e("TestLog", "url: $url")
-
         binding.webView.webViewClient = WebViewClient()
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.loadUrl(url)

@@ -1,18 +1,14 @@
 package com.crystal.todayprice.component
 
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -23,7 +19,6 @@ import com.crystal.todayprice.R
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.Notice
-import com.crystal.todayprice.data.Result
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityBaseBinding
 import com.crystal.todayprice.databinding.DrawerHeaderBinding
@@ -36,15 +31,9 @@ import com.crystal.todayprice.ui.MyInquiryActivity
 import com.crystal.todayprice.ui.NoticeListActivity
 import com.crystal.todayprice.ui.ProfileActivity
 import com.crystal.todayprice.ui.UserReviewActivity
-import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.viewmodel.UserViewModel
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 open class BaseActivity(
@@ -76,7 +65,6 @@ open class BaseActivity(
 
     override fun onResume() {
         super.onResume()
-        Log.e("TestLog", "userDaraManager.user ${userDataManager.user}")
         updateProfile(userDataManager.user)
     }
 

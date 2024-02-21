@@ -1,10 +1,6 @@
 package com.crystal.todayprice.ui
 
-import android.content.Context
-import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
-import android.util.Log
-import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -17,8 +13,6 @@ import com.crystal.todayprice.databinding.ActivityReportBinding
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.Result
-
-private const val TAG = "TestLog"
 
 class ReportActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 

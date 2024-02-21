@@ -2,25 +2,17 @@ package com.crystal.todayprice.ui
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.databinding.ActivityDeleteUserBinding
-import com.crystal.todayprice.databinding.ActivityEditNameBinding
 import com.crystal.todayprice.repository.InquiryRepositoryImpl
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
-import com.crystal.todayprice.util.FirebaseCallback
-import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.viewmodel.InquiryViewModel
 import com.crystal.todayprice.viewmodel.ReviewViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

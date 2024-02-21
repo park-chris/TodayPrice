@@ -2,7 +2,6 @@ package com.crystal.todayprice.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,12 +18,10 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMarketListBinding
-import com.crystal.todayprice.databinding.ActivityUserReviewBinding
 import com.crystal.todayprice.repository.MarketRepositoryImpl
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable
 import com.crystal.todayprice.util.GridSpacingItemDecoration
 import com.crystal.todayprice.viewmodel.MarketViewModel
-import com.google.android.gms.auth.api.Auth
 import com.google.android.material.chip.Chip
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

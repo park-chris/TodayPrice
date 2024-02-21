@@ -1,19 +1,12 @@
 package com.crystal.todayprice.ui
 
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.crystal.todayprice.R
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.databinding.ActivityProfileBinding
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 
 class ProfileActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON), NavigationView.OnNavigationItemSelectedListener  {
 

@@ -5,11 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.crystal.todayprice.data.Inquiry
-import com.crystal.todayprice.data.Notice
 import com.crystal.todayprice.repository.InquiryRepository
-import com.crystal.todayprice.repository.NoticeRepository
 import com.crystal.todayprice.util.FirebaseCallback
-import com.crystal.todayprice.util.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

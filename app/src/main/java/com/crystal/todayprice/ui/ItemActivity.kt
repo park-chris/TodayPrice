@@ -8,7 +8,6 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Market
-import com.crystal.todayprice.data.Price
 import com.crystal.todayprice.databinding.ActivityItemBinding
 import com.crystal.todayprice.repository.ItemRepositoryImpl
 import com.crystal.todayprice.util.CommonUtil.Companion.intentSerializable

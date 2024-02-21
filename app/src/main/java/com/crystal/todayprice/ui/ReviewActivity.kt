@@ -2,7 +2,6 @@ package com.crystal.todayprice.ui
 
 import android.content.Context
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -22,12 +21,12 @@ import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.data.User
 import com.crystal.todayprice.databinding.ActivityReviewBinding
-import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.repository.ReviewRepositoryImpl
 import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.OnBottomSheetListener
 import com.crystal.todayprice.util.OnDialogListener
 import com.crystal.todayprice.util.OnItemReviewListener
+import com.crystal.todayprice.util.Result
 import com.crystal.todayprice.util.TextUtil
 import com.crystal.todayprice.util.VerticalDividerItemDecoration
 import com.crystal.todayprice.viewmodel.ReviewViewModel
@@ -36,7 +35,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.Locale
 
 
 class ReviewActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {

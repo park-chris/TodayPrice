@@ -1,22 +1,17 @@
 package com.crystal.todayprice
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.adapter.ListItemAdapter
 import com.crystal.todayprice.component.BaseActivity
-import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.data.ListItem
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.data.News
 import com.crystal.todayprice.data.Notice
-import com.crystal.todayprice.data.User
 import com.crystal.todayprice.data.ViewType
 import com.crystal.todayprice.databinding.ActivityMainBinding
 import com.crystal.todayprice.repository.ListItemRepositoryImpl
@@ -25,6 +20,7 @@ import com.crystal.todayprice.ui.MarketListActivity
 import com.crystal.todayprice.ui.NewsListActivity
 import com.crystal.todayprice.ui.NoticeActivity
 import com.crystal.todayprice.ui.SearchActivity
+import com.crystal.todayprice.util.OnItemListItemListener
 import com.crystal.todayprice.viewmodel.ListItemViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

@@ -1,16 +1,10 @@
 package com.crystal.todayprice.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.crystal.todayprice.R
-import com.crystal.todayprice.adapter.InquiryAdapter
 import com.crystal.todayprice.adapter.MarketAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.CustomDialog
@@ -18,18 +12,11 @@ import com.crystal.todayprice.component.ToolbarType
 import com.crystal.todayprice.component.TransitionMode
 import com.crystal.todayprice.data.Market
 import com.crystal.todayprice.databinding.ActivityMyFavoriteBinding
-import com.crystal.todayprice.databinding.ActivityMyInquiryBinding
-import com.crystal.todayprice.repository.InquiryRepositoryImpl
-import com.crystal.todayprice.util.FirebaseCallback
 import com.crystal.todayprice.util.GridSpacingItemDecoration
 import com.crystal.todayprice.util.OnDialogListener
-import com.crystal.todayprice.util.Result
-import com.crystal.todayprice.viewmodel.InquiryViewModel
-import com.crystal.todayprice.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MyFavoriteActivity : BaseActivity(ToolbarType.ONLY_BACK, TransitionMode.HORIZON) {
 

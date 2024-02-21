@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.R
-import com.crystal.todayprice.adapter.ReviewAdapter
 import com.crystal.todayprice.adapter.UserReviewAdapter
 import com.crystal.todayprice.component.BaseActivity
 import com.crystal.todayprice.component.ButtonType

@@ -1,21 +1,14 @@
 package com.crystal.todayprice.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.crystal.todayprice.R
-import com.crystal.todayprice.data.Item
 import com.crystal.todayprice.data.Notice
-import com.crystal.todayprice.data.Review
 import com.crystal.todayprice.databinding.ItemNoticeBinding
-import com.crystal.todayprice.databinding.ItemPriceBinding
-import com.crystal.todayprice.databinding.ItemReviewBinding
 import com.crystal.todayprice.util.CommonUtil.Companion.dpToPx
-import com.crystal.todayprice.util.OnItemReviewListener
 
 class NoticeAdapter(
     private val onClick: (Notice) -> Unit
