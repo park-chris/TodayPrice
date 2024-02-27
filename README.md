@@ -37,7 +37,7 @@
 <br>
 
 # 👩🏻‍💻참여자
-- 안드로이드 개발자 1명
+- 개발자 1
 
 
 <br>
@@ -45,23 +45,24 @@
 # ✋🏻역할
 - 기획 및 디자인
 - **안드로이드 앱 전체 개발**
-- **Back-End** 개발
+- **Back-End** 개발 
 
 
 <br>
+
 # 📷스크린샷
 
+|설명|스크린샷|
+|---|---|
+|로그인 화면 및 사이드 메뉴|  <img src="https://github.com/park-chris/TodayPrice/assets/72954404/fc41c001-8030-49fd-b3b9-b1c0994ef1e4" alt="로그인 전 사이드 메뉴" style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/0fdb6b3e-e434-4fe6-9e4c-4a757eefd384" alt="로그인 후 사이드 메뉴" style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px; " width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/de5b174d-95f5-4f65-864f-73f328202b15" alt="로그인 화면" style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%">|
+|홈 화면| <img src="https://github.com/park-chris/TodayPrice/assets/72954404/5d83d11b-f746-4315-b948-cf0fa56e56c0" alt=""  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
+|시장 화면|<img src="https://github.com/park-chris/TodayPrice/assets/72954404/11e26f00-862e-428f-9811-055740311960" alt="시장 리스트 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/7c47a6bb-ae7c-4a6b-a227-eb7479ccd06b" alt="시장 소개 화면 - 상단"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/c822a430-94f7-42f3-9963-1b52472ce253" alt="시장 소개 화면 - 하단"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
+|시장 리뷰 화면|<img src="https://github.com/park-chris/TodayPrice/assets/72954404/e2d1f133-35e6-4529-ae57-26bd83f25977" alt="리뷰 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/77882745-aa83-4305-b355-2560ebbdb765" alt="리뷰 삭제 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/679977b1-7717-44e1-acd8-ee4c0cd911b7" alt="리뷰 메뉴 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
+|물품 화면|<img src="https://github.com/park-chris/TodayPrice/assets/72954404/cf9030ad-fe81-4dfa-85f8-17dcc83e094a" alt="물품 리스트 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/b89575da-bdc8-46c7-affb-51042099cfad" alt="물품 상세 화면 - 상단"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/d69aae90-4122-47a2-9b88-64c0f9b0f526" alt="물품 상세 화면 - 하단"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
+|검색 화면|<img src="https://github.com/park-chris/TodayPrice/assets/72954404/7d33e71a-14c2-438d-b673-71b1c5f083a4" alt="검색 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/7b70ed52-2a8d-4884-ba25-fe2203270efb" alt="검색 결과 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
+|프로필 화면|<img src="https://github.com/park-chris/TodayPrice/assets/72954404/b3368bfa-329c-43d5-8f13-a0c76635daea" alt="프로필 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/19b59cdb-c180-44a3-a047-e17a66c08793" alt="이름 변경 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/ff7def6e-c7f3-4ba2-9a61-ac8b91693536" alt="즐겨찾기 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/abc9a63e-8d54-4072-8b6a-3acc74314a80" alt="내 문의 내역 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
+|기타 화면|<img src="https://github.com/park-chris/TodayPrice/assets/72954404/8b654d3f-ff6c-4536-8998-b939f02f7d8c" alt="공지 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/f147366c-ab4e-4181-9742-39d739849068" alt="문의하기 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/1768d607-ea9b-404b-9330-d4e261df2592" alt="신고하기 버튼 비활성화 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/01c260d4-34fd-4600-85c9-90182092ddab" alt="신고하기 버튼 활성화 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> <img src="https://github.com/park-chris/TodayPrice/assets/72954404/59293ed8-16c7-48c9-ae37-1544f7846f0c" alt="신고 접수 완료 화면"  style="border:1px solid #eaeaea; border-radius: 7px; padding: 0px;"  width="20%"> |
 
 
-
-
-
-
-
-
-
-
-
-
-
+<br>
 
