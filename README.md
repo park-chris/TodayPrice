@@ -4,6 +4,7 @@
 전통시장 앱은 서울에 있는 전통시장의 소개, 생필품 가격, 위치, 리뷰를 제공해주는 서비스입니다. 사용자들은 각 시장의 가격 정보를 실시간으로 확인하고, 시장의 위치와 접근 방법을 쉽게 찾아볼 수 있습니다. 또한, 다른 이용자들의 리뷰를 통해 각 시장의 분위기와 매력을 느껴볼 수 있습니다. 
 
 <br>
+<br>
 
 # 💡요약
 
@@ -12,11 +13,13 @@
 
 
 <br>
+<br>
 
 # 📃만들게 된 이유
 시장을 가기 전 장 보는 비용을 예상하기 위해 만들었습니다. 처음에는 단순 생필품 가격 제공으로 만들 계획이었지만 사용자들의 후기도 있다면 더욱 좋은 앱이 될거라고 생각했습니다. 그래서 전통 시장의 다양한 정보를 제공해주는 앱을 개발하게 되었습니다.
 
 
+<br>
 <br>
 
 # 📌주요 기능
@@ -30,16 +33,21 @@
     - 시장과 생필품을 **검색** 가능
 
 <br>
+<br>
 
 # 🛠사용 기술
-`Kotlin`, `JetPack`, `Room`, `DataBinding`, `ViewModel`, `AAC`, `LiveData`, `Foreground Service`, `Background Service`, `Broadcast` , `Broadcast Receiver`
+- **Android** : `Kotlin`, `MVVM Pattern` , `JetPack`, `DataBinding`, `ViewModel`, `Retrofit` , `AAC`,  `Coroutine` , `LiveData`, `RestfulAPI`, `Retrofit`, `Glide`, `MotionLayout`, `ViewPager`, `Kakao 로그인`, `Kakap Map`
+  
+- **Back-End** : `Firebase Authentication`, `Firebase Firestore`, `Firebase Functions`, `Firebase Storage`, `Schedule functions` , `TypeScript`
 
+<br>
 <br>
 
 # 👩🏻‍💻참여자
 - 개발자 1
 
 
+<br>
 <br>
 
 # ✋🏻역할
@@ -48,6 +56,15 @@
 - **Back-End** 개발 
 
 
+<br>
+<br>
+
+# 📱Back-End
+- Repository url : [Github Repository Url]( https://github.com/park-chris/firebase-price-project)
+- 데이터 출처 : 서울 열린데이터 광장 (https://data.seoul.go.kr/dataList/OA-1170/S/1/datasetView.do)
+
+
+<br>
 <br>
 
 # 📷스크린샷
