@@ -1,5 +1,6 @@
 package com.crystal.todayprice.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import com.crystal.todayprice.util.TextUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ItemViewModel(private val itemRepository: ItemRepository): ViewModel() {
 
@@ -20,8 +22,10 @@ class ItemViewModel(private val itemRepository: ItemRepository): ViewModel() {
     val items: LiveData<List<Item>> by lazy { _items }
 
     fun getItem(marketId: Int, itemId: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val prices = itemRepository.getItem(marketId, itemId)
+        CoroutineScope(Dispatchers.Main).launch {
+            val prices = withContext(Dispatchers.IO) {
+                itemRepository.getItem(marketId, itemId)
+            }
             _prices.postValue(prices)
         }
     }

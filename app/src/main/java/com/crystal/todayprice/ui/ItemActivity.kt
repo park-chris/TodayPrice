@@ -1,6 +1,7 @@
 package com.crystal.todayprice.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.crystal.todayprice.component.BaseActivity
@@ -35,12 +36,14 @@ class ItemActivity: BaseActivity(ToolbarType.HOME, TransitionMode.HORIZON)  {
         market = intent.intentSerializable(MarketActivity.MARKET_OBJECT, Market::class.java)
 
         itemViewModel.prices.observe(this, Observer {
-            binding.price = it.last()
-            binding.graphView.setData(it.takeLast(4))
+            if (it.isNotEmpty()) {
+                binding.price = it.last()
+                binding.graphView.setData(it.takeLast(4))
+            }
         })
 
         item?.let {
-            itemViewModel.getItem(market!!.id, it.itemId.toInt())
+            itemViewModel.getItem(market!!.id, it.itemId)
             binding.item = it
             binding.priceTextView.text = TextUtil.priceFormat(this, it.itemPrice.toDouble())
         }
